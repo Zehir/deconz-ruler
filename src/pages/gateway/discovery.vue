@@ -9,11 +9,13 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div>
-    <p>Gateway Discovery</p>
-    <p>
-      {{ currentGatewayID }}
-      {{ gateways }}
-    </p>
-  </div>
+  <v-card class="d-flex pa-2" outlined tile>
+    <div>
+      <p>Gateway Discovery</p>
+      <p>
+        {{ currentGatewayID }}
+        {{ gateways }}
+      </p>
+    </div>
+  </v-card>
 </template>
