@@ -13,7 +13,7 @@ export interface Gateway {
 export const useGatewaysStore = defineStore('gateways', () => {
   const gateways: Record<string, Gateway> = reactive({})
   const currentGatewayID = ref('Toto')
-  const currentGateway = computed(() => gateways[currentGatewayID.value])
+  const currentGateway = computed<Gateway>(() => gateways[currentGatewayID.value])
 
   return {
     gateways,
