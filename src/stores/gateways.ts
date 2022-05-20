@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 import type { Gateway } from '~/interfaces/deconz'
@@ -14,6 +13,9 @@ export const useGatewaysStore = defineStore('gateways', () => {
   const logs = ref('')
 
   async function scanGateways() {
+    // Remove old data, temporarily
+    // gateways.value = {}
+
     logs.value = 'Scanning gateways...'
 
     logs.value = `Fetching data from '${phosconDiscoveryUrl}'.`
@@ -22,15 +24,13 @@ export const useGatewaysStore = defineStore('gateways', () => {
 
     // Try to find a gateway using the discovery API.
     try {
-      const discover = await axios.request({
+      const discover = await (await fetch(phosconDiscoveryUrl, {
         method: 'GET',
-        url: phosconDiscoveryUrl,
-        responseType: 'json',
-        timeout: 2000,
-      })
+        // timeout: 2000,
+      })).json()
       if (Array.isArray(discover.data) && discover.data.length > 0) {
         logs.value = `Found ${discover.data.length} gateways.`
-        discover.data.forEach((element) => {
+        discover.data.forEach((element: { id: any; name: any; internalipaddress: any; internalport: any }) => {
           Guesses.add({
             id: element.id,
             name: element.name,
@@ -75,10 +75,10 @@ export const useGatewaysStore = defineStore('gateways', () => {
       logs.value = `Trying to find gateway at '${guess.ip}:${guess.port}'.`
       const querrier = new GatewayQuerier(guess)
       const config = await querrier.get(querrier.urls.config())
-      if (config.data) {
+      if (config) {
         return {
-          id: config.data.bridgeid,
-          name: config.data.devicename,
+          id: config.bridgeid,
+          name: config.devicename,
           ip: guess.ip,
           port: guess.port,
           secured: guess.secured === true,

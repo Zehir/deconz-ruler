@@ -1,4 +1,3 @@
-import axios from 'axios'
 import type { Gateway } from '~/interfaces/deconz'
 
 export class GatewayQuerier {
@@ -29,12 +28,10 @@ export class GatewayQuerier {
       this.gateway.secured = false
   }
 
-  public get(url: string): Promise<any> {
-    return axios.request({
+  public async get(url: string): Promise<any> {
+    return (await fetch(url, {
       method: 'GET',
-      url,
-      responseType: 'json',
-      timeout: 2000,
-    })
+      // timeout: 2000,
+    })).json()
   }
 }
