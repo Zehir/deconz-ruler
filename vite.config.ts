@@ -131,6 +131,10 @@ export default defineConfig({
     onFinished() { generateSitemap() },
   },
 
+  build: {
+    sourcemap: true,
+  },
+
   // https://github.com/vitest-dev/vitest
   test: {
     include: ['test/**/*.test.ts'],
