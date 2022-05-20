@@ -12,10 +12,20 @@ declare module '@vue/runtime-core' {
     VAppBar: typeof import('vuetify/components')['VAppBar']
     VBtn: typeof import('vuetify/components')['VBtn']
     VCard: typeof import('vuetify/components')['VCard']
+    VCardActions: typeof import('vuetify/components')['VCardActions']
+    VCardText: typeof import('vuetify/components')['VCardText']
+    VCardTitle: typeof import('vuetify/components')['VCardTitle']
+    VChip: typeof import('vuetify/components')['VChip']
+    VChipGroup: typeof import('vuetify/components')['VChipGroup']
     VContainer: typeof import('vuetify/components')['VContainer']
+    VDivider: typeof import('vuetify/components')['VDivider']
     VFooter: typeof import('vuetify/components')['VFooter']
+    VImg: typeof import('vuetify/components')['VImg']
     VMain: typeof import('vuetify/components')['VMain']
     VNavigationDrawer: typeof import('vuetify/components')['VNavigationDrawer']
+    VProgressLinear: typeof import('vuetify/components')['VProgressLinear']
+    VRating: typeof import('vuetify/components')['VRating']
+    VRow: typeof import('vuetify/components')['VRow']
   }
 }
 

@@ -1,5 +1,22 @@
 <template>
-  <main class="px-4 py-10 text-center text-gray-700 dark:text-gray-200">
-    <RouterView />
-  </main>
+  <v-navigation-drawer app>
+    <!-- -->
+  </v-navigation-drawer>
+
+  <v-app-bar app>
+    <!-- -->
+  </v-app-bar>
+
+  <!-- Sizes your content based upon application components -->
+  <v-main>
+    <!-- Provides the application the proper gutter -->
+    <v-container fluid>
+      <!-- If using vue-router -->
+      <router-view />
+    </v-container>
+  </v-main>
+
+  <v-footer app>
+    <!-- -->
+  </v-footer>
 </template>

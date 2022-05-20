@@ -102,6 +102,11 @@ export const useGatewaysStore = defineStore('gateways', () => {
     currentGateway,
     scanGateways,
   }
+}, {
+  // https://github.com/prazdevs/pinia-plugin-persistedstate
+  persist: {
+    paths: ['gateways', 'currentGatewayID'],
+  },
 })
 
 // https://pinia.vuejs.org/cookbook/hot-module-replacement.html

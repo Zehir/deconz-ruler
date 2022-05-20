@@ -5,7 +5,7 @@ import { useGatewaysStore } from '~/stores/gateways'
 const Gateways = useGatewaysStore()
 const { currentGatewayID, gateways, logs } = storeToRefs(Gateways)
 
-const { t } = useI18n()
+// const { t } = useI18n()
 </script>
 
 <template>
@@ -16,14 +16,17 @@ const { t } = useI18n()
         Scan Gateways
       </v-btn>
       <p>{{ logs }}</p>
-      <v-card
-        v-for="(gateway, index) in gateways"
-        :key="index"
-        width="400"
-        :title="`${gateway.name} (${gateway.id?.slice(-6)})`"
-        :subtitle="`${gateway.ip}:${gateway.port}`"
-        text="This is content"
-      />
+      <p>{{ currentGatewayID }}</p>
     </div>
   </v-card>
+
+  <v-card
+    v-for="(gateway, index) in gateways"
+    :key="index"
+    width="400"
+    :title="`${gateway.name} (${gateway.id?.slice(-6)})`"
+    :subtitle="`${gateway.ip}:${gateway.port}`"
+    text="This is content"
+    loading="true"
+  />
 </template>
