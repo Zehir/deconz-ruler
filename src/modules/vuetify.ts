@@ -8,6 +8,9 @@ export const install: UserModule = ({ app }) => {
   const vuetify = createVuetify({
     // Components will be imported by vite-plugin-components
     directives,
+    theme: {
+      defaultTheme: 'dark',
+    },
   })
 
   app.use(vuetify)
