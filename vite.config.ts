@@ -12,8 +12,7 @@ import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Inspect from 'vite-plugin-inspect'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
-import Unocss from 'unocss/vite'
-import { Vuetify3Resolver } from 'unplugin-vue-components/resolvers'
+import Vuetify from '@vuetify/vite-plugin'
 
 const markdownWrapperClasses = 'prose prose-sm m-auto text-left'
 
@@ -29,6 +28,8 @@ export default defineConfig({
       include: [/\.vue$/, /\.md$/],
       reactivityTransform: true,
     }),
+
+    Vuetify({}),
 
     // https://github.com/hannoeru/vite-plugin-pages
     Pages({
@@ -58,7 +59,6 @@ export default defineConfig({
       // allow auto import and register components used in markdown
       include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
       dts: 'src/components.d.ts',
-      resolvers: [Vuetify3Resolver()],
     }),
 
     // https://github.com/antfu/vite-plugin-md
