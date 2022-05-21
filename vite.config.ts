@@ -61,10 +61,6 @@ export default defineConfig({
       resolvers: [Vuetify3Resolver()],
     }),
 
-    // https://github.com/antfu/unocss
-    // see unocss.config.ts for config
-    Unocss(),
-
     // https://github.com/antfu/vite-plugin-md
     // Don't need this? Try vitesse-lite: https://github.com/antfu/vitesse-lite
     Markdown({
