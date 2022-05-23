@@ -4,6 +4,7 @@ specifiers:
   '@antfu/eslint-config': ^0.23.0
   '@iconify-json/carbon': ^1.1.4
   '@intlify/vite-plugin-vue-i18n': ^4.0.0
+  '@mdi/font': ^6.7.96
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
   '@vitejs/plugin-vue': ^2.3.2
@@ -64,6 +65,7 @@ devDependencies:
   '@antfu/eslint-config': 0.23.1_hcfsmds2fshutdssjqluwm76uu
   '@iconify-json/carbon': 1.1.5
   '@intlify/vite-plugin-vue-i18n': 4.0.0_ffjyq3xvmksbcj77tjaigym5hi
+  '@mdi/font': 6.7.96
   '@types/markdown-it-link-attributes': 3.0.1
   '@types/nprogress': 0.2.0
   '@vitejs/plugin-vue': 2.3.3_vite@2.9.9+vue@3.2.34
@@ -1547,6 +1549,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.0.7
       '@jridgewell/sourcemap-codec': 1.4.13
+    dev: true
+
+  /@mdi/font/6.7.96:
+    resolution: {integrity: sha512-M68vlRhtmA/SpDjo2dV3SUZus20jrU9Zp2ggslfzh0cbFpygPukcVpBIA3pErwsukhYt4RfbgXpFi74SjixOrQ==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
