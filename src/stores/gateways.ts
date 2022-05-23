@@ -1,112 +1,142 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
-import type { Gateway } from '~/interfaces/deconz'
+import { Gateway } from '~/interfaces/deconz'
 import { GatewayQuerier } from '~/utils/gateway-querier'
-// import { Scan } from '~/utils/gateway-scanner'
-
-const phosconDiscoveryUrl = 'https://phoscon.de/discover'
 
 export const useGatewaysStore = defineStore('gateways', () => {
   const gateways: Record<string, Gateway> = reactive({})
-  const currentGatewayID = ref('')
-  const currentGateway = computed<Gateway>(() => gateways[currentGatewayID.value])
+  const currentGatewayPath = ref('')
+  const currentGateway = computed<Gateway>(() => gateways[currentGatewayPath.value])
+
   const logs = ref('')
 
   async function scanGateways() {
-    // Remove old data, temporarily
-    // gateways.value = {}
-
     logs.value = 'Scanning gateways...'
 
-    logs.value = `Fetching data from '${phosconDiscoveryUrl}'.`
-
-    const Guesses = new Set<Gateway>()
+    logs.value = `Fetching data from '${GatewayQuerier.DiscoveryURL}'.`
 
     // Try to find a gateway using the discovery API.
     try {
-      const discover = await (await fetch(phosconDiscoveryUrl, {
-        method: 'GET',
-        // timeout: 2000,
-      })).json()
-      if (Array.isArray(discover.data) && discover.data.length > 0) {
-        logs.value = `Found ${discover.data.length} gateways.`
-        discover.data.forEach((element: { id: any; name: any; internalipaddress: any; internalport: any }) => {
-          Guesses.add({
-            id: element.id,
-            name: element.name,
-            ip: element.internalipaddress,
-            port: element.internalport,
-            isValid: false,
-          })
+      const discover = await GatewayQuerier.getDiscovery()
+      if (discover) {
+        logs.value = `Found ${discover.length} gateways.`
+        discover.forEach((element) => {
+          const path = Gateway.getPath(element.internalipaddress, element.internalport)
+          // Check if gateway is already known.
+          if (gateways[path] && gateways[path].isValid === false) {
+            // Update the gateway.
+            gateways[path].ip = element.internalipaddress
+            gateways[path].name = element.name
+          }
+          else {
+            gateways[path] = new Gateway(element.id, element.internalipaddress, element.internalport)
+            gateways[path].name = element.name
+          }
         })
       }
       else {
-        logs.value = `No data fetched from '${phosconDiscoveryUrl}'.`
+        logs.value = `No data fetched from '${GatewayQuerier.DiscoveryURL}'.`
       }
     }
     catch (error) {
-      logs.value = `Error while fetching data from '${phosconDiscoveryUrl}': ${error}`
+      logs.value = `Error while fetching data from '${GatewayQuerier.DiscoveryURL}': ${error}`
       console.error(error)
     }
 
+    const Guesses: { ip: string; port: number }[] = []
     // Try using localhost with various ports.
     logs.value = 'Add 3 guesses from localhost.';
     [80, 443, 8080].forEach((port) => {
-      Guesses.add({ ip: 'localhost', port })
+      Guesses.push({ ip: 'localhost', port })
     })
 
     // Try using homeassistant address.
     logs.value = 'Add 2 guesses from homeassistant.';
     ['core-deconz.local.hass.io', 'homeassistant.local'].forEach((host) => {
-      Guesses.add({ ip: host, port: 40850 })
+      Guesses.push({ ip: host, port: 40850 })
     })
 
-    logs.value = `Processing ${Guesses.size} guesses...`;
-    (await Promise.all(Array.from(Guesses).map(FindGatewayAt)))
-      .forEach((gateway: Gateway | undefined) => {
-        if (gateway && gateway.id)
-          gateways[gateway.id] = gateway
-      })
+    logs.value = `Processing ${Guesses.length} guesses...`
+
+    await Promise.all(Guesses.map(FindGatewayAt))
+
     logs.value = `Found ${Object.keys(gateways).length} gateways.`
   }
 
-  async function FindGatewayAt(guess: Gateway): Promise<Gateway | undefined> {
+  async function FindGatewayAt(guess: { ip: string; port: number }): Promise<void> {
     try {
       logs.value = `Trying to find gateway at '${guess.ip}:${guess.port}'.`
-      const querrier = new GatewayQuerier(guess)
-      const config = await querrier.get(querrier.urls.config())
-      if (config) {
-        return {
-          id: config.bridgeid,
-          name: config.devicename,
-          ip: guess.ip,
-          port: guess.port,
-          secured: guess.secured === true,
-          isValid: false,
+      const gateway: Gateway = new Gateway('Unknown ID', guess.ip, guess.port)
+      const querrier = new GatewayQuerier(gateway)
+      const config = await querrier.getAnonymousConfig()
+
+      if (config !== undefined) {
+        if (gateways[gateway.path] && gateways[gateway.path].isValid === false) {
+          // Update the gateway.
+          gateways[gateway.path].name = config.name
+        }
+        else {
+          gateway.id = config.bridgeid
+          gateway.name = config.name
+          gateways[gateway.path] = gateway
         }
       }
     }
     catch (error) {
 
     }
+  }
 
-    // console.log(guess.ip, guess.port)
-
-    return undefined
+  function setCurrentGateway(path: string) {
+    currentGatewayPath.value = path
   }
 
   return {
     gateways,
     logs,
-    currentGatewayID,
+    currentGatewayPath,
     currentGateway,
     scanGateways,
+    setCurrentGateway,
   }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   persist: {
-    paths: ['gateways', 'currentGatewayID'],
+    paths: [
+      'gateways',
+      'currentGatewayPath',
+    ],
+    afterRestore: ({ store }) => {
+      Object.entries(store.gateways).forEach(([key, gateway]) => {
+        store.gateways[key] = Gateway.fromCredentials(gateway as Gateway)
+      })
+    },
+
+    /*
+    serializer: {
+      serialize: (data) => {
+        const savedData = {
+          currentGatewayPath: data.currentGatewayPath,
+          credentials: Object.values(data.gateways).map((gateway) => {
+            return gateway instanceof Gateway ? gateway.credentials : null
+          }),
+        }
+        return JSON.stringify(savedData)
+      },
+      deserialize: (data) => {
+        const loadedData = JSON.parse(data)
+        const gateways: Record<string, Gateway> = {}
+        loadedData.credentials.forEach((credentials: GatewayCredentials) => {
+          const gateway = Gateway.fromCredentials(credentials)
+          gateways[gateway.path] = gateway
+        })
+        loadedData.gateways = gateways
+        return loadedData
+      },
+    },
+    */
   },
+
 })
 
 // https://pinia.vuejs.org/cookbook/hot-module-replacement.html
