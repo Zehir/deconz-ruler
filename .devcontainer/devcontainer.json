@@ -35,7 +35,7 @@
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": [
-		"curl -fsSL https://get.pnpm.io/install.sh | sh -"
+		"curl -fsSL https://get.pnpm.io/install.sh | sh -",
 		"pnpm i"
 	],
 
