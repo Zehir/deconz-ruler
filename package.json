@@ -44,7 +44,7 @@
     "https-localhost": "^4.7.1",
     "markdown-it-link-attributes": "^4.0.0",
     "markdown-it-prism": "^2.2.4",
-    "pnpm": "^7.0.1",
+    "pnpm": "^7.1.5",
     "sass": "^1.52.1",
     "typescript": "^4.6.4",
     "unplugin-auto-import": "^0.7.1",
