@@ -111,30 +111,6 @@ export const useGatewaysStore = defineStore('gateways', () => {
         store.gateways[key] = Gateway.fromCredentials(gateway as Gateway)
       })
     },
-
-    /*
-    serializer: {
-      serialize: (data) => {
-        const savedData = {
-          currentGatewayPath: data.currentGatewayPath,
-          credentials: Object.values(data.gateways).map((gateway) => {
-            return gateway instanceof Gateway ? gateway.credentials : null
-          }),
-        }
-        return JSON.stringify(savedData)
-      },
-      deserialize: (data) => {
-        const loadedData = JSON.parse(data)
-        const gateways: Record<string, Gateway> = {}
-        loadedData.credentials.forEach((credentials: GatewayCredentials) => {
-          const gateway = Gateway.fromCredentials(credentials)
-          gateways[gateway.path] = gateway
-        })
-        loadedData.gateways = gateways
-        return loadedData
-      },
-    },
-    */
   },
 
 })
