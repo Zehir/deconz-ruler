@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', () => {
   /**
-   * Current name of the user.
+   * UI
    */
   const showSidebar = ref(false)
 
