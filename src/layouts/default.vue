@@ -2,7 +2,7 @@
 const drawer = ref(false)
 const items = ref([
   { text: 'Home', icon: 'mdi-home', to: '/' },
-  { text: 'Discovery', icon: 'mdi-router-wireless', to: '/gateway/discovery' },
+  { text: 'Gateways', icon: 'mdi-router-wireless', to: '/gateway' },
 ])
 </script>
 
