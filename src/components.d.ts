@@ -6,10 +6,11 @@ import '@vue/runtime-core'
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./components/Counter.vue')['default']
+    FormGateway: typeof import('./components/form/form-gateway.vue')['default']
+    NavSidebar: typeof import('./components/navigation/nav-sidebar.vue')['default']
+    NavTopbar: typeof import('./components/navigation/nav-topbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Sidebar: typeof import('./components/Sidebar.vue')['default']
-    Topbar: typeof import('./components/Topbar.vue')['default']
   }
 }
 

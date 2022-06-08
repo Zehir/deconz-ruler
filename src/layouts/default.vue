@@ -1,7 +1,7 @@
 <template>
   <!-- Navigation -->
-  <Sidebar />
-  <Topbar />
+  <nav-sidebar />
+  <nav-topbar />
   <!-- Sizes your content based upon application components -->
   <v-main>
     <!-- Provides the application the proper gutter -->
