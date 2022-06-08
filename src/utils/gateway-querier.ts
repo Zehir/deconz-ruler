@@ -1,15 +1,17 @@
+import axios, { AxiosError } from 'axios'
 import type { AxiosRequestConfig } from 'axios'
-import axios from 'axios'
 import type * as Deconz from '~/interfaces/deconz'
+import { Gateway } from '~/interfaces/deconz'
 
 export class GatewayQuerier {
   private credentials: Deconz.GatewayCredentials
 
   public static DiscoveryURL = 'https://phoscon.de/discover'
+  public static DefaultUsername = 'delight'
+  public static DefaultPassword = 'delight'
 
   public urls = {
-    protocol: () => `http${this.credentials.secured ? 's' : ''}://`,
-    base: () => `${this.urls.protocol()}${this.credentials.ip}:${this.credentials.port}/api`,
+    base: () => `${Gateway.getURI(this.credentials.secured, this.credentials.ip, this.credentials.port)}/api`,
     baseAuth: () => `${this.urls.base()}/${this.credentials.apiKey}`,
     baseNoUser: () => `${this.urls.base()}/<nouser>`,
     config: () => `${this.urls.baseAuth()}/config`,
@@ -18,13 +20,8 @@ export class GatewayQuerier {
 
   constructor(credentials: Deconz.GatewayCredentials) {
     this.credentials = credentials
-    const invalid = [undefined, '', 0]
-
-    if (invalid.includes(this.credentials.ip))
+    if ([undefined, ''].includes(this.credentials.ip))
       throw new Error('Gateway ip is undefined.')
-
-    if (invalid.includes(this.credentials.port))
-      throw new Error('Gateway port is undefined.')
 
     if (this.credentials.apiKey === undefined)
       this.credentials.apiKey = '<nouser>'
@@ -35,6 +32,29 @@ export class GatewayQuerier {
 
   public async getAnonymousConfig(): Promise<Deconz.AnonymousConfig | undefined> {
     return GatewayQuerier.getData(this.urls.anonymousConfig())
+  }
+
+  public async getConfig(): Promise<Deconz.Config | undefined> {
+    return GatewayQuerier.getData(this.urls.config())
+  }
+
+  public async getAPIKeyUsingPassword(password: string) {
+    const result = await GatewayQuerier.getData(this.urls.base(), {
+      method: 'POST',
+      data: {
+        devicetype: 'Deconz-Ruler',
+        login: GatewayQuerier.DefaultUsername,
+      },
+      auth: {
+        username: GatewayQuerier.DefaultUsername,
+        password,
+      },
+    })
+
+    if (Array.isArray(result) && result.length === 1 && result[0].success && result[0].success.username) {
+      this.credentials.apiKey = result[0].success.username
+      return this.credentials.apiKey
+    }
   }
 
   public static async getDiscovery(): Promise<Deconz.PhosconDiscoveryEntry[] | undefined> {

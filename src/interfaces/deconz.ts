@@ -5,20 +5,20 @@ export class Gateway {
 
   constructor(id: string, ip: string, port: number) {
     this.id = id
+    this.secured = false
     this.ip = ip
     this.port = port
     this.apiKey = '<nouser>'
-    this.secured = false
     this.state = 'unknown'
     this.isValid = false
   }
 
-  public get path(): string {
-    return Gateway.getPath(this.secured, this.ip, this.port)
+  public get uri(): string {
+    return Gateway.getURI(this.secured, this.ip, this.port)
   }
 
-  public static getPath(secured: boolean, ip: string, port: number): string {
-    return `${secured ? 'https' : 'http'}://${ip}:${port}`
+  public static getURI(secured: boolean, ip: string, port: number): string {
+    return `${secured === true ? 'https' : 'http'}://${ip}${isNaN(port) ? '' : `:${port}`}`
   }
 
   public static fromCredentials(credentials: GatewayCredentials): Gateway {
@@ -33,12 +33,11 @@ export class Gateway {
   public get credentials() {
     return {
       id: this.id,
+      secured: this.secured,
       ip: this.ip,
       port: this.port,
-      name: this.name,
       ws_port: this.ws_port,
       apiKey: this.apiKey,
-      secured: this.secured,
     }
   }
 }
@@ -74,4 +73,9 @@ export interface AnonymousConfig {
   replacesbridgeid: string
   starterkitid: string
   swversion: string
+}
+
+export interface Config extends AnonymousConfig {
+  UTC: string
+  websocketport: number
 }

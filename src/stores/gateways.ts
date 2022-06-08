@@ -21,7 +21,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
       if (discover) {
         logs.value = `Found ${discover.length} gateways.`
         discover.forEach((element) => {
-          const path = Gateway.getPath(element.internalipaddress, element.internalport)
+          const path = Gateway.getURI(false, element.internalipaddress, element.internalport)
           // Check if gateway is already known.
           if (gateways[path] && gateways[path].isValid === false) {
             // Update the gateway.
@@ -71,14 +71,14 @@ export const useGatewaysStore = defineStore('gateways', () => {
       const config = await querrier.getAnonymousConfig()
 
       if (config !== undefined) {
-        if (gateways[gateway.path] && gateways[gateway.path].isValid === false) {
+        if (gateways[gateway.uri] && gateways[gateway.uri].isValid === false) {
           // Update the gateway.
-          gateways[gateway.path].name = config.name
+          gateways[gateway.uri].name = config.name
         }
         else {
           gateway.id = config.bridgeid
           gateway.name = config.name
-          gateways[gateway.path] = gateway
+          gateways[gateway.uri] = gateway
         }
       }
     }

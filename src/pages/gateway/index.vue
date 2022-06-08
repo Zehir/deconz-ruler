@@ -10,7 +10,7 @@ const { t } = useI18n()
 
 <template>
   <v-container fluid>
-    <v-card class="d-flex pa-2" outlined tile>
+    <v-card class="pa-2" outlined tile>
       <div>
         <p>Gateway Discovery</p>
         <v-btn @click.prevent="Gateways.scanGateways">
@@ -19,26 +19,53 @@ const { t } = useI18n()
         <p>{{ logs }}</p>
       </div>
     </v-card>
-    <v-card
-      v-for="(gateway, index) in gateways"
-      :key="index"
-      width="400"
-      loading="true"
-    >
-      <v-card-title>{{ gateway.name }} ({{ gateway.id?.slice(-6) }})</v-card-title>
-      <v-card-subtitle>Path : {{ gateway.path }}</v-card-subtitle>
-      <v-card-actions>
-        <v-btn
-          elevation="2"
-          @click="Gateways.setCurrentGateway(gateway.path)"
-        >
-          {{ t('button.select') }}
-        </v-btn>
 
-        <p>
-          {{ gateways.currentGateway }}
-        </p>
-      </v-card-actions>
+    <br>
+
+    <v-card class="pa-2" outlined tile>
+      <form-gateway />
+    </v-card>
+
+    <br>
+
+    <v-card class="pa-2" outlined tile>
+      <v-card-header>
+        <v-card-header-text>
+          <v-card-title class="text-h5">
+            Gateways
+          </v-card-title>
+        </v-card-header-text>
+      </v-card-header>
+
+      <v-card-content class="py-1">
+        <v-table>
+          <thead>
+            <tr>
+              <th class="text-left">
+                Name
+              </th>
+              <th class="text-left">
+                ID
+              </th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(gateway, index) in gateways" :key="index">
+              <td>{{ gateway.name }}</td>
+              <td>{{ gateway.id }}</td>
+              <td>
+                <v-btn
+                  elevation="2"
+                  @click="Gateways.setCurrentGateway(gateway.path)"
+                >
+                  {{ t('button.select') }}
+                </v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </v-table>
+      </v-card-content>
     </v-card>
   </v-container>
 </template>
