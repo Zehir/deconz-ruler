@@ -14,11 +14,11 @@ export class Gateway {
   }
 
   public get path(): string {
-    return Gateway.getPath(this.ip, this.port)
+    return Gateway.getPath(this.secured, this.ip, this.port)
   }
 
-  public static getPath(ip: string, port: number): string {
-    return `${ip}:${port}`
+  public static getPath(secured: boolean, ip: string, port: number): string {
+    return `${secured ? 'https' : 'http'}://${ip}:${port}`
   }
 
   public static fromCredentials(credentials: GatewayCredentials): Gateway {
