@@ -4,9 +4,10 @@ import { Gateway } from '~/interfaces/deconz'
 import { GatewayQuerier } from '~/utils/gateway-querier'
 
 export const useGatewaysStore = defineStore('gateways', () => {
-  const gateways: Record<string, Gateway> = reactive({})
-  const currentGatewayPath = ref('')
-  const currentGateway = computed<Gateway>(() => gateways[currentGatewayPath.value])
+  const all: Record<string, Gateway> = reactive({})
+  const currentURI = ref('')
+  const current = computed<Gateway>(() => all[currentURI.value])
+  const editorDialog = ref(false)
 
   const logs = ref('')
 
@@ -23,14 +24,14 @@ export const useGatewaysStore = defineStore('gateways', () => {
         discover.forEach((element) => {
           const path = Gateway.getURI(false, element.internalipaddress, element.internalport)
           // Check if gateway is already known.
-          if (gateways[path] && gateways[path].isValid === false) {
+          if (all[path] && all[path].isValid === false) {
             // Update the gateway.
-            gateways[path].ip = element.internalipaddress
-            gateways[path].name = element.name
+            all[path].ip = element.internalipaddress
+            all[path].name = element.name
           }
           else {
-            gateways[path] = new Gateway(element.id, element.internalipaddress, element.internalport)
-            gateways[path].name = element.name
+            all[path] = new Gateway(element.id, element.internalipaddress, element.internalport)
+            all[path].name = element.name
           }
         })
       }
@@ -60,7 +61,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
 
     await Promise.all(Guesses.map(FindGatewayAt))
 
-    logs.value = `Found ${Object.keys(gateways).length} gateways.`
+    logs.value = `Found ${Object.keys(all).length} gateways.`
   }
 
   async function FindGatewayAt(guess: { ip: string; port: number }): Promise<void> {
@@ -71,14 +72,14 @@ export const useGatewaysStore = defineStore('gateways', () => {
       const config = await querrier.getAnonymousConfig()
 
       if (config !== undefined) {
-        if (gateways[gateway.uri] && gateways[gateway.uri].isValid === false) {
+        if (all[gateway.uri] && all[gateway.uri].isValid === false) {
           // Update the gateway.
-          gateways[gateway.uri].name = config.name
+          all[gateway.uri].name = config.name
         }
         else {
           gateway.id = config.bridgeid
           gateway.name = config.name
-          gateways[gateway.uri] = gateway
+          all[gateway.uri] = gateway
         }
       }
     }
@@ -87,15 +88,16 @@ export const useGatewaysStore = defineStore('gateways', () => {
     }
   }
 
-  function setCurrentGateway(path: string) {
-    currentGatewayPath.value = path
+  function setCurrentGateway(uri: string) {
+    currentURI.value = uri
   }
 
   return {
-    gateways,
+    all,
     logs,
-    currentGatewayPath,
-    currentGateway,
+    currentURI,
+    current,
+    editorDialog,
     scanGateways,
     setCurrentGateway,
   }
@@ -103,12 +105,12 @@ export const useGatewaysStore = defineStore('gateways', () => {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   persist: {
     paths: [
-      'gateways',
-      'currentGatewayPath',
+      'all',
+      'currentURI',
     ],
     afterRestore: ({ store }) => {
-      Object.entries(store.gateways).forEach(([key, gateway]) => {
-        store.gateways[key] = Gateway.fromCredentials(gateway as Gateway)
+      Object.entries(store.all).forEach(([key, gateway]) => {
+        store.all[key] = Gateway.fromCredentials(gateway as Gateway)
       })
     },
   },

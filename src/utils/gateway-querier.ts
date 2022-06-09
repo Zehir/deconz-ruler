@@ -13,7 +13,7 @@ export class GatewayQuerier {
   public urls = {
     base: () => `${Gateway.getURI(this.credentials.secured, this.credentials.ip, this.credentials.port)}/api`,
     baseAuth: () => `${this.urls.base()}/${this.credentials.apiKey}`,
-    baseNoUser: () => `${this.urls.base()}/<nouser>`,
+    baseNoUser: () => `${this.urls.base()}/`,
     config: () => `${this.urls.baseAuth()}/config`,
     anonymousConfig: () => `${this.urls.baseNoUser()}/config`,
   }
@@ -24,7 +24,7 @@ export class GatewayQuerier {
       throw new Error('Gateway ip is undefined.')
 
     if (this.credentials.apiKey === undefined)
-      this.credentials.apiKey = '<nouser>'
+      this.credentials.apiKey = ''
 
     if (this.credentials.secured === undefined)
       this.credentials.secured = false
@@ -38,7 +38,7 @@ export class GatewayQuerier {
     return GatewayQuerier.getData(this.urls.config())
   }
 
-  public async getAPIKeyUsingPassword(password: string) {
+  public async getAPIKeyUsingPassword(password: string): Promise<string | undefined> {
     const result = await GatewayQuerier.getData(this.urls.base(), {
       method: 'POST',
       data: {

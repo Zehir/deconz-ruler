@@ -8,7 +8,7 @@ export class Gateway {
     this.secured = false
     this.ip = ip
     this.port = port
-    this.apiKey = '<nouser>'
+    this.apiKey = ''
     this.state = 'unknown'
     this.isValid = false
   }
@@ -18,7 +18,7 @@ export class Gateway {
   }
 
   public static getURI(secured: boolean, ip: string, port: number): string {
-    return `${secured === true ? 'https' : 'http'}://${ip}${isNaN(port) ? '' : `:${port}`}`
+    return `${secured === true ? 'https' : 'http'}://${ip}${isNaN(port) || port === null ? '' : `:${port}`}`
   }
 
   public static fromCredentials(credentials: GatewayCredentials): Gateway {

@@ -6,8 +6,11 @@ export const useAppStore = defineStore('app', () => {
    */
   const showSidebar = ref(false)
 
+  const dialogGatewayEditor = ref(false)
+
   return {
     showSidebar,
+    dialogGatewayEditor,
   }
 })
 

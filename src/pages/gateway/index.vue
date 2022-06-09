@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
+import type { Gateway } from '~/interfaces/deconz'
+import { useAppStore } from '~/stores/app'
 import { useGatewaysStore } from '~/stores/gateways'
 
+const App = useAppStore()
 const Gateways = useGatewaysStore()
-const { gateways, logs } = storeToRefs(Gateways)
+const { dialogGatewayEditor } = storeToRefs(App)
+const { all, currentURI, logs } = storeToRefs(Gateways)
 
 const { t } = useI18n()
+
+async function connectToGateway(gateway: Gateway) {
+  currentURI.value = gateway.uri
+  dialogGatewayEditor.value = true
+}
 </script>
 
 <template>
+  <v-dialog v-model="dialogGatewayEditor">
+    <form-gateway />
+  </v-dialog>
+
   <v-container fluid>
     <v-card class="pa-2" outlined tile>
       <div>
@@ -18,12 +31,6 @@ const { t } = useI18n()
         </v-btn>
         <p>{{ logs }}</p>
       </div>
-    </v-card>
-
-    <br>
-
-    <v-card class="pa-2" outlined tile>
-      <form-gateway />
     </v-card>
 
     <br>
@@ -47,19 +54,27 @@ const { t } = useI18n()
               <th class="text-left">
                 ID
               </th>
+              <th class="text-left">
+                Address
+              </th>
+              <th class="text-left">
+                State
+              </th>
               <th />
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(gateway, index) in gateways" :key="index">
+            <tr v-for="(gateway, index) in all" :key="index">
               <td>{{ gateway.name }}</td>
-              <td>{{ gateway.id }}</td>
+              <td>...{{ gateway.id.slice(-6) }}</td>
+              <td>{{ gateway.uri }}</td>
+              <td>{{ gateway.state }}</td>
               <td>
                 <v-btn
                   elevation="2"
-                  @click="Gateways.setCurrentGateway(gateway.path)"
+                  @click="connectToGateway(gateway)"
                 >
-                  {{ t('button.select') }}
+                  {{ t('button.connect') }}
                 </v-btn>
               </td>
             </tr>
@@ -67,5 +82,7 @@ const { t } = useI18n()
         </v-table>
       </v-card-content>
     </v-card>
+    {{ all }}
+    {{ currentURI }}
   </v-container>
 </template>
