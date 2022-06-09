@@ -9,9 +9,7 @@ import { GatewayQuerier } from '~/utils/gateway-querier'
 const App = useAppStore()
 const Gateways = useGatewaysStore()
 const { dialogGatewayEditor } = storeToRefs(App)
-const { all, current, currentURI, logs } = storeToRefs(Gateways)
-
-const { t } = useI18n()
+const { all, current, currentURI } = storeToRefs(Gateways)
 
 const address = ref('http://localhost:80')
 const apiKey = ref('')
