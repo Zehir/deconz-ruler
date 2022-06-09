@@ -102,6 +102,7 @@ onBeforeMount(() => {
   <v-card
     class="mx-auto"
     max-width="500"
+    min-width="400"
   >
     <v-form>
       <v-card-text>
@@ -111,7 +112,7 @@ onBeforeMount(() => {
           placeholder="http://localhost:80"
           hint="IP-address and port of your deconz instance. Example: 127.0.0.1 or 192.168.1.100"
         />
-        <v-divider />
+
         <v-text-field
           v-model="apiKey"
           label="API Key"
@@ -142,6 +143,7 @@ onBeforeMount(() => {
               </v-btn>
             </v-expansion-panel-text>
           </v-expansion-panel>
+          <!--
           <v-expansion-panel>
             <v-expansion-panel-title>
               Acquire API key using unlocked gateway
@@ -150,6 +152,7 @@ onBeforeMount(() => {
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
             </v-expansion-panel-text>
           </v-expansion-panel>
+          -->
         </v-expansion-panels>
       </v-card-text>
     </v-form>
@@ -172,11 +175,4 @@ onBeforeMount(() => {
       </v-btn>
     </v-card-actions>
   </v-card>
-
-  <v-container>
-    {{ JSON.stringify({
-      address,
-      apiKey,
-    }) }}
-  </v-container>
 </template>
