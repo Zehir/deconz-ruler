@@ -34,8 +34,12 @@ export class GatewayQuerier {
     return GatewayQuerier.getData(this.urls.anonymousConfig())
   }
 
-  public async getConfig(): Promise<Deconz.Config | undefined> {
+  public async getConfig(): Promise<Deconz.Config | Deconz.AnonymousConfig | undefined> {
     return GatewayQuerier.getData(this.urls.config())
+  }
+
+  public static isAuthenticatedConfig(config: Deconz.Config | Deconz.AnonymousConfig): config is Deconz.Config {
+    return 'uuid' in config
   }
 
   public async getAPIKeyUsingPassword(password: string): Promise<string | undefined> {

@@ -1,7 +1,14 @@
-export interface Gateway extends GatewayCredentials {}
+import axios from 'axios'
+import { GatewayQuerier } from '~/utils/gateway-querier'
+
+export interface Gateway extends GatewayCredentials {
+
+}
+
+/*
 export class Gateway {
   isValid: boolean
-  state: 'unknown' | 'querying' | 'missingApiKey' | 'checkingApiKey' | 'ok' | 'error'
+  state: 'unknown' | 'unreachable' | 'querying' | 'missingApiKey' | 'invalidApiKey' | 'ready'
 
   constructor(id: string, ip: string, port: number) {
     this.id = id
@@ -15,6 +22,20 @@ export class Gateway {
 
   public get uri(): string {
     return Gateway.getURI(this.secured, this.ip, this.port)
+  }
+
+  public set uri(uri: string) {
+    const url = new URL(uri)
+    switch (url.protocol) {
+      case 'http':
+        this.secured = false
+        break
+      case 'https':
+        this.secured = true
+        break
+    }
+    this.ip = url.hostname
+    this.port = parseInt(url.port)
   }
 
   public static getURI(secured: boolean, ip: string, port: number): string {
@@ -40,28 +61,46 @@ export class Gateway {
       apiKey: this.apiKey,
     }
   }
+
+  public async queryState() {
+    this.state = 'querying'
+    this.isValid = false
+    const querier = new GatewayQuerier(this.credentials)
+    try {
+      const config = await querier.getConfig()
+      if (config) {
+        this.id = config.bridgeid
+        this.name = config.name
+        if (GatewayQuerier.isAuthenticatedConfig(config))
+          this.state = 'ready'
+        else if (this.apiKey.length > 0)
+          this.state = 'invalidApiKey'
+        else
+          this.state = 'missingApiKey'
+      }
+    }
+    catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        if (error.response?.status === 403)
+          this.state = 'invalidApiKey'
+        else if (error.code === 'ECONNABORTED')
+          this.state = 'unreachable'
+      }
+      else { this.state = 'unknown' }
+    }
+    finally {
+      this.isValid = this.state === 'ready'
+    }
+  }
 }
 
-export interface GatewayCredentials {
-  id: string
-  name?: string
-  ip: string
-  port: number
-  ws_port?: number
-  apiKey: string
-  secured: boolean
-}
+*/
 
-export interface PhosconDiscoveryEntry {
-  id: string
-  internalipaddress: string
-  macaddress: string
-  internalport: number
-  name: string
-  publicipaddress: string
-}
+export const DiscoveryURL = 'https://phoscon.de/discover'
+export const DefaultUsername = 'delight'
+export const DefaultPassword = 'delight'
 
-export interface AnonymousConfig {
+export interface Config {
   apiversion: string
   bridgeid: string
   datastoreversion: string
@@ -70,12 +109,8 @@ export interface AnonymousConfig {
   mac: string
   modelid: string
   name: string
-  replacesbridgeid: string
+  replacesbridgeid: string | null
   starterkitid: string
   swversion: string
 }
 
-export interface Config extends AnonymousConfig {
-  UTC: string
-  websocketport: number
-}

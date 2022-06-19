@@ -23,8 +23,9 @@ const acquireUsingPassword = reactive({
 })
 
 function getGatewayFromForm() {
-  const url = new URL(address.value)
-  return new Gateway('Unknown', url.hostname, parseInt(url.port))
+  const gateway = new Gateway('Unknown', '', NaN)
+  gateway.uri = address.value
+  return gateway
 }
 
 async function acquireAPIKeyUsingPassword() {
@@ -69,7 +70,7 @@ async function saveAndConnect() {
     current.value.ip = gateway.ip
     current.value.port = gateway.port
     current.value.apiKey = gateway.apiKey
-    current.value.state = 'ok'
+    current.value.state = 'ready'
     current.value.isValid = true
     current.value.id = authConfig.bridgeid
     current.value.name = authConfig.name
@@ -81,10 +82,6 @@ async function saveAndConnect() {
       currentURI.value = current.value.uri
       delete all.value[oldURI]
     }
-    /*
-    all.value[gateway.uri] = gateway
-    currentURI.value = gateway.uri
-    */
 
     dialogGatewayEditor.value = false
   }
