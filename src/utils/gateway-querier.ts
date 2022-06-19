@@ -1,9 +1,10 @@
 import axios from 'axios'
 import type { AxiosRequestConfig } from 'axios'
 import type * as Deconz from '~/interfaces/deconz'
-import { Gateway } from '~/interfaces/deconz'
+// import { Gateway } from '~/interfaces/deconz'
 
 export class GatewayQuerier {
+  /*
   private credentials: Deconz.GatewayCredentials
 
   public static DiscoveryURL = 'https://phoscon.de/discover'
@@ -82,4 +83,5 @@ export class GatewayQuerier {
     if (req.status === 200 && req.data)
       return req.data
   }
+  */
 }

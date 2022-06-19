@@ -1,11 +1,8 @@
-import axios from 'axios'
-import { GatewayQuerier } from '~/utils/gateway-querier'
-
+/*
 export interface Gateway extends GatewayCredentials {
 
 }
 
-/*
 export class Gateway {
   isValid: boolean
   state: 'unknown' | 'unreachable' | 'querying' | 'missingApiKey' | 'invalidApiKey' | 'ready'

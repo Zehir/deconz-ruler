@@ -32,12 +32,11 @@ const loading = ref(true)
     <v-card-text>
       <v-text-field
         v-model="credentials.apiKey"
-        label="Regular"
+        label="API Key"
       />
-      Lorem
     </v-card-text>
     <v-card-actions>
-      <v-btn>Toto</v-btn>
+      <v-btn>Save</v-btn>
     </v-card-actions>
   </v-card>
 </template>
