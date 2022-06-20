@@ -13,15 +13,6 @@ const editMode = ref(false)
 const cardClick = () => {
   console.log('cardClick')
 }
-
-const editButton = () => {
-  editMode.value = !editMode.value
-  console.log('cardEdit')
-}
-
-const deleteURI = (index: number) => {
-  console.log(credentials.value.URIs)
-}
 </script>
 
 <template>
@@ -42,8 +33,8 @@ const deleteURI = (index: number) => {
         <v-card-title>
           {{ credentials.name }}
           <v-spacer />
-          <v-btn @click.stop="editButton">
-            {{ editMode ? "Save" : "Edit" }}
+          <v-btn @click.stop="editMode = !editMode">
+            {{ editMode ? "Done" : "Edit" }}
           </v-btn>
         </v-card-title>
         <v-card-subtitle>{{ credentials.id }}</v-card-subtitle>
@@ -68,7 +59,7 @@ const deleteURI = (index: number) => {
           >
             <td v-if="editMode">
               <v-text-field v-model="uri.address" />
-              <v-btn @click.stop="deleteURI(index)">
+              <v-btn @click.stop="credentials.URIs.splice(index, 1)">
                 Delete
               </v-btn>
             </td>
