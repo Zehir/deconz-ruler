@@ -1,13 +1,14 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-
-import { useGatewayCredentials } from '~/composables/gateway-credentials'
+import type { GatewayCredentials } from '~/interfaces/deconz'
 
 export const useGatewaysStore = defineStore('gateways', () => {
-  const credentials = reactive(useGatewayCredentials())
+  const credentials = ref<GatewayCredentials[]>([])
 
   return { credentials }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
+
+  // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473
 
   persist: {
     paths: [

@@ -1,9 +1,9 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
-import type { useGatewayCredentials } from './gateway-credentials'
-import { getURI } from './gateway-uri'
-import type { Config } from '~/interfaces/deconz'
+import equal from 'fast-deep-equal/es6'
+import type { Config, GatewayCredentials, GatewayURI } from '~/interfaces/deconz'
 import { DiscoveryURL } from '~/interfaces/deconz'
+import { useGatewaysStore } from '~/stores/gateways'
 
 export interface PhosconDiscoveryEntry {
   id: string
@@ -14,8 +14,10 @@ export interface PhosconDiscoveryEntry {
   publicipaddress: string
 }
 
-export function useGatewayScanner(credentials: ReturnType<typeof useGatewayCredentials>) {
+export function useGatewayScanner() {
+  const credentials = useGatewaysStore().credentials
   const logs = ref('')
+  const found = ref(0)
   let _axiosClient: AxiosInstance | null = null
 
   const axiosClient = function () {
@@ -29,17 +31,27 @@ export function useGatewayScanner(credentials: ReturnType<typeof useGatewayCrede
     return _axiosClient
   }
 
-  function updateCredentials(id: string, name: string, uri: string) {
-    let cred = credentials.get(id)
-    if (cred === undefined)
-      cred = credentials.add(id, name)
-    else
+  function updateCredentials(id: string, name: string, uri: GatewayURI) {
+    let cred: GatewayCredentials | undefined = credentials.find(cred => cred.id === id)
+    if (cred === undefined) {
+      cred = {
+        id,
+        name,
+        apiKey: '',
+        URIs: [],
+      }
+      credentials.push(cred)
+    }
+
+    if (cred.name !== name)
       cred.name = name
-    if (!cred.URIs.has(uri))
-      cred.URIs.add(uri)
+
+    if (cred.URIs.find(_uri => equal(_uri, uri)) === undefined)
+      cred.URIs.push(uri)
   }
 
   async function scan() {
+    found.value = 0
     logs.value = 'Scanning gateways...'
 
     logs.value = `Fetching data from '${DiscoveryURL}'.`
@@ -47,10 +59,17 @@ export function useGatewayScanner(credentials: ReturnType<typeof useGatewayCrede
     try {
       const discover = await axiosClient().get<PhosconDiscoveryEntry[]>(DiscoveryURL)
       if (discover.data) {
-        logs.value = `Found ${discover.data.length} gateways.`
+        found.value += discover.data.length
+        logs.value = `Found ${found.value} gateways.`
         discover.data.forEach((element) => {
-          updateCredentials(element.id, element.name, getURI('http', element.internalipaddress, element.internalport))
-          updateCredentials(element.id, element.name, getURI('http', element.publicipaddress, element.internalport))
+          updateCredentials(element.id, element.name, {
+            type: 'api',
+            address: `http://${element.internalipaddress}:${element.internalport}`,
+          })
+          updateCredentials(element.id, element.name, {
+            type: 'api',
+            address: `http://${element.publicipaddress}:${element.internalport}`,
+          })
         })
       }
       else { logs.value = `No data fetched from '${DiscoveryURL}'.` }
@@ -77,16 +96,18 @@ export function useGatewayScanner(credentials: ReturnType<typeof useGatewayCrede
 
     await Promise.all(Guesses.map(FindGatewayAt))
 
-    logs.value = `Found ${Object.keys(credentials.all).length} gateways.`
+    logs.value = `Found ${found.value} gateways.`
   }
 
   async function FindGatewayAt(guess: { ip: string; port: number }): Promise<void> {
     try {
-      logs.value = `Trying to find gateway at '${guess.ip}:${guess.port}'.`
-      const request = await axiosClient().get<Config>(`http://${guess.ip}:${guess.port}/api/config`)
+      found.value += 1
+      const address = `http://${guess.ip}:${guess.port}`
+      logs.value = `Trying to find gateway at '${address}'.`
+      const request = await axiosClient().get<Config>(`${address}/api/config`)
       if (request.data) {
-        logs.value = `Found gateway ${request.data.name} at '${guess.ip}:${guess.port}'.`
-        updateCredentials(request.data.bridgeid, request.data.name, getURI('http', guess.ip, guess.port))
+        logs.value = `Found gateway ${request.data.name} at '${address}'.`
+        updateCredentials(request.data.bridgeid, request.data.name, { type: 'api', address })
       }
     }
     catch (error) {
