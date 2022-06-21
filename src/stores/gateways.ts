@@ -1,18 +1,36 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
+import type { Ref } from 'vue'
 import type { GatewayCredentials } from '~/interfaces/deconz'
+
+export interface GatewaysState {
+  id: string
+  credentials: Ref<GatewayCredentials>
+}
 
 export const useGatewaysStore = defineStore('gateways', () => {
   const credentials = reactive<Record<string, GatewayCredentials>>({})
+  const data = reactive<Record<string, GatewaysState>>({})
 
-  const data = reactive({})
-
-  /*
-  watch(credentials, (currentValue, oldValue) => {
-    console.log(Object.keys(currentValue).length)
-    console.log('tu')
-    console.log(Object.keys(oldValue).length)
+  watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
+    if (oldValue < currentValue) {
+      // Credentials was added
+      Object.keys(credentials).forEach((id) => {
+        if (!data[id]) {
+          data[id] = {
+            id,
+            credentials: toRef(credentials, id),
+          }
+        }
+      })
+    }
+    else {
+      // Credentials was deleted
+      Object.keys(data).forEach((id) => {
+        if (!credentials[id])
+          delete data[id]
+      })
+    }
   })
-  */
 
   return { credentials, data }
 }, {
@@ -35,4 +53,3 @@ if (import.meta.hot)
 // This will force a webpage refrech on edit
 if (import.meta.hot)
   import.meta.hot.accept(import.meta.hot.invalidate)
-

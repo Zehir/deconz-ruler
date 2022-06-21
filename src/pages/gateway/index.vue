@@ -34,5 +34,6 @@ const { t } = useI18n()
     {{ scanner.logs }}
   </p>
   <p>{{ GatewaysStore.data }}</p>
+  <p>{{ GatewaysStore.credentialsCount }}</p>
   <br>
 </template>
