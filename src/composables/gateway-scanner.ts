@@ -1,7 +1,7 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
 import equal from 'fast-deep-equal/es6'
-import type { Config, GatewayCredentials, GatewayURI } from '~/interfaces/deconz'
+import type { Config, GatewayURI } from '~/interfaces/deconz'
 import { DiscoveryURL } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
 
@@ -32,22 +32,20 @@ export function useGatewayScanner() {
   }
 
   function updateCredentials(id: string, name: string, uri: GatewayURI) {
-    let cred: GatewayCredentials | undefined = credentials.find(cred => cred.id === id)
-    if (cred === undefined) {
-      cred = {
+    if (credentials[id] === undefined) {
+      credentials[id] = {
         id,
         name,
         apiKey: '',
         URIs: [],
       }
-      credentials.push(cred)
     }
 
-    if (cred.name !== name)
-      cred.name = name
+    if (credentials[id].name !== name)
+      credentials[id].name = name
 
-    if (cred.URIs.find(_uri => equal(_uri, uri)) === undefined)
-      cred.URIs.push(uri)
+    if (credentials[id].URIs.find(_uri => equal(_uri, uri)) === undefined)
+      credentials[id].URIs.push(uri)
   }
 
   async function scan() {

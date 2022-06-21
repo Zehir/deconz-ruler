@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GatewayCredentials } from '~/interfaces/deconz'
+import { useGatewaysStore } from '~/stores/gateways'
 
 const props = defineProps<{
   modelValue: GatewayCredentials
@@ -7,20 +8,36 @@ const props = defineProps<{
 
 const credentials = useVModel(props)
 
+const GatewaysStore = useGatewaysStore()
+
 const loading = ref(true)
 const editMode = ref(false)
 
 const cardClick = () => {
   console.log('cardClick')
 }
+
+const addURI = () => {
+  credentials.value.URIs.push({
+    type: 'api',
+    address: '',
+  })
+}
+
+const deleteSelf = () => {
+  delete GatewaysStore.credentials[credentials.value.id]
+}
 </script>
 
 <template>
-  <v-card
-    v-ripple="true"
+  <!--
+    <v-card
+    v-ripple="false"
     tonal
     @click.stop="cardClick"
   >
+  -->
+  <v-card tonal>
     <v-progress-linear
       v-if="loading"
       class="position-absolute"
@@ -33,6 +50,9 @@ const cardClick = () => {
         <v-card-title>
           {{ credentials.name }}
           <v-spacer />
+          <v-btn v-if="editMode" @click.stop="deleteSelf">
+            Delete
+          </v-btn>
           <v-btn @click.stop="editMode = !editMode">
             {{ editMode ? "Done" : "Edit" }}
           </v-btn>
@@ -42,6 +62,12 @@ const cardClick = () => {
     </v-card-header>
 
     <v-card-text>
+      <p v-if="editMode">
+        <v-text-field v-model="credentials.apiKey" label="API Key" />
+      </p>
+      <p v-else>
+        API Key = "{{ credentials.apiKey }}"
+      </p>
       <v-table>
         <thead>
           <tr>
@@ -73,6 +99,14 @@ const cardClick = () => {
                 inline
               />
             </td>
+          </tr>
+          <tr v-if="editMode">
+            <td>
+              <v-btn @click="addURI">
+                Add URI
+              </v-btn>
+            </td>
+            <td />
           </tr>
         </tbody>
       </v-table>

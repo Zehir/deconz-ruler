@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { GatewayCredentials } from '~/composables/gateway-credentials'
 import { useGatewayScanner } from '~/composables/gateway-scanner'
 import { useAppStore } from '~/stores/app'
 import { useGatewaysStore } from '~/stores/gateways'
@@ -19,14 +18,21 @@ const { t } = useI18n()
 
   <v-container fluid>
     <v-row dense>
+      <v-col :cols="12">
+        <p>{{ GatewaysStore.credentials }}</p>
+      </v-col>
       <v-col
-        v-for="index in GatewaysStore.credentials.length" :key="index"
+        v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
         :cols="12"
       >
-        <gateway-credentials v-model="GatewaysStore.credentials[index - 1 ]" />
+        <gateway-credentials v-model="GatewaysStore.credentials[index]" />
       </v-col>
     </v-row>
   </v-container>
-  <p>{{ scanner.logs }}</p>
-  <p>{{ GatewaysStore.credentials }}</p>
+
+  <p v-if="scanner.logs.value.length > 0">
+    {{ scanner.logs }}
+  </p>
+  <p>{{ GatewaysStore.data }}</p>
+  <br>
 </template>
