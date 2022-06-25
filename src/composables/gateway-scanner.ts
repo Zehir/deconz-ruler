@@ -1,6 +1,5 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
-import equal from 'fast-deep-equal/es6'
 import type { Config, GatewayURI } from '~/interfaces/deconz'
 import { DiscoveryURL } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
@@ -44,7 +43,7 @@ export function useGatewayScanner() {
     if (credentials[id].name !== name)
       credentials[id].name = name
 
-    if (credentials[id].URIs.find(_uri => equal(_uri, uri)) === undefined)
+    if (credentials[id].URIs.find(_uri => _uri.type === uri.type && _uri.address === uri.address) === undefined)
       credentials[id].URIs.push(uri)
   }
 
