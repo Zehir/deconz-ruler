@@ -1,8 +1,13 @@
-import JsonViewer from 'vue-json-viewer'
+import JsonViewer from 'vue-json-viewer/ssr.js'
+import 'vue-json-viewer/style.css'
+
 import { type UserModule } from '~/types'
 
-// Setup Pinia
-// https://pinia.esm.dev/
-export const install: UserModule = ({ app }) => {
+// Setup Json Viewer
+// https://www.npmjs.com/package/vue-json-viewer
+export const install: UserModule = ({ isClient, app }) => {
+  if (!isClient)
+    return
+
   app.use(JsonViewer)
 }
