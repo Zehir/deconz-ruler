@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { GatewayCredentials } from '~/interfaces/deconz'
+import { GatewayURITypes } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
 
 const props = defineProps<{
@@ -10,7 +11,7 @@ const credentials = useVModel(props)
 
 const GatewaysStore = useGatewaysStore()
 
-const loading = ref(true)
+const loading = ref(false)
 const editMode = ref(false)
 
 const cardClick = () => {
@@ -84,6 +85,7 @@ const deleteSelf = () => {
             v-for="(uri, index) in credentials.URIs" :key="index"
           >
             <td v-if="editMode">
+              <v-select v-model="uri.type" :items="GatewayURITypes" />
               <v-text-field v-model="uri.address" />
               <v-btn @click.stop="credentials.URIs.splice(index, 1)">
                 Delete

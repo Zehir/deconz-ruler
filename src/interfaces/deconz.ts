@@ -2,6 +2,8 @@ export const DiscoveryURL = 'https://phoscon.de/discover'
 export const DefaultUsername = 'delight'
 export const DefaultPassword = 'delight'
 
+export const GatewayURITypes = ['api', 'websocket'] as const
+
 export interface GatewayCredentials {
   id: string
   name: string
@@ -10,7 +12,7 @@ export interface GatewayCredentials {
 }
 
 export interface GatewayURI {
-  type: 'api' | 'websocket'
+  type: typeof GatewayURITypes[number]
   address: string
 }
 

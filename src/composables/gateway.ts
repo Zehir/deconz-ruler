@@ -32,11 +32,22 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
     })
   }
 
-  // Pooling
+  // Uris
   const gatewayAPIUri = computed(() => {
-    return `${credentials.value.URIs[0].address}/api/${credentials.value.apiKey}/`
+    const uri = credentials.value.URIs.find(_uri => _uri.type === 'api')
+    if (uri === undefined)
+      return ''
+    return `${uri.address}/api/${credentials.value.apiKey}/`
   })
 
+  const gatewayWebsocketUri = computed(() => {
+    const uri = credentials.value.URIs.find(_uri => _uri.type === 'websocket')
+    if (uri === undefined)
+      return ''
+    return uri.address
+  })
+
+  // Pooling
   const useGatewayFetch = createFetch({
     baseUrl: gatewayAPIUri,
     options: {
@@ -55,10 +66,6 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }, 5000, { immediateCallback: true })
 
   // Websocket
-  const gatewayWebsocketUri = computed(() => {
-    return 'ws://localhost:443'
-  })
-
   const websocket = useWebSocket(gatewayWebsocketUri.value, {
     autoReconnect: true,
     heartbeat: {
