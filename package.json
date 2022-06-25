@@ -20,13 +20,13 @@
     "pinia": "^2.0.14",
     "pinia-plugin-persistedstate": "^1.5.2",
     "prism-theme-vars": "^0.2.2",
-    "vite-plugin-vuetify": "1.0.0-alpha.11",
+    "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue": "^3.2.33",
     "vue-demi": "^0.12.5",
     "vue-i18n": "9.2.0-beta.35",
     "vue-json-viewer": "^3.0.4",
     "vue-router": "^4.0.15",
-    "vuetify": "^3.0.0-beta.2"
+    "vuetify": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.23.0",
