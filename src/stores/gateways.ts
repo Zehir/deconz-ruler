@@ -1,33 +1,29 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { Ref } from 'vue'
+import { useGateway } from '~/composables/gateway'
 import type { GatewayCredentials } from '~/interfaces/deconz'
 
 export interface GatewaysState {
-  id: string
   credentials: Ref<GatewayCredentials>
 }
 
 export const useGatewaysStore = defineStore('gateways', () => {
   const credentials = reactive<Record<string, GatewayCredentials>>({})
-  const data = reactive<Record<string, GatewaysState>>({})
+  const data = reactive<Record<string, ReturnType<typeof useGateway>>>({})
 
   watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
     if (oldValue < currentValue) {
       // Credentials was added
       Object.keys(credentials).forEach((id) => {
-        if (!data[id]) {
-          data[id] = {
-            id,
-            credentials: toRef(credentials, id),
-          }
-        }
+        if (!data[id])
+          data[id] = useGateway(toRef(credentials, id))
       })
     }
     else {
       // Credentials was deleted
       Object.keys(data).forEach((id) => {
         if (!credentials[id])
-          delete data[id]
+          data[id].destroy()
       })
     }
   })

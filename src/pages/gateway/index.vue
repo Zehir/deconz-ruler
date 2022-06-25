@@ -19,13 +19,24 @@ const { t } = useI18n()
   <v-container fluid>
     <v-row dense>
       <v-col :cols="12">
-        <p>{{ GatewaysStore.credentials }}</p>
+        <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
       </v-col>
       <v-col
         v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
         :cols="12"
       >
         <gateway-credentials v-model="GatewaysStore.credentials[index]" />
+        <json-viewer
+          v-if="GatewaysStore.data[index]?.data"
+          :value="GatewaysStore.data[index].data"
+          :expand-depth="0"
+        />
+
+        <json-viewer
+          v-if="GatewaysStore.data[index]"
+          :value="GatewaysStore.data[index].getDataRef('sensors', 2)"
+          :expand-depth="2"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -33,7 +44,6 @@ const { t } = useI18n()
   <p v-if="scanner.logs.value.length > 0">
     {{ scanner.logs }}
   </p>
-  <p>{{ GatewaysStore.data }}</p>
-  <p>{{ GatewaysStore.credentialsCount }}</p>
+
   <br>
 </template>
