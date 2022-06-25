@@ -1,3 +1,4 @@
+import type { MaybeRef } from '@vueuse/core'
 import { createFetch } from '@vueuse/core'
 import type { Ref } from 'vue'
 import type { AlarmSystem, Config, GatewayCredentials, GatewayData, Group, Light, ResourceLink, Rule, Scene, Schedule, Sensor, WebSocketEvent } from '~/interfaces/deconz'
@@ -20,15 +21,15 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   })
 
   // Getters
-  const getDataRef = (type: keyof GatewayData, id?: number) => {
+  const getDataRef = (type: keyof GatewayData, id?: MaybeRef<number>) => {
     if (type === 'config')
       return toRef(data.value, 'config')
 
-    if (id === undefined)
-      return ref(undefined)
-
-    // return toRef(data.value[type], id)
-    return computed(() => data.value[type][id])
+    return computed(() => {
+      if (unref(id) === undefined)
+        return ref({})
+      return data.value[type][unref(id as number)]
+    })
   }
 
   // Pooling

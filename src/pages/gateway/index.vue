@@ -8,6 +8,8 @@ const GatewaysStore = useGatewaysStore()
 
 const scanner = useGatewayScanner()
 
+const sensorID = ref(2)
+
 const { t } = useI18n()
 </script>
 
@@ -32,9 +34,11 @@ const { t } = useI18n()
           :expand-depth="0"
         />
 
+        <v-text-field v-model="sensorID" label="Sensor ID" type="number" />
+
         <json-viewer
           v-if="GatewaysStore.data[index]"
-          :value="GatewaysStore.data[index].getDataRef('sensors', 2)"
+          :value="GatewaysStore.data[index].getDataRef('sensors', sensorID)"
           :expand-depth="2"
         />
       </v-col>
