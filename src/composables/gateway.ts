@@ -1,5 +1,5 @@
 import type { MaybeRef } from '@vueuse/core'
-import { createFetch } from '@vueuse/core'
+import { createFetch, get } from '@vueuse/core'
 import type { Ref } from 'vue'
 import type { AlarmSystem, Config, GatewayCredentials, GatewayData, Group, Light, ResourceLink, Rule, Scene, Schedule, Sensor, WebSocketEvent } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
@@ -21,14 +21,12 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   })
 
   // Getters
-  const getDataRef = (type: keyof GatewayData, id?: MaybeRef<number>) => {
+  const getData = (type: keyof GatewayData, id?: MaybeRef<number>) => {
     if (type === 'config')
       return toRef(data.value, 'config')
 
     return computed(() => {
-      if (unref(id) === undefined)
-        return ref({})
-      return data.value[type][unref(id as number)]
+      return data.value[type][unref(id as number)] ?? ref({})
     })
   }
 
@@ -56,14 +54,16 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   })
 
   const gatewayShell = useGatewayFetch('/', {
-    immediate: false,
+    // immediate: false,
     refetch: true,
     initialData: data,
   }).get().json()
 
   const pooling = useIntervalFn(() => {
+    if (get(gatewayShell.isFetching) === true)
+      return
     gatewayShell.execute()
-  }, 5000, { immediateCallback: true })
+  }, 30000)
 
   // Websocket
   const websocket = useWebSocket(gatewayWebsocketUri.value, {
@@ -76,36 +76,41 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
 
   watch(websocket.data, (msg) => {
     const event = JSON.parse(msg) as WebSocketEvent
-    if (event.id === undefined)
+    if (event.id === undefined || event.t !== 'event')
       return
-    const objectRef = getDataRef(event.r, parseInt(event.id))
-    if (objectRef.value === undefined)
-      return
-
+    // eslint-disable-next-line no-console
     console.log('event', event)
 
-    switch (event.t) {
-      case 'event':
-
-        switch (event.e) {
-          case 'added':
-
-            break
-
-          case 'changed':
-            if (event.state)
-              objectRef.value.state = event.state
-            break
-
-          case 'deleted':
-
-            break
-
-          case 'scene-called':
-
-            break
-        }
-        break
+    if (event.e === 'changed') {
+      const objectRef = getData(event.r, parseInt(event.id))
+      if (event.state)
+        objectRef.value.state = event.state
+      if (event.config)
+        objectRef.value.config = event.config
+      if (event.name)
+        objectRef.value.name = event.name
+      if (event.attr) {
+        const attr = event.attr as Record<string, any>
+        Object.keys(attr).forEach((key) => {
+          objectRef.value[key] = attr[key]
+        })
+      }
+    }
+    else if (event.e === 'added') {
+      switch (event.r) {
+        case 'groups':
+          data.value[event.r][parseInt(event.id)] = event.group as Group
+          break
+        case 'lights':
+          data.value[event.r][parseInt(event.id)] = event.light as Light
+          break
+        case 'sensors':
+          data.value[event.r][parseInt(event.id)] = event.sensor as Sensor
+          break
+      }
+    }
+    else if (event.e === 'deleted') {
+      delete data.value[event.r][parseInt(event.id)]
     }
   })
 
@@ -116,5 +121,5 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
     delete gatewayStore.data[credentials.value.id]
   }
 
-  return { credentials, gatewayShell, data, getDataRef, destroy }
+  return { credentials, gatewayShell, data, getData, destroy }
 }

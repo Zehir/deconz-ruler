@@ -99,6 +99,10 @@ export interface WebSocketEvent {
    */
   name?: string
   /**
+   * Not documented, list of updated attributes
+   */
+  attr?: Record<string, any>
+  /**
    * Depending on the websocketnotifyall setting: a map containing all or only the changed state attributes of a group, light, or sensor resource.
    * Only for changed events.
    */

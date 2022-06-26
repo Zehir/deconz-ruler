@@ -35,10 +35,9 @@ const { t } = useI18n()
         />
 
         <v-text-field v-model="sensorID" label="Sensor ID" type="number" />
-
         <json-viewer
-          v-if="GatewaysStore.data[index]"
-          :value="GatewaysStore.data[index].getDataRef('sensors', sensorID)"
+          v-if="GatewaysStore.data[index]?.getData('sensors', sensorID)"
+          :value="GatewaysStore.data[index].getData('sensors', sensorID)"
           :expand-depth="2"
         />
       </v-col>
