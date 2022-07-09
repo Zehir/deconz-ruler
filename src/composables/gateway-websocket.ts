@@ -1,24 +1,38 @@
-import type { ComputedRef, Ref } from 'vue'
+import type { Ref } from 'vue'
 import type { GatewayData, Group, Light, Sensor, WebSocketEvent } from '~/interfaces/deconz'
 
-export function useGatewayWebsocket(gatewayWebsocketUri: ComputedRef<string>, data: Ref<GatewayData>) {
+export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<GatewayData>) {
   const currentEvent = ref('{}')
-  let websocket: ReturnType<typeof useWebSocket> | undefined
+  const websocket: Ref<ReturnType<typeof useWebSocket> | undefined> = ref(undefined)
+
+  const state = computed(() => {
+    if (websocket.value === undefined)
+      return 'disconnected'
+    switch (unref(websocket.value.status)) {
+      case 'OPEN':
+        return 'connected'
+      case 'CONNECTING':
+        return 'pending'
+      case 'CLOSED':
+        return 'disconnected'
+    }
+  })
 
   watch(gatewayWebsocketUri, (newUri) => {
-    console.log('Connect to websocket:', newUri)
-    if (websocket !== undefined)
-      websocket.close()
+    if (websocket.value !== undefined)
+      websocket.value.close()
     if (newUri.length === 0)
       return
-    websocket = useWebSocket(newUri, {
+    websocket.value = useWebSocket(newUri, {
       autoReconnect: true,
       heartbeat: {
         message: 'ping',
-        interval: 1000,
+        interval: 10000,
+      },
+      onMessage: (ws: WebSocket, event: MessageEvent) => {
+        currentEvent.value = event.data
       },
     })
-    syncRef(websocket.data, currentEvent, { direction: 'ltr' })
   }, { immediate: true })
 
   watch(currentEvent, (msg) => {
@@ -69,9 +83,9 @@ export function useGatewayWebsocket(gatewayWebsocketUri: ComputedRef<string>, da
   })
 
   const destroy = () => {
-    if (websocket)
-      websocket.close()
+    if (websocket.value)
+      websocket.value.close()
   }
 
-  return { destroy }
+  return { shell: websocket, state, foo: 'bar', destroy }
 }

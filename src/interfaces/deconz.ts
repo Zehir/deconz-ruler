@@ -18,7 +18,7 @@ export interface GatewayURI {
 
 export interface GatewayData {
   alarmsystems: Record<number, AlarmSystem>
-  config: Config
+  config: Config | undefined
   groups: Record<number, Group>
   lights: Record<number, Light>
   resourcelinks: Record<number, ResourceLink>

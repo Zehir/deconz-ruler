@@ -1,21 +1,32 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 import type { GatewayCredentials } from '~/interfaces/deconz'
 import { GatewayURITypes } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
+import { StateToColor } from '~/utils'
 
 const props = defineProps<{
   modelValue: GatewayCredentials
 }>()
 
 const credentials = useVModel(props)
+const router = useRouter()
 
 const GatewaysStore = useGatewaysStore()
 
 const loading = ref(false)
 const editMode = ref(false)
 
+const Gateway = computed(() => {
+  const gateway = GatewaysStore.gateway[credentials.value.id]
+  if (!gateway)
+    return null
+
+  return gateway
+})
+
 const cardClick = () => {
-  console.log('cardClick')
+  router.push(`/gateway/${credentials.value.id}`)
 }
 
 const addURI = () => {
@@ -38,7 +49,11 @@ const deleteSelf = () => {
     @click.stop="cardClick"
   >
   -->
-  <v-card tonal>
+  <v-card
+    v-ripple="false"
+    tonal
+    @click.stop="cardClick"
+  >
     <v-progress-linear
       v-if="loading"
       class="position-absolute"
@@ -51,6 +66,16 @@ const deleteSelf = () => {
         <v-card-title>
           {{ credentials.name }}
           <v-spacer />
+          <v-badge
+            :color="StateToColor(Gateway?.pooling.state ?? 'unknown')"
+            content="API"
+            inline
+          />
+          <v-badge
+            :color="StateToColor(Gateway?.websocket.state ?? 'unknown')"
+            content="Websocket"
+            inline
+          />
           <v-btn v-if="editMode" @click.stop="deleteSelf">
             Delete
           </v-btn>
@@ -66,10 +91,7 @@ const deleteSelf = () => {
       <p v-if="editMode">
         <v-text-field v-model="credentials.apiKey" label="API Key" />
       </p>
-      <p v-else>
-        API Key = "{{ credentials.apiKey }}"
-      </p>
-      <v-table>
+      <v-table v-if="editMode">
         <thead>
           <tr>
             <th class="text-left w-75">
@@ -92,7 +114,7 @@ const deleteSelf = () => {
               </v-btn>
             </td>
             <td v-else>
-              {{ uri.address }}
+              {{ uri.type }} : {{ uri.address }}
             </td>
             <td>
               <v-badge

@@ -8,7 +8,7 @@ const GatewaysStore = useGatewaysStore()
 
 const scanner = useGatewayScanner()
 
-const sensorID = ref(2)
+const sensorID = ref(1)
 
 const { t } = useI18n()
 </script>
@@ -19,27 +19,31 @@ const { t } = useI18n()
   </v-btn>
 
   <v-container fluid>
+    gateway/index.vue
     <v-row dense>
+      <!--
       <v-col :cols="12">
         <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
       </v-col>
+      -->
       <v-col
         v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
         :cols="12"
       >
         <gateway-credentials v-model="GatewaysStore.credentials[index]" />
+        <!--
         <json-viewer
-          v-if="GatewaysStore.data[index]?.data"
-          :value="GatewaysStore.data[index].data"
+          v-if="GatewaysStore.gateway[index]?.data"
+          :value="GatewaysStore.gateway[index].data"
           :expand-depth="0"
         />
-
         <v-text-field v-model="sensorID" label="Sensor ID" type="number" />
         <json-viewer
-          v-if="GatewaysStore.data[index]?.getData('sensors', sensorID)"
-          :value="GatewaysStore.data[index].getData('sensors', sensorID)"
+          v-if="GatewaysStore.gateway[index]?.getData('sensors', sensorID)"
+          :value="GatewaysStore.gateway[index].getData('sensors', sensorID)"
           :expand-depth="2"
         />
+        -->
       </v-col>
     </v-row>
   </v-container>

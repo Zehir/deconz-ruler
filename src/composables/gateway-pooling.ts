@@ -1,8 +1,10 @@
 import { createFetch, get } from '@vueuse/core'
-import type { ComputedRef, Ref } from 'vue'
+import type { Ref } from 'vue'
 import type { GatewayData } from '~/interfaces/deconz'
 
-export function useGatewayPooling(gatewayAPIUri: ComputedRef<string>, data: Ref<GatewayData>) {
+export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayData>) {
+  const state = ref('unknown')
+  const error = ref('')
   // Pooling
   const useGatewayFetch = createFetch({
     baseUrl: gatewayAPIUri,
@@ -12,13 +14,16 @@ export function useGatewayPooling(gatewayAPIUri: ComputedRef<string>, data: Ref<
   })
 
   const shell = useGatewayFetch('/', {
-    // immediate: false,
+    immediate: false,
     refetch: true,
-    initialData: data,
+    afterFetch(ctx) {
+      state.value = 'connected'
+      error.value = ''
+      return ctx
+    },
     onFetchError(ctx) {
-      // ctx.data can be null when 5xx response
-      if (ctx.data === null)
-        ctx.data = { title: 'Hunter x Hunter' } // Modifies the response data
+      state.value = 'error'
+      error.value = ctx.error.message
       return ctx
     },
   }).get().json()
@@ -27,12 +32,27 @@ export function useGatewayPooling(gatewayAPIUri: ComputedRef<string>, data: Ref<
     if (get(shell.isFetching) === true)
       return
     shell.execute()
-  }, 30000)
+  }, 30000, { immediate: false })
+
+  watch(gatewayAPIUri, (newURI) => {
+    if (newURI.length !== 0)
+      pooling.resume()
+  }, { immediate: true })
+
+  watch(shell.data, (newData) => {
+    if (shell.statusCode.value !== 200) {
+      error.value = shell.error.value
+      console.warn(shell.error)
+      return
+    }
+    // Todo make a better patch method
+    data.value = newData
+  })
 
   const destroy = () => {
     pooling.pause()
     shell.abort()
   }
 
-  return { shell, destroy }
+  return { state, error, shell, destroy }
 }
