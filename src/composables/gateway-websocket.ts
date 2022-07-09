@@ -60,6 +60,8 @@ export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<
       if (event.attr) {
         const attr = event.attr as Record<string, any>
         Object.keys(attr).forEach((key) => {
+          if (key === 'id')
+            return
           objectRef[key] = attr[key]
         })
       }
@@ -87,5 +89,9 @@ export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<
       websocket.value.close()
   }
 
-  return { shell: websocket, state, foo: 'bar', destroy }
+  return {
+    shell: websocket,
+    state,
+    destroy,
+  }
 }
