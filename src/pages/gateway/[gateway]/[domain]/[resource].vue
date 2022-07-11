@@ -1,30 +1,39 @@
 <script setup lang="ts">
-import { useGatewayScanner } from '~/composables/gateway-scanner'
 import { useAppStore } from '~/stores/app'
 import { useGatewaysStore } from '~/stores/gateways'
+import type { GatewayData } from '~/interfaces/deconz'
 
 const props = defineProps<{
   gateway: string
-  domain: string
+  domain: keyof GatewayData
   resource: string
 }>()
 
 const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
 
-const Gateway = computed(() => {
-  return GatewaysStore.gateway[props.gateway]
-})
+const Resource = GatewaysStore.getData(props.gateway, props.domain, props.resource)
 
 const { t } = useI18n()
 </script>
 
 <template>
-  gateway/[gateway]/[domain]/[resource].vue
+  <breadcrumbs />
+  <v-divider />
+  File : gateway/[gateway]/[domain]/[resource].vue
 
   <json-viewer
-    v-if="Gateway?.data[domain][parseInt(resource)]"
-    :value="Gateway.data[domain][parseInt(resource)]"
+    v-if="Resource"
+    :value="Resource"
     :expand-depth="5"
   />
 </template>
+
+<route lang="json">
+{
+  "name": "Resource detail",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
+}
+</route>

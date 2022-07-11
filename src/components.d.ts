@@ -5,6 +5,7 @@ import '@vue/runtime-core'
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    Breadcrumbs: typeof import('./components/navigation/breadcrumbs.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     GatewayCredentials: typeof import('./components/gateway-credentials.vue')['default']
     NavSidebar: typeof import('./components/navigation/nav-sidebar.vue')['default']

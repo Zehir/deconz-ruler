@@ -19,7 +19,9 @@ const { t } = useI18n()
 </script>
 
 <template>
-  gateway/[gateway]/[domain]/index.vue
+  <breadcrumbs />
+  <v-divider />
+  File : gateway/[gateway]/[domain]/index.vue
 
   <div v-if="Gateway?.data[domain]">
     <v-btn
@@ -35,3 +37,12 @@ const { t } = useI18n()
     />
   </div>
 </template>
+
+<route lang="json">
+{
+  "name": "Domain index",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
+}
+</route>

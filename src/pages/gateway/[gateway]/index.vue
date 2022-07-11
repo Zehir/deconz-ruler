@@ -18,18 +18,30 @@ const { t } = useI18n()
 </script>
 
 <template>
-  gateway/[gateway]/index.vue
+  <breadcrumbs />
+  <v-divider />
+  File : gateway/[gateway]/index.vue
 
-  <v-btn
-    v-for="(domain, index) in Gateway.data" :key="index"
-    :to="`/gateway/${props.gateway}/${index}`"
-  >
-    {{ index }}
+  <div v-if="Gateway?.data">
+    <v-btn
+      v-for="(domain, index) in Gateway.data" :key="index"
+      :to="`/gateway/${props.gateway}/${index}`"
     >
-  </v-btn>
-  <json-viewer
-    v-if="Gateway?.data"
-    :value="Gateway.data"
-    :expand-depth="0"
-  />
+      {{ index }}
+      >
+    </v-btn>
+    <json-viewer
+      :value="Gateway.data"
+      :expand-depth="0"
+    />
+  </div>
 </template>
+
+<route lang="json">
+{
+  "name": "Gateway detail",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
+}
+</route>

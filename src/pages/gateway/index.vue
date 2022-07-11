@@ -14,6 +14,8 @@ const { t } = useI18n()
 </script>
 
 <template>
+  <breadcrumbs />
+  <v-divider />
   <v-btn @click="scanner.scan">
     Scan
   </v-btn>
@@ -54,3 +56,12 @@ const { t } = useI18n()
 
   <br>
 </template>
+
+<route lang="json">
+{
+  "name": "Gateway index",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
+}
+</route>
