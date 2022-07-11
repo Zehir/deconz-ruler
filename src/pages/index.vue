@@ -9,6 +9,8 @@ const AppStore = useAppStore()
 
 <template>
   <v-container fluid>
-    {{ AppStore }}
+    <v-btn to="/gateway/">
+      Gateways
+    </v-btn>
   </v-container>
 </template>
