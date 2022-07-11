@@ -47,7 +47,8 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
       gatewayWebsocketUri.value = wsURI.address
   }
 
-  const { isPending, start, stop } = useTimeoutFn(() => {
+  // Delay the connection for 1.5 seconds.
+  useTimeoutFn(() => {
     connect()
   }, 1500)
 
