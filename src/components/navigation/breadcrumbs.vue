@@ -6,11 +6,11 @@ import { useGatewaysStore } from '~/stores/gateways'
   TODO Ajouter une liste déroulante et pas seulement le nom de là où je suis
 */
 
+const route = useRoute()
+
 const show = ref(true)
 
 const breadcrumbs = computed(() => {
-  const route = useRoute()
-
   const items = []
   items.push({
     text: 'Home',
@@ -64,7 +64,7 @@ const breadcrumbs = computed(() => {
 </script>
 
 <template>
-  <div v-if="show">
+  <div v-show="show">
     <v-breadcrumbs :items="breadcrumbs" />
     <v-divider />
   </div>
