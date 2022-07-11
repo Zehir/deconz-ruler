@@ -20,6 +20,7 @@ const breadcrumbs = computed(() => {
 
   switch (route.meta.breadcrumbs) {
     case 'resource-path': {
+      show.value = true
       items.push({
         text: 'Gateways',
         disabled: false,
