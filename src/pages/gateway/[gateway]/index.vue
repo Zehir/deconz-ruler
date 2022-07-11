@@ -18,8 +18,6 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <breadcrumbs />
-  <v-divider />
   File : gateway/[gateway]/index.vue
 
   <div v-if="Gateway?.data">

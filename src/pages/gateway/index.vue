@@ -14,8 +14,6 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <breadcrumbs />
-  <v-divider />
   <v-btn @click="scanner.scan">
     Scan
   </v-btn>

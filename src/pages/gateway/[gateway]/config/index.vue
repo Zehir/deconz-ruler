@@ -26,3 +26,12 @@ const { t } = useI18n()
     :expand-depth="1"
   />
 </template>
+
+<route lang="json">
+{
+  "name": "Config detail",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
+}
+</route>

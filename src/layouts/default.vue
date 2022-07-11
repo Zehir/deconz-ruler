@@ -4,6 +4,7 @@
   <nav-topbar />
   <!-- Sizes your content based upon application components -->
   <v-main>
+    <breadcrumbs />
     <!-- Provides the application the proper gutter -->
     <router-view />
   </v-main>
