@@ -1,55 +1,62 @@
 <script setup lang="ts">
-import { useGatewayScanner } from '~/composables/gateway-scanner'
-import { useAppStore } from '~/stores/app'
 import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewayScanner } from '~/composables/gateway-scanner'
 
-const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
+const Scanner = useGatewayScanner()
 
-const scanner = useGatewayScanner()
+const dialog = ref(false)
 
-const sensorID = ref(1)
+const Add = () => {
+
+}
 
 const { t } = useI18n()
 </script>
 
 <template>
-  <v-btn @click="scanner.scan">
+  <v-btn @click="Scanner.scan">
     Scan
   </v-btn>
+
+  <!--
+  <v-dialog
+    v-model="dialog"
+    width="500"
+  >
+    <template #activator="{ props }">
+      <v-btn v-bind="props">
+        Add
+      </v-btn>
+    </template>
+
+    <form-gateway />
+  </v-dialog>
+-->
+
+  <!--
+    <form-gateway mode="new" address="http://homeassistant.local:40850" api-key="2305677514" />
+  -->
+  <br>
+  <form-gateway mode="edit" gateway-id="00212EFFFF070D25" />
 
   <v-container fluid>
     gateway/index.vue
     <v-row dense>
-      <!--
       <v-col :cols="12">
         <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
       </v-col>
-      -->
       <v-col
         v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
         :cols="12"
       >
         <gateway-credentials v-model="GatewaysStore.credentials[index]" />
-        <!--
-        <json-viewer
-          v-if="GatewaysStore.gateway[index]?.data"
-          :value="GatewaysStore.gateway[index].data"
-          :expand-depth="0"
-        />
-        <v-text-field v-model="sensorID" label="Sensor ID" type="number" />
-        <json-viewer
-          v-if="GatewaysStore.gateway[index]?.getData('sensors', sensorID)"
-          :value="GatewaysStore.gateway[index].getData('sensors', sensorID)"
-          :expand-depth="2"
-        />
-        -->
       </v-col>
     </v-row>
   </v-container>
 
-  <p v-if="scanner.logs.value.length > 0">
-    {{ scanner.logs }}
+  <p v-if="Scanner.logs.value.length > 0">
+    {{ Scanner.logs }}
   </p>
 
   <br>
