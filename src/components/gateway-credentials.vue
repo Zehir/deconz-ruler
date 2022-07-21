@@ -61,32 +61,27 @@ const deleteSelf = () => {
       height="5"
       indeterminate
     />
-    <v-card-header>
-      <v-card-header-text>
-        <v-card-title>
-          {{ credentials.name }}
-          <v-spacer />
-          <v-badge
-            :color="StateToColor(Gateway?.pooling.state ?? 'unknown')"
-            content="API"
-            inline
-          />
-          <v-badge
-            :color="StateToColor(Gateway?.websocket.state ?? 'unknown')"
-            content="Websocket"
-            inline
-          />
-          <v-btn v-if="editMode" @click.stop="deleteSelf">
-            Delete
-          </v-btn>
-          <v-btn @click.stop="editMode = !editMode">
-            {{ editMode ? "Done" : "Edit" }}
-          </v-btn>
-        </v-card-title>
-        <v-card-subtitle>{{ credentials.id }}</v-card-subtitle>
-      </v-card-header-text>
-    </v-card-header>
-
+    <v-card-title>
+      {{ credentials.name }}
+      <v-spacer />
+      <v-badge
+        :color="StateToColor(Gateway?.pooling.state ?? 'unknown')"
+        content="API"
+        inline
+      />
+      <v-badge
+        :color="StateToColor(Gateway?.websocket.state ?? 'unknown')"
+        content="Websocket"
+        inline
+      />
+      <v-btn v-if="editMode" @click.stop="deleteSelf">
+        Delete
+      </v-btn>
+      <v-btn @click.stop="editMode = !editMode">
+        {{ editMode ? "Done" : "Edit" }}
+      </v-btn>
+    </v-card-title>
+    <v-card-subtitle>{{ credentials.id }}</v-card-subtitle>
     <v-card-text>
       <p v-if="editMode">
         <v-text-field v-model="credentials.apiKey" label="API Key" />

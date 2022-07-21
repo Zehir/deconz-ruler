@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useGatewaysStore } from '~/stores/gateways'
 import type { GatewayURI } from '~/interfaces/deconz'
+import { GatewayURITypes } from '~/interfaces/deconz'
 
 const props = withDefaults(defineProps<{
   mode: 'new' | 'edit'
@@ -25,6 +26,9 @@ const acquireUsingPassword = reactive({
   errorMessage: '',
 })
 
+function test(index) {
+  return `123${index}`
+}
 async function acquireAPIKeyUsingPassword() {
   /*
   acquireUsingPassword.loading = true
@@ -92,6 +96,11 @@ async function saveAndConnect() {
   */
 }
 
+const GatewayURITypesOptions = GatewayURITypes.map(item => ({
+  title: item.charAt(0).toUpperCase() + item.slice(1),
+  value: item,
+}))
+
 onBeforeMount(() => {
   switch (props.mode) {
     case 'new':{
@@ -128,11 +137,8 @@ onBeforeMount(() => {
       v-model="tab"
       grow
     >
-      <v-tab value="api_address">
-        API Address
-      </v-tab>
-      <v-tab value="websocket_address">
-        Websocket Address
+      <v-tab value="address">
+        Address
       </v-tab>
       <v-tab value="api_key">
         API Key
@@ -142,24 +148,46 @@ onBeforeMount(() => {
     <v-form>
       <v-card-text>
         <v-window v-model="tab">
-          <v-window-item value="api_address">
-            <v-text-field
-              v-for="(uri, index) in uris.filter((uri) => uri.type === 'api')"
+          <v-window-item value="address">
+            <p>
+              You can set multiple API and Websocket Address for the same gateway.
+              <br>
+              WIP for now only the first one is used.
+            </p>
+            <template
+              v-for="(uri, index) in uris"
               :key="index"
-              v-model="uri.address"
-              label="API Address"
-              hint="The address of the gateway"
-            />
-          </v-window-item>
-
-          <v-window-item value="websocket_address">
-            <v-text-field
-              v-for="(uri, index) in uris.filter((uri) => uri.type === 'websocket')"
-              :key="`websocket_${index}`"
-              v-model="uri.address"
-              label="Websocket Address"
-              hint="Blabla"
-            />
+            >
+              <v-container class="d-inline-flex">
+                <v-select
+                  v-model="uri.type"
+                  class="w-0 px-2"
+                  :items="GatewayURITypesOptions"
+                  label="Type"
+                  hide-details="auto"
+                />
+                <v-text-field
+                  v-model="uri.address"
+                  class="w-auto px-2"
+                  label="Address"
+                  hint="The address of the gateway"
+                  hide-details="auto"
+                />
+                <v-btn
+                  class="px-2"
+                  variant="tonal"
+                  icon="mdi-trash-can"
+                  @click="uris.splice(index, 1)"
+                />
+              </v-container>
+            </template>
+            <v-btn
+              color="secondary"
+              prepend-icon="mdi-plus"
+              @click="uris.push({ type: 'api', address: '' })"
+            >
+              Add Address
+            </v-btn>
           </v-window-item>
 
           <v-window-item value="api_key">
@@ -214,13 +242,13 @@ onBeforeMount(() => {
     <v-card-actions>
       <v-spacer />
       <v-btn
-        depressed
+        variant="tonal"
         @click="cancel()"
       >
         Cancel
       </v-btn>
       <v-btn
-        depressed
+        variant="tonal"
         @click="saveAndConnect()"
       >
         Save and connect
