@@ -7,7 +7,7 @@ specifiers:
   '@mdi/font': ^6.7.96
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
-  '@vitejs/plugin-vue': ^2.3.3
+  '@vitejs/plugin-vue': ^3.0.1
   '@vue/test-utils': ^2.0.1
   '@vueuse/core': ^8.7.5
   '@vueuse/head': ^0.7.6
@@ -31,7 +31,7 @@ specifiers:
   unplugin-vue-components: ^0.20.0
   vite: ^2.9.12
   vite-plugin-inspect: ^0.5.0
-  vite-plugin-pages: ^0.24.2
+  vite-plugin-pages: ^0.25.0
   vite-plugin-pwa: ^0.12.0
   vite-plugin-vue-layouts: ^0.6.0
   vite-plugin-vue-markdown: ^0.1.1
@@ -70,7 +70,7 @@ devDependencies:
   '@mdi/font': 6.7.96
   '@types/markdown-it-link-attributes': 3.0.1
   '@types/nprogress': 0.2.0
-  '@vitejs/plugin-vue': 2.3.3_vite@2.9.12+vue@3.2.37
+  '@vitejs/plugin-vue': 3.0.1_vite@2.9.12+vue@3.2.37
   '@vue/test-utils': 2.0.1_vue@3.2.37
   critters: 0.0.16
   cross-env: 7.0.3
@@ -87,7 +87,7 @@ devDependencies:
   unplugin-vue-components: 0.20.0_vite@2.9.12+vue@3.2.37
   vite: 2.9.12_sass@1.53.0
   vite-plugin-inspect: 0.5.0_vite@2.9.12
-  vite-plugin-pages: 0.24.2_vite@2.9.12
+  vite-plugin-pages: 0.25.0_vite@2.9.12
   vite-plugin-pwa: 0.12.0_vite@2.9.12
   vite-plugin-vue-layouts: 0.6.0_rhgkriiwgt67w4tmjwulloled4
   vite-plugin-vue-markdown: 0.1.1_vite@2.9.12
@@ -1923,11 +1923,11 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.3.3_vite@2.9.12+vue@3.2.37:
-    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue/3.0.1_vite@2.9.12+vue@3.2.37:
+    resolution: {integrity: sha512-Ll9JgxG7ONIz/XZv3dssfoMUDu9qAnlJ+km+pBA0teYSXzwPCIzS/e1bmwNYl5dcQGs677D21amgfYAnzMl17A==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
       vite: 2.9.12_sass@1.53.0
@@ -6907,11 +6907,11 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-pages/0.24.2_vite@2.9.12:
-    resolution: {integrity: sha512-AmrHa6gi6n0mZReKzQTQ1uuf17fd1ziRDjNvSh0NTWNnDgA2si+hC8p63s3KyEmJS5lOE/rEeO4NBaRkY3sY3g==}
+  /vite-plugin-pages/0.25.0_vite@2.9.12:
+    resolution: {integrity: sha512-q0SX2iSw0UrTnivkzsPb19ZxamShq1nE/e/CKOe8+uVg70/e14uJuzKnw7dZ2omPjmV9Lhks38nzJL6RDRGmeA==}
     peerDependencies:
-      '@vue/compiler-sfc': ^2.0.0 || ^3.0.0
-      vite: ^2.0.0
+      '@vue/compiler-sfc': ^2.7.0 || ^3.0.0
+      vite: ^2.0.0 || ^3.0.0-0
     peerDependenciesMeta:
       '@vue/compiler-sfc':
         optional: true
