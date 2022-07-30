@@ -4,10 +4,10 @@ specifiers:
   '@antfu/eslint-config': ^0.25.2
   '@iconify-json/carbon': ^1.1.5
   '@intlify/vite-plugin-vue-i18n': ^4.0.0
-  '@mdi/font': ^6.7.96
+  '@mdi/font': ^7.0.96
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
-  '@vitejs/plugin-vue': ^2.3.3
+  '@vitejs/plugin-vue': ^3.0.1
   '@vue/test-utils': ^2.0.1
   '@vueuse/core': ^8.7.5
   '@vueuse/head': ^0.7.6
@@ -27,7 +27,7 @@ specifiers:
   prism-theme-vars: ^0.2.3
   sass: ^1.53.0
   typescript: ^4.7.4
-  unplugin-auto-import: ^0.9.1
+  unplugin-auto-import: ^0.10.3
   unplugin-vue-components: ^0.20.0
   vite: ^2.9.12
   vite-plugin-inspect: ^0.5.0
@@ -37,7 +37,7 @@ specifiers:
   vite-plugin-vue-markdown: ^0.1.1
   vite-plugin-vuetify: ^1.0.0-alpha.12
   vite-ssg: ^0.20.1
-  vite-ssg-sitemap: ^0.2.7
+  vite-ssg-sitemap: ^0.3.1
   vitest: ^0.19.1
   vue: ^3.2.37
   vue-demi: ^0.13.1
@@ -67,10 +67,10 @@ devDependencies:
   '@antfu/eslint-config': 0.25.2_b5e7v2qnwxfo6hmiq56u52mz3e
   '@iconify-json/carbon': 1.1.5
   '@intlify/vite-plugin-vue-i18n': 4.0.0_jg524lrp6mwbliyl7dcdb54k4a
-  '@mdi/font': 6.7.96
+  '@mdi/font': 7.0.96
   '@types/markdown-it-link-attributes': 3.0.1
   '@types/nprogress': 0.2.0
-  '@vitejs/plugin-vue': 2.3.3_vite@2.9.12+vue@3.2.37
+  '@vitejs/plugin-vue': 3.0.1_vite@2.9.12+vue@3.2.37
   '@vue/test-utils': 2.0.1_vue@3.2.37
   critters: 0.0.16
   cross-env: 7.0.3
@@ -83,7 +83,7 @@ devDependencies:
   pnpm: 7.3.0
   sass: 1.53.0
   typescript: 4.7.4
-  unplugin-auto-import: 0.9.1_4jnm4urp6nwbe5o76bpn6kimyu
+  unplugin-auto-import: 0.10.3_4jnm4urp6nwbe5o76bpn6kimyu
   unplugin-vue-components: 0.20.0_vite@2.9.12+vue@3.2.37
   vite: 2.9.12_sass@1.53.0
   vite-plugin-inspect: 0.5.0_vite@2.9.12
@@ -92,7 +92,7 @@ devDependencies:
   vite-plugin-vue-layouts: 0.6.0_rhgkriiwgt67w4tmjwulloled4
   vite-plugin-vue-markdown: 0.1.1_vite@2.9.12
   vite-ssg: 0.20.1_ah2svnd4q4evbmcsekycrwsdcm
-  vite-ssg-sitemap: 0.2.7
+  vite-ssg-sitemap: 0.3.1
   vitest: 0.19.1_sass@1.53.0
   vue-tsc: 0.39.2_typescript@4.7.4
 
@@ -1584,8 +1584,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.13
     dev: true
 
-  /@mdi/font/6.7.96:
-    resolution: {integrity: sha512-M68vlRhtmA/SpDjo2dV3SUZus20jrU9Zp2ggslfzh0cbFpygPukcVpBIA3pErwsukhYt4RfbgXpFi74SjixOrQ==}
+  /@mdi/font/7.0.96:
+    resolution: {integrity: sha512-rzlxTfR64hqY8yiBzDjmANfcd8rv+T5C0Yedv/TWk2QyAQYdc66e0kaN1ipmnYU3RukHRTRcBARHzzm+tIhL7w==}
     dev: true
 
   /@nodelib/fs.scandir/2.1.5:
@@ -1923,11 +1923,11 @@ packages:
       eslint-visitor-keys: 3.3.0
     dev: true
 
-  /@vitejs/plugin-vue/2.3.3_vite@2.9.12+vue@3.2.37:
-    resolution: {integrity: sha512-SmQLDyhz+6lGJhPELsBdzXGc+AcaT8stgkbiTFGpXPe8Tl1tJaBw1A6pxDqDuRsVkD8uscrkx3hA7QDOoKYtyw==}
-    engines: {node: '>=12.0.0'}
+  /@vitejs/plugin-vue/3.0.1_vite@2.9.12+vue@3.2.37:
+    resolution: {integrity: sha512-Ll9JgxG7ONIz/XZv3dssfoMUDu9qAnlJ+km+pBA0teYSXzwPCIzS/e1bmwNYl5dcQGs677D21amgfYAnzMl17A==}
+    engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
-      vite: ^2.5.10
+      vite: ^3.0.0
       vue: ^3.2.25
     dependencies:
       vite: 2.9.12_sass@1.53.0
@@ -2140,12 +2140,12 @@ packages:
       acorn: 7.4.1
     dev: true
 
-  /acorn-jsx/5.3.2_acorn@8.7.1:
+  /acorn-jsx/5.3.2_acorn@8.8.0:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
       acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
     dependencies:
-      acorn: 8.7.1
+      acorn: 8.8.0
     dev: true
 
   /acorn-walk/7.2.0:
@@ -2161,6 +2161,12 @@ packages:
 
   /acorn/8.7.1:
     resolution: {integrity: sha512-Xx54uLJQZ19lKygFXOWsscKUbsBZW0CPykPhVQdhIeIwrbPmJzqeASDInc8nKBnp/JT6igTs82qPXz069H8I/A==}
+    engines: {node: '>=0.4.0'}
+    hasBin: true
+    dev: true
+
+  /acorn/8.8.0:
+    resolution: {integrity: sha512-QOxyigPVrpZ2GXT+PFyZTl6TtOFc5egxHIP9IlQ+RbupQuX4RkT/Bee4/kQuC02Xkzg84JcT7oLYtDIQxp+v7w==}
     engines: {node: '>=0.4.0'}
     hasBin: true
     dev: true
@@ -3810,8 +3816,8 @@ packages:
     resolution: {integrity: sha512-D211tC7ZwouTIuY5x9XnS0E9sWNChB7IYKX/Xp5eQj3nFXhqmiUDB9q27y76oFl8jTg3pXcQx/bpxMfs3CIZbA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dependencies:
-      acorn: 8.7.1
-      acorn-jsx: 5.3.2_acorn@8.7.1
+      acorn: 8.8.0
+      acorn-jsx: 5.3.2_acorn@8.8.0
       eslint-visitor-keys: 3.3.0
     dev: true
 
@@ -4847,7 +4853,7 @@ packages:
         optional: true
     dependencies:
       abab: 2.0.6
-      acorn: 8.7.1
+      acorn: 8.8.0
       acorn-globals: 6.0.0
       cssom: 0.5.0
       cssstyle: 2.3.0
@@ -5282,10 +5288,10 @@ packages:
     resolution: {integrity: sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==}
     dev: true
 
-  /mlly/0.5.3:
-    resolution: {integrity: sha512-im69tuLD9EJh9fc9TZRpJEFvsBcGMez7glUCWDcHWWCKzhvPmNvyaYjp/+h0qJJN/Xovrs//GzGjOOKmFw4Gog==}
+  /mlly/0.5.5:
+    resolution: {integrity: sha512-2R4JT/SxRDPexomw4rmHYY/gWAGmL9Kkq1OR76Ua6w+P340a1aBDTWzKo2kAlxzrG82OdXs5VB9Lmcmyit0Obg==}
     dependencies:
-      pathe: 0.2.0
+      pathe: 0.3.2
       pkg-types: 0.3.3
     dev: true
 
@@ -5633,12 +5639,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /pathe/0.2.0:
-    resolution: {integrity: sha512-sTitTPYnn23esFR3RlqYBWn4c45WGeLcsKzQiUpXJAyfcWkolvlYpV8FLo7JishK946oQwMFUCHXQ9AjGPKExw==}
-    dev: true
-
-  /pathe/0.3.0:
-    resolution: {integrity: sha512-3vUjp552BJzCw9vqKsO5sttHkbYqqsZtH0x1PNtItgqx8BXEXzoY1SYRKcL6BTyVh4lGJGLj0tM42elUDMvcYA==}
+  /pathe/0.3.2:
+    resolution: {integrity: sha512-qhnmX0TOqlCvdWWTkoM83wh5J8fZ2yhbDEc9MlsnAEtEc+JCwxUKEwmd6pkY9hRe6JR1Uecbc14VcAKX2yFSTA==}
     dev: true
 
   /pathval/1.1.1:
@@ -5702,8 +5704,8 @@ packages:
     resolution: {integrity: sha512-6AJcCMnjUQPQv/Wk960w0TOmjhdjbeaQJoSKWRQv9N3rgkessCu6J0Ydsog/nw1MbpnxHuPzYbfOn2KmlZO1FA==}
     dependencies:
       jsonc-parser: 3.0.0
-      mlly: 0.5.3
-      pathe: 0.3.0
+      mlly: 0.5.5
+      pathe: 0.3.2
     dev: true
 
   /pluralize/8.0.0:
@@ -6090,8 +6092,8 @@ packages:
       xmlchars: 2.2.0
     dev: true
 
-  /scule/0.2.1:
-    resolution: {integrity: sha512-M9gnWtn3J0W+UhJOHmBxBTwv8mZCan5i1Himp60t6vvZcor0wr+IM0URKmIglsWJ7bRujNAVVN77fp+uZaWoKg==}
+  /scule/0.3.2:
+    resolution: {integrity: sha512-zIvPdjOH8fv8CgrPT5eqtxHQXmPNnV/vHJYffZhE43KZkvULvpCTvOt1HPlFaCZx287INL9qaqrZg34e8NgI4g==}
     dev: true
 
   /section-matter/1.0.0:
@@ -6430,7 +6432,7 @@ packages:
   /strip-literal/0.4.0:
     resolution: {integrity: sha512-ql/sBDoJOybTKSIOWrrh8kgUEMjXMwRAkZTD0EwiwxQH/6tTPkZvMIEjp0CRlpi6V5FMiJyvxeRkEi1KrGISoA==}
     dependencies:
-      acorn: 8.7.1
+      acorn: 8.8.0
     dev: true
 
   /supports-color/5.5.0:
@@ -6483,7 +6485,7 @@ packages:
     hasBin: true
     dependencies:
       '@jridgewell/source-map': 0.3.2
-      acorn: 8.7.1
+      acorn: 8.8.0
       commander: 2.20.3
       source-map-support: 0.5.21
     dev: true
@@ -6711,19 +6713,19 @@ packages:
     engines: {node: '>=4'}
     dev: true
 
-  /unimport/0.4.0_vite@2.9.12:
-    resolution: {integrity: sha512-k2KgvR/rvpmOln5vJtgbikfnntV3nG2F4mRrAI+16cA0KgANaPqHwVrdJijWbW4ZLDmSt0xzCfy4MJt8bMel0w==}
+  /unimport/0.6.4_vite@2.9.12:
+    resolution: {integrity: sha512-1cbSeTsC2EwzWeWAyQleajM354y+EYsymxE9p1wDbHKVTEe9XL6+e7vlEv2pj1Zk8YYFf+CBf9QG8My7aDKhag==}
     dependencies:
       '@rollup/pluginutils': 4.2.1
       escape-string-regexp: 5.0.0
       fast-glob: 3.2.11
       local-pkg: 0.4.2
       magic-string: 0.26.2
-      mlly: 0.5.3
-      pathe: 0.3.0
-      scule: 0.2.1
+      mlly: 0.5.5
+      pathe: 0.3.2
+      scule: 0.3.2
       strip-literal: 0.4.0
-      unplugin: 0.7.0_vite@2.9.12
+      unplugin: 0.8.0_vite@2.9.12
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -6759,8 +6761,8 @@ packages:
     engines: {node: '>= 0.8'}
     dev: true
 
-  /unplugin-auto-import/0.9.1_4jnm4urp6nwbe5o76bpn6kimyu:
-    resolution: {integrity: sha512-U2LGVl7nlVIGGV86Gr4x9JS5R2Vag43CGDiOebcCqQ1FPV/r8pdQ9yIZVbBj/v6xk3px/vE1zePC9z/WZgKmXg==}
+  /unplugin-auto-import/0.10.3_4jnm4urp6nwbe5o76bpn6kimyu:
+    resolution: {integrity: sha512-tODQr7ZBnsBZ9lKaz2mqszKVi/4ALuLtS4gc1xwpcsBav5TCAl0HFSMuai1qL4AkYEwD2HPqK04LocCyK+D0KQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@vueuse/core': '*'
@@ -6771,10 +6773,10 @@ packages:
       '@antfu/utils': 0.5.2
       '@rollup/pluginutils': 4.2.1
       '@vueuse/core': 8.7.5_vue@3.2.37
-      local-pkg: 0.4.1
+      local-pkg: 0.4.2
       magic-string: 0.26.2
-      unimport: 0.4.0_vite@2.9.12
-      unplugin: 0.7.0_vite@2.9.12
+      unimport: 0.6.4_vite@2.9.12
+      unplugin: 0.8.0_vite@2.9.12
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -6828,7 +6830,31 @@ packages:
       webpack:
         optional: true
     dependencies:
-      acorn: 8.7.1
+      acorn: 8.8.0
+      chokidar: 3.5.3
+      vite: 2.9.12_sass@1.53.0
+      webpack-sources: 3.2.3
+      webpack-virtual-modules: 0.4.4
+    dev: true
+
+  /unplugin/0.8.0_vite@2.9.12:
+    resolution: {integrity: sha512-OzOkJ9XOPlD1Cph6qy/p4i/KSUbs76GToXjH/STHpfo6D7y+EqpfAL6G6HaoOw5QLkt9+KWwcxYUmPFkDf1upQ==}
+    peerDependencies:
+      esbuild: '>=0.13'
+      rollup: ^2.50.0
+      vite: ^2.3.0 || ^3.0.0-0
+      webpack: 4 || 5
+    peerDependenciesMeta:
+      esbuild:
+        optional: true
+      rollup:
+        optional: true
+      vite:
+        optional: true
+      webpack:
+        optional: true
+    dependencies:
+      acorn: 8.8.0
       chokidar: 3.5.3
       vite: 2.9.12_sass@1.53.0
       webpack-sources: 3.2.3
@@ -7011,8 +7037,8 @@ packages:
       - supports-color
     dev: false
 
-  /vite-ssg-sitemap/0.2.7:
-    resolution: {integrity: sha512-vzB2qey/PZGv8gd3nCkLiXxEemByZrTHjhkO7aFcjbxAKlW36RraBMZkizzRUo6uB06Uo7yM4UmzjE5h6dfvsg==}
+  /vite-ssg-sitemap/0.3.1:
+    resolution: {integrity: sha512-I/urEKBAF62r4b3jL4Usa3kpo/WQl4gC/SqQz2APHh+2ZLMbO0xstULfkVHIaRW6416vtfz2SlvysdvW+u1xkQ==}
     dev: true
 
   /vite-ssg/0.20.1_ah2svnd4q4evbmcsekycrwsdcm:

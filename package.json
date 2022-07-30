@@ -35,7 +35,7 @@
     "@mdi/font": "^7.0.96",
     "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/nprogress": "^0.2.0",
-    "@vitejs/plugin-vue": "^2.3.3",
+    "@vitejs/plugin-vue": "^3.0.1",
     "@vue/test-utils": "^2.0.1",
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
@@ -57,7 +57,7 @@
     "vite-plugin-vue-layouts": "^0.6.0",
     "vite-plugin-vue-markdown": "^0.1.1",
     "vite-ssg": "^0.20.1",
-    "vite-ssg-sitemap": "^0.2.7",
+    "vite-ssg-sitemap": "^0.3.1",
     "vitest": "^0.19.1",
     "vue-tsc": "^0.39.2"
   }
