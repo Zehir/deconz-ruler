@@ -8,7 +8,7 @@ import Components from 'unplugin-vue-components/vite'
 import AutoImport from 'unplugin-auto-import/vite'
 import Markdown from 'vite-plugin-vue-markdown'
 import { VitePWA } from 'vite-plugin-pwa'
-import { vueI18n as VueI18n } from '@intlify/vite-plugin-vue-i18n'
+import VueI18n from '@intlify/vite-plugin-vue-i18n'
 import Inspect from 'vite-plugin-inspect'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Shiki from 'markdown-it-shiki'
@@ -145,7 +145,11 @@ export default defineConfig({
 
   ssr: {
     // TODO: workaround until they support native ESM
-    noExternal: ['workbox-window', /vue-i18n/],
+    noExternal: [
+      'workbox-window',
+      /vue-i18n/,
+      'vuetify',
+    ],
   },
 
 })
