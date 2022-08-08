@@ -26,12 +26,12 @@
     "vue-i18n": "^9.1.10",
     "vue-json-viewer": "^3.0.4",
     "vue-router": "^4.0.16",
-    "vuetify": "3.0.0-beta.4"
+    "vuetify": "3.0.0-beta.6"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.2",
     "@iconify-json/carbon": "^1.1.5",
-    "@intlify/vite-plugin-vue-i18n": "^4.0.0",
+    "@intlify/vite-plugin-vue-i18n": "^6.0.0",
     "@mdi/font": "^7.0.96",
     "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/nprogress": "^0.2.0",
