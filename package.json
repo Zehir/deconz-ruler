@@ -26,7 +26,7 @@
     "vue-i18n": "^9.1.10",
     "vue-json-viewer": "^3.0.4",
     "vue-router": "^4.0.16",
-    "vuetify": "3.0.0-beta.4"
+    "vuetify": "3.0.0-beta.6"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.25.2",
@@ -54,7 +54,7 @@
     "vite-plugin-inspect": "^0.5.0",
     "vite-plugin-pages": "^0.25.0",
     "vite-plugin-pwa": "^0.12.0",
-    "vite-plugin-vue-layouts": "^0.6.0",
+    "vite-plugin-vue-layouts": "^0.7.0",
     "vite-plugin-vue-markdown": "^0.1.1",
     "vite-ssg": "^0.20.1",
     "vite-ssg-sitemap": "^0.3.1",
