@@ -139,7 +139,7 @@ export default defineConfig({
   // https://github.com/antfu/vite-ssg
   ssgOptions: {
     script: 'async',
-    formatting: 'minify',
+    formatting: 'prettify', // minify
     onFinished() { generateSitemap() },
   },
 
