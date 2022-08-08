@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@antfu/eslint-config': ^0.25.2
   '@iconify-json/carbon': ^1.1.5
-  '@intlify/vite-plugin-vue-i18n': ^4.0.0
+  '@intlify/vite-plugin-vue-i18n': ^5.0.1
   '@mdi/font': ^7.0.96
   '@types/markdown-it-link-attributes': ^3.0.1
   '@types/nprogress': ^0.2.0
@@ -66,7 +66,7 @@ dependencies:
 devDependencies:
   '@antfu/eslint-config': 0.25.2_b5e7v2qnwxfo6hmiq56u52mz3e
   '@iconify-json/carbon': 1.1.5
-  '@intlify/vite-plugin-vue-i18n': 4.0.0_jg524lrp6mwbliyl7dcdb54k4a
+  '@intlify/vite-plugin-vue-i18n': 5.0.1_jg524lrp6mwbliyl7dcdb54k4a
   '@mdi/font': 7.0.96
   '@types/markdown-it-link-attributes': 3.0.1
   '@types/nprogress': 0.2.0
@@ -1506,15 +1506,17 @@ packages:
     engines: {node: '>= 14'}
     dev: true
 
-  /@intlify/vite-plugin-vue-i18n/4.0.0_jg524lrp6mwbliyl7dcdb54k4a:
-    resolution: {integrity: sha512-bX7WgJAnYAbhmfvMp17TjCzg4e4T68O7iqAcNo6TOS+oHK0kAJAN9AJfEMTdpDrAwURCw0VwZ0kgMFWDbJkY4g==}
-    engines: {node: '>= 12'}
+  /@intlify/vite-plugin-vue-i18n/5.0.1_jg524lrp6mwbliyl7dcdb54k4a:
+    resolution: {integrity: sha512-+LAUdm5PxGtLrUYgD2Wg9SINmLmhZqrcTnzccfqopca5NvaXWOPnQR4cQOkn82qLuyjWdCYC1BoqMHWBWX/MyQ==}
+    engines: {node: '>= 14.6'}
     peerDependencies:
-      petite-vue-i18n: next
-      vite: ^2.9.0
-      vue-i18n: next
+      petite-vue-i18n: '*'
+      vite: ^2.9.0 || ^3.0.0
+      vue-i18n: '*'
     peerDependenciesMeta:
       petite-vue-i18n:
+        optional: true
+      vite:
         optional: true
       vue-i18n:
         optional: true
