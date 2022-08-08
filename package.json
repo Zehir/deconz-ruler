@@ -13,7 +13,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@vueuse/core": "^8.7.5",
+    "@vueuse/core": "^9.0.2",
     "@vueuse/head": "^0.7.6",
     "axios": "^0.27.2",
     "nprogress": "^0.2.0",
