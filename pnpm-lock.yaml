@@ -28,7 +28,7 @@ specifiers:
   sass: ^1.53.0
   typescript: ^4.7.4
   unplugin-auto-import: ^0.10.3
-  unplugin-vue-components: ^0.21.2
+  unplugin-vue-components: ^0.22.0
   vite: ^2.9.12
   vite-plugin-inspect: ^0.5.0
   vite-plugin-pages: ^0.25.0
@@ -84,7 +84,7 @@ devDependencies:
   sass: 1.53.0
   typescript: 4.7.4
   unplugin-auto-import: 0.10.3_4jnm4urp6nwbe5o76bpn6kimyu
-  unplugin-vue-components: 0.21.2_vite@2.9.12+vue@3.2.37
+  unplugin-vue-components: 0.22.0_vite@2.9.12+vue@3.2.37
   vite: 2.9.12_sass@1.53.0
   vite-plugin-inspect: 0.5.0_vite@2.9.12
   vite-plugin-pages: 0.25.0_vite@2.9.12
@@ -1444,8 +1444,8 @@ packages:
       vue-i18n:
         optional: true
     dependencies:
-      '@intlify/message-compiler': 9.2.0-beta.40
-      '@intlify/shared': 9.2.0-beta.40
+      '@intlify/message-compiler': 9.2.0
+      '@intlify/shared': 9.2.0
       jsonc-eslint-parser: 1.4.1
       source-map: 0.6.1
       vue-i18n: 9.1.10_vue@3.2.37
@@ -1477,11 +1477,11 @@ packages:
       '@intlify/shared': 9.1.10
       source-map: 0.6.1
 
-  /@intlify/message-compiler/9.2.0-beta.40:
-    resolution: {integrity: sha512-6QWTSYewmkew4nsRqgkwTVuGFKzxVCOK8EXsPt15N+tN1g+OYjC3PfGA2dPB6cVkNxqA9mV/hNK02uHPWU9t0A==}
+  /@intlify/message-compiler/9.2.0:
+    resolution: {integrity: sha512-KGwwZsl+Nw2O26ZOKdytncxzKnMZ236KmM70u4GePgbizI+pu8yAh0apKxljSPzEJ7WECKTVc9R+laG12EJQYA==}
     engines: {node: '>= 14'}
     dependencies:
-      '@intlify/shared': 9.2.0-beta.40
+      '@intlify/shared': 9.2.0
       source-map: 0.6.1
     dev: true
 
@@ -1501,8 +1501,8 @@ packages:
     resolution: {integrity: sha512-Om54xJeo1Vw+K1+wHYyXngE8cAbrxZHpWjYzMR9wCkqbhGtRV5VLhVc214Ze2YatPrWlS2WSMOWXR8JktX/IgA==}
     engines: {node: '>= 10'}
 
-  /@intlify/shared/9.2.0-beta.40:
-    resolution: {integrity: sha512-xWz+SFjgt/LfaSbbHVn+V7gmvX4ZNP3cIFta790GWZ/tEgwJeC3tkV7i45iUbZ4ZimOerFgKH05b7qvJlKb6RQ==}
+  /@intlify/shared/9.2.0:
+    resolution: {integrity: sha512-71uObL3Sy2ZiBQBMVETbkspE4Plpy87Hvlj6FAUF3xdD+M82tuxe3MVJjaD3ucqhtHmQWBkAWEurVLdPYr8G2g==}
     engines: {node: '>= 14'}
     dev: true
 
@@ -1522,7 +1522,7 @@ packages:
         optional: true
     dependencies:
       '@intlify/bundle-utils': 3.1.0_vue-i18n@9.1.10
-      '@intlify/shared': 9.2.0-beta.40
+      '@intlify/shared': 9.2.0
       '@rollup/pluginutils': 4.2.1
       debug: 4.3.4
       fast-glob: 3.2.11
@@ -6704,7 +6704,7 @@ packages:
       pathe: 0.3.2
       scule: 0.3.2
       strip-literal: 0.4.0
-      unplugin: 0.8.0_vite@2.9.12
+      unplugin: 0.8.1_vite@2.9.12
     transitivePeerDependencies:
       - esbuild
       - rollup
@@ -6763,8 +6763,8 @@ packages:
       - webpack
     dev: true
 
-  /unplugin-vue-components/0.21.2_vite@2.9.12+vue@3.2.37:
-    resolution: {integrity: sha512-HBU+EuesDj/HRs7EtYH7gBACljVhqLylltrCLModRmCToIIrrNvMh54aylUt4AD4qiwylgOx4Vgb9sBlrIcRDw==}
+  /unplugin-vue-components/0.22.0_vite@2.9.12+vue@3.2.37:
+    resolution: {integrity: sha512-MpGcrnHgFLUK94Jf46UuiMOPQ4hVAijriR6bPbCGSBygiEDJbPXqy2C1d1k6PkixESFacKkipeuPhme+8F7gHQ==}
     engines: {node: '>=14'}
     peerDependencies:
       '@babel/parser': ^7.15.8
@@ -6782,7 +6782,7 @@ packages:
       magic-string: 0.26.2
       minimatch: 5.1.0
       resolve: 1.22.1
-      unplugin: 0.7.2_vite@2.9.12
+      unplugin: 0.8.1_vite@2.9.12
       vue: 3.2.37
     transitivePeerDependencies:
       - esbuild
@@ -6792,8 +6792,8 @@ packages:
       - webpack
     dev: true
 
-  /unplugin/0.7.2_vite@2.9.12:
-    resolution: {integrity: sha512-m7thX4jP8l5sETpLdUASoDOGOcHaOVtgNyrYlToyQUvILUtEzEnngRBrHnAX3IKqooJVmXpoa/CwQ/QqzvGaHQ==}
+  /unplugin/0.8.0_vite@2.9.12:
+    resolution: {integrity: sha512-OzOkJ9XOPlD1Cph6qy/p4i/KSUbs76GToXjH/STHpfo6D7y+EqpfAL6G6HaoOw5QLkt9+KWwcxYUmPFkDf1upQ==}
     peerDependencies:
       esbuild: '>=0.13'
       rollup: ^2.50.0
@@ -6816,8 +6816,8 @@ packages:
       webpack-virtual-modules: 0.4.4
     dev: true
 
-  /unplugin/0.8.0_vite@2.9.12:
-    resolution: {integrity: sha512-OzOkJ9XOPlD1Cph6qy/p4i/KSUbs76GToXjH/STHpfo6D7y+EqpfAL6G6HaoOw5QLkt9+KWwcxYUmPFkDf1upQ==}
+  /unplugin/0.8.1_vite@2.9.12:
+    resolution: {integrity: sha512-o7rUZoPLG1fH4LKinWgb77gDtTE6mw/iry0Pq0Z5UPvZ9+HZ1/4+7fic7t58s8/CGkPrDpGq+RltO+DmswcR4g==}
     peerDependencies:
       esbuild: '>=0.13'
       rollup: ^2.50.0
