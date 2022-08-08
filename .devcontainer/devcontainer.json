@@ -28,7 +28,8 @@
 		"streetsidesoftware.code-spell-checker",
 		"esbenp.prettier-vscode",
 		"Tobermory.es6-string-html",
-		"mhutchie.git-graph"
+		"mhutchie.git-graph",
+		"eamodio.gitlens"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
