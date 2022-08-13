@@ -20,6 +20,12 @@ const items = ref([
       >
         <gateway-badge v-model="GatewaysStore.credentials[item.id]" />
       </template>
+      <v-divider />
+      <v-list-item class="ma-1 justify-center">
+        <btn-rounded-circle>
+          <v-icon icon="mdi-plus" />
+        </btn-rounded-circle>
+      </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
