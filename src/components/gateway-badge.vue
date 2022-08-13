@@ -4,9 +4,6 @@ import type { GatewayCredentials } from '~/interfaces/deconz'
 const props = defineProps<{
   modelValue: GatewayCredentials
 }>()
-
-const active = ref(true)
-const over = ref(true)
 </script>
 
 <template>

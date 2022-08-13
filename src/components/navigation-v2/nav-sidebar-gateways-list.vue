@@ -1,14 +1,7 @@
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { useGatewaysStore } from '~/stores/gateways'
 
 const GatewaysStore = useGatewaysStore()
-
-const items = ref([
-  { id: '75', image: 'https://randomuser.me/api/portraits/women/75.jpg', to: '/' },
-  { id: '10', image: 'https://randomuser.me/api/portraits/women/10.jpg', to: '/' },
-  { id: '43', image: 'https://randomuser.me/api/portraits/women/43.jpg', to: '/' },
-])
 </script>
 
 <template>
