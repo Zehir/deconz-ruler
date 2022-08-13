@@ -26,11 +26,8 @@ const items = ref([
         :value="item"
         active-color="primary"
         :to="item.to"
+        :prepend-icon="item.icon"
       >
-        <v-list-item-avatar>
-          <v-icon :icon="item.icon" />
-        </v-list-item-avatar>
-
         <v-list-item-title>
           {{ item.text }}
         </v-list-item-title>

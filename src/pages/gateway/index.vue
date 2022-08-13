@@ -38,7 +38,7 @@ const { t } = useI18n()
     <form-gateway mode="new" address="http://homeassistant.local:40850" api-key="2305677514" />
   -->
   <br>
-  <form-gateway mode="edit" gateway-id="00212EFFFF070D25" />
+  <form-gateway mode="edit" gateway-id="00212EFFFF06018D" />
 
   <v-container fluid>
     gateway/index.vue

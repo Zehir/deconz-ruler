@@ -1,17 +1,14 @@
 <template>
   <client-only>
-    <!-- Navigation -->
-    <nav-sidebar />
-    <nav-topbar />
-    <!-- Sizes your content based upon application components -->
-    <v-main>
-      <breadcrumbs />
-      <!-- Provides the application the proper gutter -->
-      <router-view />
-    </v-main>
-
-    <v-footer app>
-    <!-- -->
-    </v-footer>
+    <v-layout>
+      <nav-topbar-global />
+      <nav-sidebar-gateways-list />
+      <nav-sidebar-gateways-details />
+      <nav-topbar-details />
+      <nav-sidebar-items-details />
+      <v-main>
+        <router-view />
+      </v-main>
+    </v-layout>
   </client-only>
 </template>
