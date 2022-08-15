@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const btnProps = defineProps<{
+  color?: string
+}>()
+</script>
+
 <template>
   <v-hover v-slot="{ isHovering, props }">
     <v-btn
@@ -7,6 +13,7 @@
       variant="outlined"
       :rounded="isHovering ? 'rounded-xl' : 'circle'"
       v-bind="props"
+      :color="btnProps.color"
     >
       <slot />
     </v-btn>
