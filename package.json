@@ -31,7 +31,7 @@
     "vuetify": "^3.0.0-beta.7"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^0.25.2",
+    "@antfu/eslint-config": "^0.26.1",
     "@iconify-json/carbon": "^1.1.7",
     "@intlify/vite-plugin-vue-i18n": "^6.0.1",
     "@mdi/font": "^7.0.96",
@@ -42,7 +42,7 @@
     "critters": "^0.0.16",
     "cross-env": "^7.0.3",
     "cypress": "^10.4.0",
-    "eslint": "^8.21.0",
+    "eslint": "^8.22.0",
     "eslint-plugin-cypress": "^2.12.1",
     "https-localhost": "^4.7.1",
     "markdown-it-link-attributes": "^4.0.1",
