@@ -12,7 +12,9 @@ const props = defineProps<{
 const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
 
-const Resource = GatewaysStore.getData(props.gateway, props.domain, props.resource)
+const Resource = computed(() => {
+  return GatewaysStore.getData(props.gateway, props.domain, props.resource).value
+})
 
 const { t } = useI18n()
 </script>
