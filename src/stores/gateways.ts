@@ -26,10 +26,16 @@ export const useGatewaysStore = defineStore('gateways', () => {
     }
   })
 
-  const getGateway = (gatewayID: string) => computed(() => {
+  const getGateway = (gatewayID: string) => computed<null | ReturnType<typeof useGateway>>(() => {
     if (!gateway[gatewayID])
-      return {}
+      return null
     return gateway[gatewayID]
+  })
+
+  const activeGateway = computed(() => {
+    if (!activeGatewayID.value)
+      return null
+    return getGateway(activeGatewayID.value).value
   })
 
   const getData = (gatewayID: string, domain: keyof GatewayData, resource?: number | string) => computed(() => {
@@ -38,7 +44,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
     return gateway[gatewayID].getData(domain, typeof resource === 'string' ? parseInt(resource) : resource).value
   })
 
-  return { credentials, gateway, activeGatewayID, getGateway, getData }
+  return { credentials, gateway, activeGatewayID, activeGateway, getGateway, getData }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473

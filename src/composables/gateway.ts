@@ -32,6 +32,12 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
     if (type === 'config')
       return toRef(data.value, 'config')
 
+    if (unref(id) === undefined) {
+      return computed(() => {
+        return data.value![type] ?? {}
+      })
+    }
+
     return computed(() => {
       return data.value![type]![unref(id as number)] ?? {}
     })

@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     BtnRoundedCircle: typeof import('./components/btn-rounded-circle.vue')['default']
     copy: typeof import('./components/navigation-v2/nav-top-bar-global copy.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
+    DomainDetailList: typeof import('./components/domain-detail-list.vue')['default']
     FormGateway: typeof import('./components/form/form-gateway.vue')['default']
     GatewayBadge: typeof import('./components/gateway-badge.vue')['default']
     GatewayCredentials: typeof import('./components/gateway-credentials.vue')['default']

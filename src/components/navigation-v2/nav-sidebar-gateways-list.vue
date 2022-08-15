@@ -20,6 +20,9 @@ const GatewaysStore = useGatewaysStore()
         <v-list-item class="ma-1 justify-center">
           <btn-rounded-circle>
             <v-icon icon="mdi-plus" />
+            <v-tooltip location="right" activator="parent">
+              Add Gateway
+            </v-tooltip>
           </btn-rounded-circle>
         </v-list-item>
       </perfect-scrollbar>
