@@ -1,7 +1,11 @@
+<script>
+export default {
+  inheritAttrs: false,
+}
+</script>
+
 <script setup lang="ts">
-const btnProps = defineProps<{
-  color?: string
-}>()
+
 </script>
 
 <template>
@@ -12,8 +16,7 @@ const btnProps = defineProps<{
       width="48"
       variant="outlined"
       :rounded="isHovering ? 'rounded-xl' : 'circle'"
-      v-bind="props"
-      :color="btnProps.color"
+      v-bind="{ ...props, ...$attrs }"
     >
       <slot />
     </v-btn>

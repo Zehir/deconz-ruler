@@ -6,7 +6,9 @@ import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
 export const useGatewaysStore = defineStore('gateways', () => {
   const credentials = reactive<Record<string, GatewayCredentials>>({})
   const gateway = reactive<Record<string, ReturnType<typeof useGateway>>>({})
+  const activeGatewayID = ref<string | null>(null)
 
+  // Sync gateway data with credentials
   watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
     if (oldValue < currentValue) {
       // Credentials was added
@@ -36,7 +38,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
     return gateway[gatewayID].getData(domain, typeof resource === 'string' ? parseInt(resource) : resource).value
   })
 
-  return { credentials, gateway, getGateway, getData }
+  return { credentials, gateway, activeGatewayID, getGateway, getData }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473
