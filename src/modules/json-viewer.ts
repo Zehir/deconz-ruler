@@ -5,9 +5,6 @@ import { type UserModule } from '~/types'
 
 // Setup Json Viewer
 // https://www.npmjs.com/package/vue-json-viewer
-export const install: UserModule = ({ isClient, app }) => {
-  if (!isClient)
-    return
-
+export const install: UserModule = ({ app }) => {
   app.use(JsonViewer)
 }
