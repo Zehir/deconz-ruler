@@ -29,3 +29,4 @@ const GatewaysStore = useGatewaysStore()
     </v-list>
   </v-navigation-drawer>
 </template>
+

@@ -6,9 +6,11 @@
       <nav-sidebar-gateways-details />
       <nav-topbar-details />
       <nav-sidebar-items-details />
-      <v-main>
-        <router-view />
-      </v-main>
+      <perfect-scrollbar>
+        <v-main>
+          <router-view />
+        </v-main>
+      </perfect-scrollbar>
     </v-layout>
   </client-only>
 </template>

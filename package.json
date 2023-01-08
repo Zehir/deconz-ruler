@@ -42,6 +42,7 @@
     "@types/markdown-it-link-attributes": "^3.0.1",
     "@types/nprogress": "^0.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
+    "@volar-plugins/prettyhtml": "^1.0.3",
     "@vue-macros/volar": "^0.5.8",
     "@vue/test-utils": "^2.2.7",
     "critters": "^0.0.16",

@@ -12,31 +12,23 @@ const items = ref([
 </script>
 
 <template>
-  <v-navigation-drawer width="240" color="grey-darken-1" permanent>
+  <v-navigation-drawer width="240" permanent>
     <template v-if="GatewaysStore.activeGateway">
-      <v-menu>
-        <template #activator="{ props }">
-          <v-btn
-            block
-            height="48"
-            append-icon="mdi-chevron-down"
-            v-bind="props"
-          >
-            {{ GatewaysStore.activeGateway.credentials.name }}
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-            <v-list-item-title>Hello</v-list-item-title>
-          </v-list-item>
-        </v-list>
-      </v-menu>
+      <v-card :title="GatewaysStore.activeGateway.credentials.name" />
 
+      <v-list>
+        <v-list-item>
+          <v-list-item-title># Settings</v-list-item-title>
+        </v-list-item>
+      </v-list>
+
+      <!--
       <domain-detail-list
         v-for="(data, name) in GatewaysStore.activeGateway.data"
         :key="name"
         :domain="name as keyof GatewayData"
       />
+      -->
     </template>
   </v-navigation-drawer>
 </template>

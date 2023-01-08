@@ -26,9 +26,6 @@ const acquireUsingPassword = reactive({
   errorMessage: '',
 })
 
-function test(index) {
-  return `123${index}`
-}
 async function acquireAPIKeyUsingPassword() {
   /*
   acquireUsingPassword.loading = true
@@ -137,6 +134,9 @@ onBeforeMount(() => {
       v-model="tab"
       grow
     >
+      <v-tab value="general">
+        General
+      </v-tab>
       <v-tab value="address">
         Address
       </v-tab>
@@ -147,6 +147,15 @@ onBeforeMount(() => {
 
     <v-form>
       <v-card-text>
+        <v-window v-model="tab">
+          <v-window-item value="general">
+            <p>
+              You can set multiple API and Websocket Address for the same gateway.
+              <br>
+              WIP for now only the first one is used.
+            </p>
+          </v-window-item>
+        </v-window>
         <v-window v-model="tab">
           <v-window-item value="address">
             <p>
