@@ -2,11 +2,17 @@
 import { useGatewaysStore } from '~/stores/gateways'
 
 const GatewaysStore = useGatewaysStore()
+
+const list = $ref()
+
+onMounted(() => {
+  console.log('Mouted', list)
+})
 </script>
 
 <template>
   <v-navigation-drawer width="72" permanent>
-    <v-list nav class="d-flex flex-column pa-0" height="100%">
+    <VList id="#nav-level-one-list" ref="list" nav class="d-flex flex-column pa-0" height="100%">
       <perfect-scrollbar>
         <template
           v-for="item in GatewaysStore.credentials"
@@ -26,7 +32,7 @@ const GatewaysStore = useGatewaysStore()
           </btn-rounded-circle>
         </v-list-item>
       </perfect-scrollbar>
-    </v-list>
+    </VList>
   </v-navigation-drawer>
 </template>
 

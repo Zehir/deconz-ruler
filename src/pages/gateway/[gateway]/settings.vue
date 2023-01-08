@@ -23,9 +23,6 @@ const { t } = useI18n()
 
 <route lang="json">
 {
-  "name": "Gateway detail",
-  "meta": {
-    "breadcrumbs": "resource-path"
-  }
+  "name": "Settings"
 }
 </route>

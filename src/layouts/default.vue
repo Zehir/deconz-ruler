@@ -1,10 +1,9 @@
 <template>
   <v-layout>
     <nav-topbar-global />
-    <nav-sidebar-gateways-list />
-    <nav-sidebar-gateways-details />
+    <nav-sidebar-level-one />
+    <nav-sidebar-level-two />
     <nav-topbar-details />
-    <nav-sidebar-items-details />
     <perfect-scrollbar>
       <v-main>
         <router-view />

@@ -12,12 +12,6 @@ const GatewaysStore = useGatewaysStore()
 
 <template>
   <v-container fluid>
-    <v-btn to="/gateway/">
-      Gateways
-    </v-btn>
-
-    <form-gateway mode="edit" gateway-id="00212EFFFF09701A" />
-
-    {{ GatewaysStore.credentials }}
+    Home
   </v-container>
 </template>
