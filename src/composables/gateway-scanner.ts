@@ -1,8 +1,7 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
-import type { Config, GatewayURI } from '~/interfaces/deconz'
+import type { Config, GatewayCredentials, GatewayURI } from '~/interfaces/deconz'
 import { DiscoveryURL } from '~/interfaces/deconz'
-import { useGatewaysStore } from '~/stores/gateways'
 
 export interface PhosconDiscoveryEntry {
   id: string
@@ -14,7 +13,7 @@ export interface PhosconDiscoveryEntry {
 }
 
 export function useGatewayScanner() {
-  const credentials = useGatewaysStore().credentials
+  const credentials = reactive<Record<string, GatewayCredentials>>({})
   const logs = ref('')
   const found = ref(0)
   let _axiosClient: AxiosInstance | null = null
@@ -112,5 +111,5 @@ export function useGatewayScanner() {
     }
   }
 
-  return { logs, scan }
+  return { credentials, logs, scan }
 }

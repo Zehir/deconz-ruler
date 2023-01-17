@@ -1,11 +1,11 @@
+<script setup lang="ts">
+
+</script>
+
 <script>
 export default {
   inheritAttrs: false,
 }
-</script>
-
-<script setup lang="ts">
-
 </script>
 
 <template>

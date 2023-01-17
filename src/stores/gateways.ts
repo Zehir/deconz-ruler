@@ -5,46 +5,40 @@ import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
 
 export const useGatewaysStore = defineStore('gateways', () => {
   const credentials = reactive<Record<string, GatewayCredentials>>({})
-  const gateway = reactive<Record<string, ReturnType<typeof useGateway>>>({})
-  const activeGatewayID = ref<string | null>(null)
+  const gateways = reactive<Record<string, ReturnType<typeof useGateway>>>({})
 
+  // const test = computed(() => 1)
   // Sync gateway data with credentials
   watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
     if (oldValue < currentValue) {
       // Credentials was added
       Object.keys(credentials).forEach((id) => {
-        if (!gateway[id])
-          gateway[id] = useGateway(toRef(credentials, id))
+        if (!gateways[id])
+          gateways[id] = useGateway(toRef(credentials, id))
       })
     }
     else {
       // Credentials was deleted
-      Object.keys(gateway).forEach((id) => {
+      Object.keys(gateways).forEach((id) => {
         if (!credentials[id])
-          gateway[id].destroy()
+          gateways[id].destroy()
       })
     }
   })
 
   const getGateway = (gatewayID: string) => computed<null | ReturnType<typeof useGateway>>(() => {
-    if (!gateway[gatewayID])
+    if (!gateways[gatewayID])
       return null
-    return gateway[gatewayID]
-  })
-
-  const activeGateway = computed(() => {
-    if (!activeGatewayID.value)
-      return null
-    return getGateway(activeGatewayID.value).value
+    return gateways[gatewayID]
   })
 
   const getData = (gatewayID: string, domain: keyof GatewayData, resource?: number | string) => computed(() => {
-    if (!gateway[gatewayID])
+    if (!gateways[gatewayID])
       return {}
-    return gateway[gatewayID].getData(domain, typeof resource === 'string' ? parseInt(resource) : resource).value
+    return gateways[gatewayID].getData(domain, typeof resource === 'string' ? parseInt(resource) : resource).value
   })
 
-  return { credentials, gateway, activeGatewayID, activeGateway, getGateway, getData }
+  return { credentials, gateway: gateways, getGateway, getData }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473
@@ -57,11 +51,9 @@ export const useGatewaysStore = defineStore('gateways', () => {
 })
 
 // https://pinia.vuejs.org/cookbook/hot-module-replacement.html
-/*
-if (import.meta.hot)
-  import.meta.hot.accept(acceptHMRUpdate(useGatewaysStore, import.meta.hot))
-*/
+// if (import.meta.hot)
+//  import.meta.hot.accept(acceptHMRUpdate(useGatewaysStore, import.meta.hot))
 // Workaround for https://github.com/prazdevs/pinia-plugin-persistedstate/issues/79
 // This will force a webpage refrech on edit
 if (import.meta.hot)
-  import.meta.hot.accept(import.meta.hot.invalidate)
+  import.meta.hot.invalidate()

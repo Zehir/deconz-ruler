@@ -31,17 +31,29 @@ export interface GatewayData {
 export type AlarmSystem = Record<string, any>
 
 export interface Config {
+  // The version of the API used by the device
   apiversion: string
+  // The unique identifier of the bridge
   bridgeid: string
+  // The version of the datastore used by the device
   datastoreversion: string
+  // The name of the device
   devicename: string
+  // Indicates if the device is in factory new state
   factorynew: boolean
+  // The MAC address of the device
   mac: string
+  // The model identifier of the device
   modelid: string
+  // The user-defined name of the device
   name: string
+  // The identifier of the bridge that this device replaces (if applicable)
   replacesbridgeid: string | null
+  // The identifier of the starter kit (if applicable)
   starterkitid: string
+  // The version of the software used by the device
   swversion: string
+  // Allows for additional properties to be added to the interface in the future
   [key: string]: any
 }
 

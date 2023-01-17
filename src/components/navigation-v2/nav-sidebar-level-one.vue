@@ -5,29 +5,38 @@ const GatewaysStore = useGatewaysStore()
 
 const list = $ref()
 
+/*
 onMounted(() => {
   console.log('Mouted', list)
 })
+*/
 </script>
 
 <template>
   <v-navigation-drawer width="72" permanent>
     <VList id="#nav-level-one-list" ref="list" nav class="d-flex flex-column pa-0" height="100%">
       <perfect-scrollbar>
-        <template
-          v-for="item in GatewaysStore.credentials"
-          :key="item.id"
-        >
-          <gateway-badge
-            v-model="GatewaysStore.credentials[item.id]"
-          />
+        <template v-for="item in GatewaysStore.credentials" :key="item.id">
+          <gateway-badge v-model="GatewaysStore.credentials[item.id]" />
         </template>
         <v-divider />
         <v-list-item class="ma-1 justify-center">
-          <btn-rounded-circle>
-            <v-icon icon="mdi-plus" />
+          <dialog-add-gateway>
+            <template #btn="{ props: btnProps }">
+              <btn-rounded-circle v-bind="{ ...btnProps }">
+                <v-icon icon="mdi-plus" size="x-large" />
+                <v-tooltip location="right" activator="parent">
+                  Add Gateway
+                </v-tooltip>
+              </btn-rounded-circle>
+            </template>
+          </dialog-add-gateway>
+        </v-list-item>
+        <v-list-item class="ma-1 justify-center">
+          <btn-rounded-circle to="/gateway/find">
+            <v-icon icon="mdi-compass" size="x-large" />
             <v-tooltip location="right" activator="parent">
-              Add Gateway
+              Find Gateway
             </v-tooltip>
           </btn-rounded-circle>
         </v-list-item>
