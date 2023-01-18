@@ -15,7 +15,6 @@ export interface PhosconDiscoveryEntry {
 export function useGatewayScanner() {
   const credentials = reactive<Record<string, GatewayCredentials>>({})
   const logs = ref('')
-  const found = ref(0)
   let _axiosClient: AxiosInstance | null = null
 
   const axiosClient = function () {
@@ -47,25 +46,15 @@ export function useGatewayScanner() {
   }
 
   async function scan() {
-    found.value = 0
     logs.value = 'Scanning gateways...'
+    const Guesses: { ip: string; port: number }[] = []
 
     logs.value = `Fetching data from '${DiscoveryURL}'.`
-
     try {
       const discover = await axiosClient().get<PhosconDiscoveryEntry[]>(DiscoveryURL)
       if (discover.data) {
-        found.value += discover.data.length
-        logs.value = `Found ${found.value} gateways.`
         discover.data.forEach((element) => {
-          updateCredentials(element.id, element.name, {
-            type: 'api',
-            address: `http://${element.internalipaddress}:${element.internalport}`,
-          })
-          updateCredentials(element.id, element.name, {
-            type: 'api',
-            address: `http://${element.publicipaddress}:${element.internalport}`,
-          })
+          Guesses.push({ ip: element.internalipaddress, port: element.internalport })
         })
       }
       else { logs.value = `No data fetched from '${DiscoveryURL}'.` }
@@ -75,7 +64,6 @@ export function useGatewayScanner() {
       console.error(error)
     }
 
-    const Guesses: { ip: string; port: number }[] = []
     // Try using localhost with various ports.
     logs.value = 'Add 3 guesses from localhost.';
     [80, 443, 8080].forEach((port) => {
@@ -84,20 +72,21 @@ export function useGatewayScanner() {
 
     // Try using homeassistant address.
     logs.value = 'Add 2 guesses from homeassistant.';
-    ['core-deconz.local.hass.io', 'homeassistant.local'].forEach((host) => {
+    [
+      'core-deconz.local.hass.io',
+      'homeassistant.local',
+    ].forEach((host) => {
       Guesses.push({ ip: host, port: 40850 })
     })
 
     logs.value = `Processing ${Guesses.length} guesses...`
 
+    console.log('Scanning for gateways, you may see errors below but just ignore them, it\'s just because there was no gateway there.')
     await Promise.all(Guesses.map(FindGatewayAt))
-
-    logs.value = `Found ${found.value} gateways.`
   }
 
   async function FindGatewayAt(guess: { ip: string; port: number }): Promise<void> {
     try {
-      found.value += 1
       const address = `http://${guess.ip}:${guess.port}`
       logs.value = `Trying to find gateway at '${address}'.`
       const request = await axiosClient().get<Config>(`${address}/api/config`)
@@ -107,7 +96,7 @@ export function useGatewayScanner() {
       }
     }
     catch (error) {
-      // Errors happen a lot here, it's not worth catching them
+      // Errors happen a lot here, it's not worth catching them.
     }
   }
 

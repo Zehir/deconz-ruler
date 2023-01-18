@@ -17,7 +17,7 @@
   "dependencies": {
     "@vueuse/core": "^9.11.0",
     "@vueuse/head": "^1.0.22",
-    "axios": "^1.2.2",
+    "axios": "^1.2.3",
     "binary-parser": "^2.2.1",
     "color": "^4.2.3",
     "nprogress": "^0.2.0",
@@ -32,7 +32,7 @@
     "vue-json-viewer": "^3.0.4",
     "vue-router": "^4.1.6",
     "vue3-perfect-scrollbar": "^1.6.1",
-    "vuetify": "^3.1.1"
+    "vuetify": "^3.1.2"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^0.33.1",

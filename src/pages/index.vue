@@ -15,3 +15,12 @@ const GatewaysStore = useGatewaysStore()
     Home
   </v-container>
 </template>
+
+<route lang="json">
+{
+  "meta": {
+    "breadcrumbs": "none"
+  }
+}
+</route>
+

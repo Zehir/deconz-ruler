@@ -16,6 +16,7 @@ declare module '@vue/runtime-core' {
     FormGateway: typeof import('./components/form/form-gateway.vue')['default']
     GatewayBadge: typeof import('./components/gateway-badge.vue')['default']
     GatewayCredentials: typeof import('./components/gateway-credentials.vue')['default']
+    NavBreadcrumbs: typeof import('./components/navigation-v2/nav-breadcrumbs.vue')['default']
     NavSidebar: typeof import('./components/navigation/nav-sidebar.vue')['default']
     NavSidebar1Gateways: typeof import('./components/navigation-v2/nav-sidebar-1-gateways.vue')['default']
     NavSidebarGateways: typeof import('./components/navigation-v2/nav-sidebar-gateways.vue')['default']

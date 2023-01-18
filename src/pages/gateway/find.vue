@@ -13,6 +13,8 @@ const Add = () => {
 }
 
 const { t } = useI18n()
+
+onMounted(Scanner.scan)
 </script>
 
 <template>
@@ -40,8 +42,14 @@ const { t } = useI18n()
   -->
   <br>
 
-  <p v-if="GatewaysStore.credentials">
-    <json-viewer :value="GatewaysStore.credentials" :expand-depth="5" />
+  <p v-if="Scanner.credentials">
+    <json-viewer :value="Scanner.credentials" :expand-depth="5" />
+  </p>
+
+  <hr>
+
+  <p v-if="Scanner.credentials">
+    <json-viewer :value="Scanner.credentials" :expand-depth="5" />
   </p>
 
   <p v-if="Scanner.logs.value.length > 0">
@@ -50,4 +58,13 @@ const { t } = useI18n()
 
   <br>
 </template>
+
+<route lang="json">
+{
+  "name": "Find Gateway",
+  "meta": {
+    "hideLevelTwoSidebar": true
+  }
+}
+</route>
 
