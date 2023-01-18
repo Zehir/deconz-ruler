@@ -86,5 +86,6 @@ const breadcrumbs = computed(() => {
       </v-breadcrumbs>
       <v-divider />
     </div>
+    <portal-target name="nav-topbar-details" multiple />
   </v-app-bar>
 </template>
