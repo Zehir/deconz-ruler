@@ -23,6 +23,7 @@
     "nprogress": "^0.2.0",
     "pinia": "^2.0.29",
     "pinia-plugin-persistedstate": "^3.0.2",
+    "portal-vue": "^3.0.0",
     "postcss": "^8.4.21",
     "prism-theme-vars": "^0.2.4",
     "vite-plugin-vuetify": "^1.0.1",

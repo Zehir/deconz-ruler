@@ -30,6 +30,7 @@ specifiers:
   pinia: ^2.0.29
   pinia-plugin-persistedstate: ^3.0.2
   pnpm: ^7.25.0
+  portal-vue: ^3.0.0
   postcss: ^8.4.21
   prism-theme-vars: ^0.2.4
   sass: ^1.57.1
@@ -66,6 +67,7 @@ dependencies:
   nprogress: 0.2.0
   pinia: 2.0.29_prq2uz4lho2pwp6irk4cfkrxwu
   pinia-plugin-persistedstate: 3.0.2_pinia@2.0.29
+  portal-vue: 3.0.0_vue@3.2.45
   postcss: 8.4.21
   prism-theme-vars: 0.2.4
   vite-plugin-vuetify: 1.0.1_l54dx3ntqreabui4gzakb57alm
@@ -7493,6 +7495,18 @@ packages:
     engines: {node: '>=14.6'}
     hasBin: true
     dev: true
+
+  /portal-vue/3.0.0_vue@3.2.45:
+    resolution: {integrity: sha512-9eprMxNURLx6ijbcgkWjYNcTWJYu/H8QF8nyAeBzOmk9lKCea01BW1hYBeLkgz+AestmPOvznAEOFmNuO4Adjw==}
+    engines: {node: '>=14.19'}
+    peerDependencies:
+      vue: ^3.0.4
+    peerDependenciesMeta:
+      vue:
+        optional: true
+    dependencies:
+      vue: 3.2.45
+    dev: false
 
   /postcss-calc/8.2.4_postcss@8.4.21:
     resolution: {integrity: sha512-SmWMSJmB8MRnnULldx0lQIyhSNvuDl9HfrZkaqqE/WHAhToYsAvDq+yAsA/kIyINDszOp3Rh0GFoNuH5Ypsm3Q==}
