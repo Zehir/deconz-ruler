@@ -9,6 +9,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Breadcrumbs: typeof import('./components/navigation/breadcrumbs.vue')['default']
     BtnRoundedCircle: typeof import('./components/btn-rounded-circle.vue')['default']
+    CardGateway: typeof import('./components/card/card-gateway.vue')['default']
+    CardGatewayAdd: typeof import('./components/card/card-gateway-add.vue')['default']
     copy: typeof import('./components/navigation-v2/nav-top-bar-global copy.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     DialogAddGateway: typeof import('./components/dialog/dialog-add-gateway.vue')['default']

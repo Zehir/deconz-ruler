@@ -1,21 +1,22 @@
 <script setup lang="ts">
 import { useGatewaysStore } from '~/stores/gateways'
 import { useGatewayScanner } from '~/composables/gateway-scanner'
+import type { GatewayCredentials } from '~/interfaces/deconz'
 
-/*
-const props = defineProps<{
-}>()
-*/
+const props = withDefaults(defineProps<{
+  initialState?: GatewayCredentials
+}>(), {
+})
 
 const emit = defineEmits<{
   (e: 'close'): void
 }>()
+
 const GatewaysStore = useGatewaysStore()
 const Scanner = useGatewayScanner()
 
 const error = ref('')
-const state = reactive({
-})
+const state = reactive<Partial<GatewayCredentials>>({})
 
 const create = async () => {
 
@@ -55,15 +56,9 @@ const close = () => {
               </v-alert>
             </v-col>
 
-            <v-col :cols="12">
-              <p v-if="Scanner.logs.value.length > 0">
-                {{ Scanner.logs }}
-              </p>
-            </v-col>
-
             <!-- Debug -->
             <v-col :cols="12">
-              <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
+              <json-viewer :value="state" :expand-depth="3" />
             </v-col>
           </v-row>
         </v-card-text>
