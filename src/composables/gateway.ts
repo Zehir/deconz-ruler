@@ -54,15 +54,15 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }
 
   // Delay the connection for 1.5 seconds.
-  useTimeoutFn(() => {
+  const { stop } = useTimeoutFn(() => {
     connect()
   }, 1500)
 
   const destroy = () => {
     isConnected.value = false
+    stop()
     gatewayPooling.destroy()
     gatewayWebsocket.destroy()
-    delete gatewayStore.gateway[credentials.value.id]
   }
 
   return {
