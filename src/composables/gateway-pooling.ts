@@ -36,8 +36,13 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
 
   watch(gatewayAPIUri, (newURI) => {
     endpoint.value = '/config'
-    if (newURI.length !== 0)
+    if (newURI.length === 0) {
+      state.setError('api_address', 'Invalid API address')
+    }
+    else {
       pooling.resume()
+      state.clearError('api_address')
+    }
   }, { immediate: true })
 
   watch(shell.data, (newData) => {
@@ -57,7 +62,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
         data.value = { config: newData }
         // If linkbutton value is present, the api key is valid
         if (newData.linkbutton === undefined) {
-          state.setError('api_key', 'Invalid api key')
+          state.setError('api_key', 'Invalid API key')
           pooling.pause()
         }
         else {

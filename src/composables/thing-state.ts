@@ -17,7 +17,7 @@ export function useThingState() {
   }
 
   const messages = computed(() => {
-    return Object.values(errors.value).join('\n')
+    return `${Object.values(errors.value).join(', ')}.`
   })
 
   return { errors, isOK, state, color, setError, clearError, messages }
