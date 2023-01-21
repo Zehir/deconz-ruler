@@ -1,70 +1,67 @@
 <script setup lang="ts">
-import { useGatewaysStore } from '~/stores/gateways'
 import { useGatewayScanner } from '~/composables/gateway-scanner'
 
-const GatewaysStore = useGatewaysStore()
 const Scanner = useGatewayScanner()
-
-const dialog = ref(false)
-
-const Add = () => {
-
-}
-
 const { t } = useI18n()
+
+onMounted(() => {
+  Scanner.scan()
+})
 </script>
 
 <template>
-  <v-btn @click="Scanner.scan">
-    Scan
-  </v-btn>
+  <portal to="nav-topbar-details">
+    <v-btn
+      :loading="Scanner.scanning.value"
+      :disabled="Scanner.scanning.value"
+      variant="tonal"
+      @click="Scanner.scan"
+    >
+      Scan for gateways
+      <template #loader>
+        Scanning &nbsp;
+        <v-progress-circular
+          indeterminate
+          size="23"
+          width="2"
+        />
+      </template>
+    </v-btn>
 
-  <!--
-  <v-dialog
-    v-model="dialog"
-    width="500"
-  >
-    <template #activator="{ props }">
-      <v-btn v-bind="props">
-        Add
-      </v-btn>
+    <dialog-find-gateway class="ma-2" variant="tonal">
+      Find by address
+    </dialog-find-gateway>
+  </portal>
+
+  <div class="d-flex flex-wrap">
+    <template
+      v-for="gateway in Scanner.gateways"
+      :key="gateway.credentials.id"
+    >
+      <card-gateway
+        :credentials="gateway.credentials"
+        :config="gateway.config"
+      />
     </template>
+  </div>
 
-    <form-gateway />
-  </v-dialog>
--->
-
-  <!--
-    <form-gateway mode="new" address="http://homeassistant.local:40850" api-key="2305677514" />
-  -->
-  <br>
-  <v-container fluid>
-    gateway/index.vue
-    <v-row dense>
-      <v-col :cols="12">
-        <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
-      </v-col>
-      <v-col
-        v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
-        :cols="12"
-      >
-        <gateway-credentials v-model="GatewaysStore.credentials[index]" />
-      </v-col>
-    </v-row>
-  </v-container>
-
-  <p v-if="Scanner.logs.value.length > 0">
-    {{ Scanner.logs }}
-  </p>
-
-  <br>
+  <v-expansion-panels>
+    <v-expansion-panel
+      title="Debug view"
+    >
+      <v-expansion-panel-text>
+        <json-viewer :value="Scanner.gateways" :expand-depth="3" />
+      </v-expansion-panel-text>
+    </v-expansion-panel>
+  </v-expansion-panels>
 </template>
 
 <route lang="json">
 {
-  "name": "Gateway index",
+  "name": "Gateways",
   "meta": {
-    "breadcrumbs": "resource-path"
+    "hideLevelTwoSidebar": true
   }
 }
 </route>
+

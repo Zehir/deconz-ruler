@@ -1,13 +1,12 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', () => {
-  /**
-   * UI
-   */
-  const showSidebar = ref(false)
+  const navigationTitle = 'Home'
+
+  const isGatewayRoute = computed(() => useRoute().params.gateway !== undefined)
 
   return {
-    showSidebar,
+    navigationTitle, isGatewayRoute,
   }
 })
 

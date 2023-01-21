@@ -1,6 +1,6 @@
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
-import type { Config, GatewayCredentials, GatewayURI } from '~/interfaces/deconz'
+import type { Config, GatewayCredentials } from '~/interfaces/deconz'
 import { DiscoveryURL } from '~/interfaces/deconz'
 
 export interface PhosconDiscoveryEntry {
@@ -13,8 +13,13 @@ export interface PhosconDiscoveryEntry {
 }
 
 export function useGatewayScanner() {
-  const credentials = reactive<Record<string, GatewayCredentials>>({})
+  const gateways = reactive<Record<string, {
+    credentials: GatewayCredentials
+    config: Partial<Config>
+  }>>({})
+
   const logs = ref('')
+  const scanning = ref(false)
   let _axiosClient: AxiosInstance | null = null
 
   const axiosClient = function () {
@@ -28,24 +33,28 @@ export function useGatewayScanner() {
     return _axiosClient
   }
 
-  function updateCredentials(id: string, name: string, uri: GatewayURI) {
-    if (credentials[id] === undefined) {
-      credentials[id] = {
-        id,
-        name,
-        apiKey: '',
-        URIs: [],
+  function updateData(address: string, data: Config) {
+    if (gateways[data.bridgeid] === undefined) {
+      gateways[data.bridgeid] = {
+        credentials: {
+          id: data.bridgeid,
+          name: '',
+          apiKey: '',
+          URIs: [],
+        },
+        config: {},
       }
     }
 
-    if (credentials[id].name !== name)
-      credentials[id].name = name
+    gateways[data.bridgeid].credentials.name = data.name
+    gateways[data.bridgeid].config = data
 
-    if (credentials[id].URIs.find(_uri => _uri.type === uri.type && _uri.address === uri.address) === undefined)
-      credentials[id].URIs.push(uri)
+    if (gateways[data.bridgeid].credentials.URIs.find(_uri => _uri.address === address) === undefined)
+      gateways[data.bridgeid].credentials.URIs.push({ type: 'api', address })
   }
 
   async function scan() {
+    scanning.value = true
     logs.value = 'Scanning gateways...'
     const Guesses: { ip: string; port: number }[] = []
 
@@ -73,8 +82,8 @@ export function useGatewayScanner() {
     // Try using homeassistant address.
     logs.value = 'Add 2 guesses from homeassistant.';
     [
-      'core-deconz.local.hass.io',
-      'homeassistant.local',
+      'core-deconz.local.hass.io', // For the docker network
+      'homeassistant.local', // For the local network
     ].forEach((host) => {
       Guesses.push({ ip: host, port: 40850 })
     })
@@ -82,17 +91,22 @@ export function useGatewayScanner() {
     logs.value = `Processing ${Guesses.length} guesses...`
 
     console.log('Scanning for gateways, you may see errors below but just ignore them, it\'s just because there was no gateway there.')
-    await Promise.all(Guesses.map(FindGatewayAt))
+    await Promise.all(Guesses.map(async (guess) => {
+      const address = getURI(guess)
+      const result = await findGatewayAt(address)
+      if (result !== undefined)
+        updateData(address, result)
+    }))
+
+    scanning.value = false
   }
 
-  async function FindGatewayAt(guess: { ip: string; port: number }): Promise<void> {
+  async function findGatewayAt(address: string): Promise<Config | undefined> {
     try {
-      const address = `http://${guess.ip}:${guess.port}`
-      logs.value = `Trying to find gateway at '${address}'.`
       const request = await axiosClient().get<Config>(`${address}/api/config`)
       if (request.data) {
         logs.value = `Found gateway ${request.data.name} at '${address}'.`
-        updateCredentials(request.data.bridgeid, request.data.name, { type: 'api', address })
+        return request.data
       }
     }
     catch (error) {
@@ -100,5 +114,9 @@ export function useGatewayScanner() {
     }
   }
 
-  return { credentials, logs, scan }
+  function getURI(guess: { ip: string; port: number }): string {
+    return `http://${guess.ip}:${guess.port}`
+  }
+
+  return { gateways, logs, scan, scanning, findGatewayAt }
 }

@@ -2,9 +2,10 @@ import { createFetch, get } from '@vueuse/core'
 import type { Ref } from 'vue'
 import type { GatewayData } from '~/interfaces/deconz'
 
-export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayData>) {
+export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<GatewayData>>) {
   const state = ref('unknown')
   const error = ref('')
+  const target = ref('/config')
   // Pooling
   const useGatewayFetch = createFetch({
     baseUrl: gatewayAPIUri,
@@ -13,7 +14,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayD
     },
   })
 
-  const shell = useGatewayFetch('/', {
+  const shell = useGatewayFetch(target, {
     immediate: false,
     refetch: true,
     afterFetch(ctx) {
@@ -35,6 +36,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayD
   }, 30000, { immediate: false })
 
   watch(gatewayAPIUri, (newURI) => {
+    target.value = '/config'
     if (newURI.length !== 0)
       pooling.resume()
   }, { immediate: true })
@@ -45,8 +47,26 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayD
       console.warn(shell.error)
       return
     }
-    // Todo make a better patch method
-    data.value = newData
+
+    switch (target.value) {
+      case '/':
+        // Todo make a better patch method
+        data.value = newData
+        break
+
+      case '/config':
+        data.value = { config: newData }
+        // If linkbutton value is present, the api key is valid
+        if (newData.linkbutton === undefined) {
+          state.value = 'error'
+          error.value = 'Invalid api key'
+          pooling.pause()
+        }
+        else {
+          target.value = '/'
+        }
+        break
+    }
   })
 
   const destroy = () => {
@@ -54,5 +74,5 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<GatewayD
     shell.abort()
   }
 
-  return { state, error, shell, destroy }
+  return { state, error, shell, destroy, isActive: pooling.isActive }
 }

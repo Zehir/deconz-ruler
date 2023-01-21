@@ -5,6 +5,7 @@ export const DefaultPassword = 'delight'
 export const GatewayURITypes = ['api', 'websocket'] as const
 
 export interface GatewayCredentials {
+  // TODO Remove id and name
   id: string
   name: string
   apiKey: string

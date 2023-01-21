@@ -55,6 +55,7 @@ export default defineConfig({
         '@vueuse/core',
       ],
       dts: 'src/auto-imports.d.ts',
+      vueTemplate: true,
     }),
 
     // https://github.com/antfu/unplugin-vue-components
@@ -94,8 +95,8 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.svg', 'safari-pinned-tab.svg'],
       manifest: {
-        name: 'Vitesse',
-        short_name: 'Vitesse',
+        name: 'Deconz-Ruler',
+        short_name: 'Deconz-Ruler',
         theme_color: '#ffffff',
         icons: [
           {
@@ -150,6 +151,8 @@ export default defineConfig({
       'workbox-window',
       /vue-i18n/,
       'vuetify',
+      '@vuelidate/core', // https://github.com/vuelidate/vuelidate/issues/1111
+
     ],
   },
 

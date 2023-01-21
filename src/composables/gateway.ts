@@ -9,20 +9,10 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   // Data
   const gatewayStore = useGatewaysStore()
   const gatewayAPIUri = ref('')
+  const gatewayAPIUriStates = ref({})
   const gatewayWebsocketUri = ref('')
-  const isConnected = ref(false)
 
-  const data = ref<GatewayData>({
-    alarmsystems: {},
-    config: undefined,
-    groups: {},
-    lights: {},
-    resourcelinks: {},
-    rules: {},
-    scenes: {},
-    schedules: {},
-    sensors: {},
-  })
+  const data = ref<Partial<GatewayData>>({})
 
   const gatewayPooling = useGatewayPooling(gatewayAPIUri, data)
   const gatewayWebsocket = useGatewayWebsocket(gatewayWebsocketUri, data)
@@ -44,7 +34,6 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }
 
   const connect = () => {
-    isConnected.value = true
     const apiURI = credentials.value.URIs.find(_uri => _uri.type === 'api')
     if (apiURI !== undefined)
       gatewayAPIUri.value = `${apiURI.address}/api/${credentials.value.apiKey}/`
@@ -59,7 +48,6 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }, 1500)
 
   const destroy = () => {
-    isConnected.value = false
     stop()
     gatewayPooling.destroy()
     gatewayWebsocket.destroy()

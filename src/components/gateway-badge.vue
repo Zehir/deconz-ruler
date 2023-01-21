@@ -5,18 +5,14 @@ import type { GatewayCredentials } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
 
 const props = withDefaults(defineProps<{
-  modelValue: GatewayCredentials
+  credentials: GatewayCredentials
 }>(), {
 })
 
 const GatewaysStore = useGatewaysStore()
 
-const active = computed(() => {
-  return props.modelValue.id === GatewaysStore.activeGatewayID
-})
-
 const badgeColor = computed(() => {
-  return Color(`#${props.modelValue.id.substring(10)}`)
+  return Color(`#${props.credentials.id.substring(10)}`)
     .lightness(80)
     .hex()
 })
@@ -25,13 +21,12 @@ const badgeColor = computed(() => {
 <template>
   <v-list-item class="ma-1 justify-center">
     <btn-rounded-circle
-      :active="active"
       :color="badgeColor"
-      @click="GatewaysStore.activeGatewayID = props.modelValue.id"
+      :to="`/gateway/${props.credentials.id}`"
     >
-      {{ props.modelValue.name.substring(0, 1) }}
+      {{ props.credentials.name.substring(0, 1) }}
       <v-tooltip location="right" activator="parent">
-        {{ props.modelValue.name }}
+        {{ props.credentials.name }}
       </v-tooltip>
     </btn-rounded-circle>
   </v-list-item>

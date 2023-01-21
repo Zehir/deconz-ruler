@@ -5,8 +5,9 @@ import { useGatewaysStore } from '~/stores/gateways'
 const { t } = useI18n()
 
 // const AppStore = inject('AppStore') as ReturnType<typeof useAppStore>
-const AppStore = useAppStore()
+const App = useAppStore()
 
+App.navigationTitle = 'Home'
 const GatewaysStore = useGatewaysStore()
 </script>
 

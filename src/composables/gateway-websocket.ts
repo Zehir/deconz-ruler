@@ -1,7 +1,7 @@
 import type { Ref } from 'vue'
 import type { GatewayData, Group, Light, Sensor, WebSocketEvent } from '~/interfaces/deconz'
 
-export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<GatewayData>) {
+export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<Partial<GatewayData>>) {
   const currentEvent = ref('{}')
   const websocket: Ref<ReturnType<typeof useWebSocket> | undefined> = ref(undefined)
 

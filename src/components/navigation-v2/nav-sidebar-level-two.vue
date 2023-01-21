@@ -1,15 +1,21 @@
 <script setup lang="ts">
+import { useAppStore } from '~/stores/app'
+
 const route = useRoute()
 
 const drawer = computed(() => route.meta.hideLevelTwoSidebar !== true)
+
+const App = useAppStore()
 </script>
 
 <template>
   <div>
     <v-navigation-drawer v-model="drawer" width="240" permanent>
-      <portal-target name="nav-sidebar-level-two" multiple />
+      <v-toolbar height="48" :title="App.navigationTitle" />
+      <div v-if="App.isGatewayRoute">
+        <spot-gateway-state />
+      </div>
       <v-list id="#nav-level-two-list">
-        <portal-target name="nav-sidebar-level-two-list" multiple />
         <!--
         <v-list-item>
           <v-list-item-title># Settings</v-list-item-title>

@@ -14,6 +14,7 @@ declare module '@vue/runtime-core' {
     copy: typeof import('./components/navigation-v2/nav-top-bar-global copy.vue')['default']
     Counter: typeof import('./components/Counter.vue')['default']
     DialogAddGateway: typeof import('./components/dialog/dialog-add-gateway.vue')['default']
+    DialogFindGateway: typeof import('./components/dialog/dialog-find-gateway.vue')['default']
     DomainDetailList: typeof import('./components/domain-detail-list.vue')['default']
     FormGateway: typeof import('./components/form/form-gateway.vue')['default']
     GatewayBadge: typeof import('./components/gateway-badge.vue')['default']
@@ -29,11 +30,13 @@ declare module '@vue/runtime-core' {
     NavSidebarLevelOne: typeof import('./components/navigation-v2/nav-sidebar-level-one.vue')['default']
     NavSidebarLevelThree: typeof import('./components/navigation-v2/nav-sidebar-level-three.vue')['default']
     NavSidebarLevelTwo: typeof import('./components/navigation-v2/nav-sidebar-level-two.vue')['default']
+    NavSidebarLevelTwoGateway: typeof import('./components/navigation-v2/nav-sidebar-level-two-gateway.vue')['default']
     NavTopbar: typeof import('./components/navigation/nav-topbar.vue')['default']
     NavTopbarDetails: typeof import('./components/navigation-v2/nav-topbar-details.vue')['default']
     NavTopbarGlobal: typeof import('./components/navigation-v2/nav-topbar-global.vue')['default']
     NavTopBarGlobal: typeof import('./components/navigation-v2/nav-top-bar-global.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SpotGatewayState: typeof import('./components/spot/spot-gateway-state.vue')['default']
   }
 }

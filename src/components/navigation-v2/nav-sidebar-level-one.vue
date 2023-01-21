@@ -25,9 +25,10 @@ onMounted(() => {
       </v-list-item>
       <perfect-scrollbar>
         <template v-for="item in GatewaysStore.credentials" :key="item.id">
-          <gateway-badge v-model="GatewaysStore.credentials[item.id]" />
+          <gateway-badge :credentials="GatewaysStore.credentials[item.id]" />
         </template>
         <v-divider />
+        <!--
         <v-list-item class="ma-1 justify-center">
           <dialog-add-gateway>
             <template #btn="{ props: btnProps }">
@@ -40,11 +41,12 @@ onMounted(() => {
             </template>
           </dialog-add-gateway>
         </v-list-item>
+        -->
         <v-list-item class="ma-1 justify-center">
-          <btn-rounded-circle to="/gateway/find">
+          <btn-rounded-circle to="/gateway">
             <v-icon icon="mdi-compass" size="x-large" />
             <v-tooltip location="right" activator="parent">
-              Find Gateway
+              Gateways
             </v-tooltip>
           </btn-rounded-circle>
         </v-list-item>
