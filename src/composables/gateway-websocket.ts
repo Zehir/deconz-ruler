@@ -1,20 +1,32 @@
 import type { Ref } from 'vue'
+import { useThingState } from './thing-state'
 import type { GatewayData, Group, Light, Sensor, WebSocketEvent } from '~/interfaces/deconz'
 
 export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<Partial<GatewayData>>) {
   const currentEvent = ref('{}')
   const websocket: Ref<ReturnType<typeof useWebSocket> | undefined> = ref(undefined)
 
-  const state = computed(() => {
-    if (websocket.value === undefined)
-      return 'disconnected'
-    switch (unref(websocket.value.status)) {
+  const state = useThingState()
+
+  if (gatewayWebsocketUri.value.length === 0)
+    state.setError('state', 'Invalid websocket address')
+
+  watch(websocket, (newValue) => {
+    if (newValue === undefined) {
+      state.setError('state', 'Disconnected')
+      return
+    }
+
+    switch (unref(newValue.status)) {
       case 'OPEN':
-        return 'connected'
+        state.clearError('state')
+        break
       case 'CONNECTING':
-        return 'pending'
+        state.setError('state', 'Connecting')
+        break
       case 'CLOSED':
-        return 'disconnected'
+        state.setError('state', 'Disconnected')
+        break
     }
   })
 

@@ -4,63 +4,42 @@ import { useGatewaysStore } from '~/stores/gateways'
 
 const App = useAppStore()
 const Gateway = useGatewaysStore()
-
-const state = computed(() => {
-  const gateway = Gateway.activeGateway?.value
-  const returnValue = {
-    api: { color: 'success', text: 'OK', tooltip: 'Connexion with API OK' },
-    websocket: { color: 'success', text: 'OK', tooltip: 'Connexion with Websocket OK' },
-  }
-  if (gateway === null || gateway === undefined) {
-    returnValue.api.color = 'grey'
-    returnValue.api.text = 'Unknown'
-    returnValue.api.tooltip = 'Unknown state'
-    returnValue.websocket.color = 'grey'
-    returnValue.websocket.text = 'Unknown'
-    returnValue.websocket.tooltip = 'Unknown state'
-    return returnValue
-  }
-
-  if (gateway.pooling.state === 'error') {
-    returnValue.api.color = 'error'
-    returnValue.api.text = 'Error'
-    returnValue.api.tooltip = gateway.pooling.error
-  }
-
-  return returnValue
-})
 </script>
 
 <template>
-  <div v-if="Gateway.activeGateway?.value !== null">
+  <div v-if="Gateway.activeGateway?.value !== null && Gateway.activeGateway?.value !== undefined">
     <v-tooltip
-      :text="state.api.tooltip"
+      :text="Gateway.activeGateway.value.pooling.state.messages"
+      :disabled="Gateway.activeGateway.value.pooling.state.isOK"
       location="bottom"
     >
       <template #activator="{ props }">
         <v-chip
           class="ma-2"
           label
-          v-bind="{ ...props, ... state.api }"
+          v-bind="{ ...props }"
+          :color="Gateway.activeGateway.value.pooling.state.color"
         >
           <v-icon start icon="mdi-api" />
-          {{ state.api.text }}
+          {{ Gateway.activeGateway.value.pooling.state.state }}
         </v-chip>
       </template>
     </v-tooltip>
 
     <v-tooltip
-      :text="state.websocket.tooltip"
+      :text="Gateway.activeGateway.value.websocket.state.messages"
+      :disabled="Gateway.activeGateway.value.websocket.state.isOK"
       location="bottom"
     >
       <template #activator="{ props }">
         <v-chip
           class="ma-2"
           label
-          v-bind="{ ...props, ... state.websocket }"
+          v-bind="{ ...props }"
+          :color="Gateway.activeGateway.value.websocket.state.color"
         >
           <v-icon start icon="mdi-link-variant" />
-          {{ state.websocket.text }}
+          {{ Gateway.activeGateway.value.websocket.state.state }}
         </v-chip>
       </template>
     </v-tooltip>

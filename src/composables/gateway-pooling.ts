@@ -1,11 +1,12 @@
 import { createFetch, get } from '@vueuse/core'
 import type { Ref } from 'vue'
+import { useThingState } from './thing-state'
 import type { GatewayData } from '~/interfaces/deconz'
 
 export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<GatewayData>>) {
-  const state = ref('unknown')
+  const state = useThingState()
   const error = ref('')
-  const target = ref('/config')
+  const endpoint = ref('/config')
   // Pooling
   const useGatewayFetch = createFetch({
     baseUrl: gatewayAPIUri,
@@ -14,17 +15,15 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
     },
   })
 
-  const shell = useGatewayFetch(target, {
+  const shell = useGatewayFetch(endpoint, {
     immediate: false,
     refetch: true,
     afterFetch(ctx) {
-      state.value = 'connected'
-      error.value = ''
+      state.clearError('fetch')
       return ctx
     },
     onFetchError(ctx) {
-      state.value = 'error'
-      error.value = ctx.error.message
+      state.setError('fetch', ctx.error.message)
       return ctx
     },
   }).get().json()
@@ -36,7 +35,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
   }, 30000, { immediate: false })
 
   watch(gatewayAPIUri, (newURI) => {
-    target.value = '/config'
+    endpoint.value = '/config'
     if (newURI.length !== 0)
       pooling.resume()
   }, { immediate: true })
@@ -48,7 +47,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
       return
     }
 
-    switch (target.value) {
+    switch (endpoint.value) {
       case '/':
         // Todo make a better patch method
         data.value = newData
@@ -58,12 +57,14 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
         data.value = { config: newData }
         // If linkbutton value is present, the api key is valid
         if (newData.linkbutton === undefined) {
-          state.value = 'error'
-          error.value = 'Invalid api key'
+          state.setError('api_key', 'Invalid api key')
           pooling.pause()
         }
         else {
-          target.value = '/'
+          // Next time fetch the good data and start pooling
+          endpoint.value = '/'
+          state.clearError('api_key')
+          pooling.resume()
         }
         break
     }
@@ -74,5 +75,5 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
     shell.abort()
   }
 
-  return { state, error, shell, destroy, isActive: pooling.isActive }
+  return { useGatewayFetch, state, error, shell, destroy, isActive: pooling.isActive }
 }
