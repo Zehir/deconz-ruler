@@ -7,10 +7,10 @@ const Gateway = useGatewaysStore()
 </script>
 
 <template>
-  <div v-if="Gateway.activeGateway?.value !== null && Gateway.activeGateway?.value !== undefined">
+  <div v-if="Gateway.activeGateway !== undefined">
     <v-tooltip
-      :text="Gateway.activeGateway.value.pooling.state.messages"
-      :disabled="Gateway.activeGateway.value.pooling.state.isOK"
+      :text="Gateway.activeGateway.pooling.state.messages.value"
+      :disabled="Gateway.activeGateway.pooling.state.isOK.value"
       location="bottom"
     >
       <template #activator="{ props }">
@@ -18,17 +18,17 @@ const Gateway = useGatewaysStore()
           class="ma-2"
           label
           v-bind="{ ...props }"
-          :color="Gateway.activeGateway.value.pooling.state.color"
+          :color="Gateway.activeGateway.pooling.state.color.value"
         >
           <v-icon start icon="mdi-api" />
-          {{ Gateway.activeGateway.value.pooling.state.state }}
+          {{ Gateway.activeGateway.pooling.state.state.value }}
         </v-chip>
       </template>
     </v-tooltip>
 
     <v-tooltip
-      :text="Gateway.activeGateway.value.websocket.state.messages"
-      :disabled="Gateway.activeGateway.value.websocket.state.isOK"
+      :text="Gateway.activeGateway.websocket.state.messages.value"
+      :disabled="Gateway.activeGateway.websocket.state.isOK.value"
       location="bottom"
     >
       <template #activator="{ props }">
@@ -36,10 +36,10 @@ const Gateway = useGatewaysStore()
           class="ma-2"
           label
           v-bind="{ ...props }"
-          :color="Gateway.activeGateway.value.websocket.state.color"
+          :color="Gateway.activeGateway.websocket.state.color.value"
         >
           <v-icon start icon="mdi-link-variant" />
-          {{ Gateway.activeGateway.value.websocket.state.state }}
+          {{ Gateway.activeGateway.websocket.state.state.value }}
         </v-chip>
       </template>
     </v-tooltip>
