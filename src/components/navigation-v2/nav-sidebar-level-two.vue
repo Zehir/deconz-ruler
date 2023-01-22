@@ -16,6 +16,7 @@ const App = useAppStore()
         <spot-gateway-state />
       </div>
       <v-list id="#nav-level-two-list">
+        <nav-sidebar-level-two-gateway v-if="App.isGatewayRoute" />
         <!--
         <v-list-item>
           <v-list-item-title># Settings</v-list-item-title>

@@ -11,6 +11,7 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   const gatewayAPIUri = ref('')
   const gatewayAPIUriStates = ref({})
   const gatewayWebsocketUri = ref('')
+  const id = computed(() => credentials.value.id)
 
   const data = ref<Partial<GatewayData>>({})
 
@@ -54,6 +55,7 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }
 
   return {
+    id,
     credentials,
     pooling: gatewayPooling,
     websocket: gatewayWebsocket,
