@@ -18,11 +18,14 @@ const { t } = useI18n()
 
 <template>
   File : gateway/[gateway]/settings.vue
-  Coucou
 </template>
 
 <route lang="json">
 {
-  "name": "Settings"
+  "name": "Settings",
+  "meta": {
+    "breadcrumbs": "resource-path"
+  }
 }
 </route>
+

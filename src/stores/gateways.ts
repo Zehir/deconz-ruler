@@ -30,7 +30,6 @@ export const useGatewaysStore = defineStore('gateways', () => {
   const activeGateway = computed(() => {
     if (typeof route.params.gateway !== 'string')
       return undefined
-    // return gateways[route.params.gateway]
     return toRef(gateways, route.params.gateway).value
   })
 

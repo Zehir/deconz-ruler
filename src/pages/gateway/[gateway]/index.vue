@@ -53,7 +53,7 @@ onMounted(() => {
 
 <route lang="json">
 {
-  "name": "Gateway detail",
+  "name": "Gateway index",
   "meta": {
     "breadcrumbs": "resource-path"
   }
