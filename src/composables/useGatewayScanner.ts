@@ -40,7 +40,7 @@ export function useGatewayScanner() {
           id: data.bridgeid,
           name: '',
           apiKey: '',
-          URIs: [],
+          URIs: { },
         },
         config: {},
       }
@@ -49,8 +49,10 @@ export function useGatewayScanner() {
     gateways[data.bridgeid].credentials.name = data.name
     gateways[data.bridgeid].config = data
 
-    if (gateways[data.bridgeid].credentials.URIs.find(_uri => _uri.address === address) === undefined)
-      gateways[data.bridgeid].credentials.URIs.push({ type: 'api', address })
+    if (Array.isArray(gateways[data.bridgeid].credentials.URIs.api))
+      gateways[data.bridgeid].credentials.URIs.api!.push(address)
+    else
+      gateways[data.bridgeid].credentials.URIs.api = [address]
   }
 
   async function scan() {

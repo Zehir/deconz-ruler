@@ -10,11 +10,9 @@ const props = withDefaults(defineProps<{
 const GatewaysStore = useGatewaysStore()
 
 const updateGateway = () => {
-  console.log('updateGateway', props.credentials)
   GatewaysStore.updateCredentials(props.credentials)
 }
 const deleteGateway = () => {
-  console.log('deleteGateway', props.credentials)
   GatewaysStore.removeCredentials(props.credentials.id)
 }
 
@@ -48,10 +46,10 @@ const inStore = computed(() => GatewaysStore.credentials[props.credentials.id] !
     <v-card-text class="mb-auto">
       <v-list lines="one">
         <v-list-item
-          v-for="item, index in credentials.URIs"
+          v-for="item, index in credentials.URIs.api"
           :key="index"
           variant="text"
-          :title="item.address"
+          :title="item"
         />
       </v-list>
       <span class="text-caption text-grey-darken-1">

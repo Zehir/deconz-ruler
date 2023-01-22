@@ -18,6 +18,8 @@ const { t } = useI18n()
 
 <template>
   File : gateway/[gateway]/settings.vue
+
+  <json-viewer :value="GatewaysStore.activeCredential" :expand-depth="4" />
 </template>
 
 <route lang="json">

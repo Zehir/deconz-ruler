@@ -2,16 +2,17 @@ import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
 import { useGatewayPooling } from './useGatewayPooling'
 import { useGatewayWebsocket } from './useGatewayWebsocket'
-import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
+import type { GatewayCredentials, GatewayData, GatewayURI, GatewayURITypes } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
 
 export function useGateway(credentials: Ref<GatewayCredentials>) {
   // Data
   const gatewayStore = useGatewaysStore()
+  const offlineUris = reactive<{ [key in typeof GatewayURITypes[number]]?: GatewayURI[] }>({ })
   const gatewayAPIUri = ref('')
-  const gatewayAPIUriStates = ref({})
+
   const gatewayWebsocketUri = ref('')
-  const id = computed(() => credentials.value.id)
+  const id = computed(() => credentials.value?.id)
 
   const data = ref<Partial<GatewayData>>({})
 
@@ -35,12 +36,12 @@ export function useGateway(credentials: Ref<GatewayCredentials>) {
   }
 
   const connect = () => {
-    const apiURI = credentials.value.URIs.find(_uri => _uri.type === 'api')
+    const apiURI = credentials.value.URIs.api?.[0]
     if (apiURI !== undefined)
-      gatewayAPIUri.value = `${apiURI.address}/api/${credentials.value.apiKey}/`
-    const wsURI = credentials.value.URIs.find(_uri => _uri.type === 'websocket')
+      gatewayAPIUri.value = `${apiURI}/api/${credentials.value.apiKey}/`
+    const wsURI = credentials.value.URIs.websocket?.[0]
     if (wsURI !== undefined)
-      gatewayWebsocketUri.value = wsURI.address
+      gatewayWebsocketUri.value = wsURI
   }
 
   // Delay the connection for 1.5 seconds.

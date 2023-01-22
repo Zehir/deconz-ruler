@@ -28,13 +28,6 @@ const cardClick = () => {
   router.push(`/gateway/${credentials.value.id}`)
 }
 
-const addURI = () => {
-  credentials.value.URIs.push({
-    type: 'api',
-    address: '',
-  })
-}
-
 const deleteSelf = () => {
   delete GatewaysStore.credentials[credentials.value.id]
 }

@@ -101,14 +101,17 @@ const GatewayURITypesOptions = GatewayURITypes.map(item => ({
 onBeforeMount(() => {
   switch (props.mode) {
     case 'new':{
+      /*
       uris.value.push({
         type: 'api',
         address: props.address || 'http://localhost:80',
       })
       apiKey.value = props.apiKey || ''
+      */
       break
     }
     case 'edit':{
+      /*
       if (props.gatewayId === undefined)
         break
       const credentials = GatewaysStore.credentials[props.gatewayId]
@@ -118,6 +121,7 @@ onBeforeMount(() => {
         uris.value.push({ ...uri })
       })
       apiKey.value = credentials.apiKey
+      */
       break
     }
   }

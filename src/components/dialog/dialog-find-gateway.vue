@@ -47,9 +47,9 @@ const credentials = computed<GatewayCredentials | undefined>(() => {
     id: state.config.bridgeid,
     name: state.config.name,
     apiKey: '',
-    URIs: [
-      { type: 'api', address: state.address },
-    ],
+    URIs: {
+      api: [state.address],
+    },
   }
 })
 

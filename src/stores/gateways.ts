@@ -27,6 +27,12 @@ export const useGatewaysStore = defineStore('gateways', () => {
     }
   })
 
+  const activeCredential = computed(() => {
+    if (typeof route.params.gateway !== 'string')
+      return undefined
+    return toRef(credentials, route.params.gateway).value
+  })
+
   const activeGateway = computed(() => {
     if (typeof route.params.gateway !== 'string')
       return undefined
@@ -47,7 +53,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
     delete credentials[gatewayID]
   }
 
-  return { credentials, gateways, getData, updateCredentials, removeCredentials, activeGateway }
+  return { credentials, gateways, getData, updateCredentials, removeCredentials, activeCredential, activeGateway }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473

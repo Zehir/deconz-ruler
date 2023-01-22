@@ -14,14 +14,14 @@ const baseURL = computed(() => {
 })
 
 const items = computed(() => {
-  const list: { title: string; icon: string; to: string }[] = []
+  const list: { title: string; icon?: string; to: string }[] = []
 
   if (GatewayStore.activeGateway === undefined)
     return list
 
   list.push({
     title: 'Home',
-    icon: 'mdi-cog',
+    icon: 'mdi-home',
     to: `${baseURL.value}/`,
   })
 
@@ -36,5 +36,9 @@ const items = computed(() => {
 </script>
 
 <template>
-  <v-list-item v-for="(item, index) in items" :key="index" v-bind="item" />
+  <v-list-item v-for="(item, index) in items" :key="index" v-bind="item">
+    <template v-if="item.icon" #prepend>
+      <v-icon :icon="item.icon" />
+    </template>
+  </v-list-item>
 </template>
