@@ -1,6 +1,6 @@
 import { createFetch, get } from '@vueuse/core'
 import type { Ref } from 'vue'
-import { useThingState } from './thing-state'
+import { useThingState } from './useThingState'
 import type { GatewayData } from '~/interfaces/deconz'
 
 export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<GatewayData>>) {

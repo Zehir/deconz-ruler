@@ -1,13 +1,12 @@
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { useGateway } from '~/composables/gateway'
+import { useGateway } from '~/composables/useGateway'
 import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
 
 export const useGatewaysStore = defineStore('gateways', () => {
   const route = useRoute()
-  const credentials = reactive<Record<string, GatewayCredentials>>({})
-  const gateways = reactive<Record<string, ReturnType<typeof useGateway>>>({})
+  const credentials = shallowReactive<Record<string, GatewayCredentials>>({})
+  const gateways = shallowReactive<Record<string, ReturnType<typeof useGateway>>>({})
 
-  // const test = computed(() => 1)
   // Sync gateway data with credentials
   watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
     if (oldValue < currentValue) {
@@ -28,21 +27,16 @@ export const useGatewaysStore = defineStore('gateways', () => {
     }
   })
 
-  const getGateway = (gatewayID: string) => computed<null | ReturnType<typeof useGateway>>(() => {
-    if (!gateways[gatewayID])
-      return null
-    return gateways[gatewayID]
-  })
-
   const activeGateway = computed(() => {
     if (typeof route.params.gateway !== 'string')
-      return null
-    return getGateway(route.params.gateway)
+      return undefined
+    // return gateways[route.params.gateway]
+    return toRef(gateways, route.params.gateway).value
   })
 
   const getData = (gatewayID: string, domain: keyof GatewayData, resource?: number | string) => computed(() => {
     if (!gateways[gatewayID])
-      return {}
+      return undefined
     return gateways[gatewayID].getData(domain, typeof resource === 'string' ? parseInt(resource) : resource).value
   })
 
@@ -54,7 +48,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
     delete credentials[gatewayID]
   }
 
-  return { credentials, gateway: gateways, getGateway, getData, updateCredentials, removeCredentials, activeGateway }
+  return { credentials, gateways, getData, updateCredentials, removeCredentials, activeGateway }
 }, {
   // https://github.com/prazdevs/pinia-plugin-persistedstate
   // For later : https://github.com/prazdevs/pinia-plugin-persistedstate/issues/60#issuecomment-1120244473

@@ -8,20 +8,22 @@ const App = useAppStore()
 const GatewayStore = useGatewaysStore()
 
 const baseURL = computed(() => {
-  if (GatewayStore.activeGateway.value === null)
+  if (GatewayStore.activeGateway?.id.value === undefined)
     return ''
-  return `/gateway/${GatewayStore.activeGateway.value.id}`
+  return `/gateway/${GatewayStore.activeGateway.id.value}`
 })
 
 const items = computed(() => {
-  const list = [{
+  const list: { title: string; icon: string; to: string }[] = []
+
+  if (GatewayStore.activeGateway === undefined)
+    return list
+
+  list.push({
     title: 'Home',
     icon: 'mdi-cog',
     to: `${baseURL.value}/`,
-  }]
-
-  if (GatewayStore.activeGateway.value === null)
-    return list
+  })
 
   list.push({
     title: 'Settings',

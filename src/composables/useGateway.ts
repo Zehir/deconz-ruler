@@ -1,7 +1,7 @@
 import type { MaybeRef } from '@vueuse/core'
 import type { Ref } from 'vue'
-import { useGatewayPooling } from './gateway-pooling'
-import { useGatewayWebsocket } from './gateway-websocket'
+import { useGatewayPooling } from './useGatewayPooling'
+import { useGatewayWebsocket } from './useGatewayWebsocket'
 import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
 import { useGatewaysStore } from '~/stores/gateways'
 

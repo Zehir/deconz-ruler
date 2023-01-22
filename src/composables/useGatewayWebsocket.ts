@@ -1,5 +1,5 @@
 import type { Ref } from 'vue'
-import { useThingState } from './thing-state'
+import { useThingState } from './useThingState'
 import type { GatewayData, Group, Light, Sensor, WebSocketEvent } from '~/interfaces/deconz'
 
 export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<Partial<GatewayData>>) {

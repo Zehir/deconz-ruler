@@ -17,7 +17,7 @@ const GatewaysStore = useGatewaysStore()
 const loading = ref(false)
 
 const Gateway = computed(() => {
-  const gateway = GatewaysStore.gateway[credentials.value.id]
+  const gateway = GatewaysStore.gateways[credentials.value.id]
   if (!gateway)
     return null
 

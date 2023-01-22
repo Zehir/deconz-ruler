@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGatewayScanner } from '~/composables/gateway-scanner'
+import { useGatewayScanner } from '~/composables/useGatewayScanner'
 
 const Scanner = useGatewayScanner()
 const { t } = useI18n()

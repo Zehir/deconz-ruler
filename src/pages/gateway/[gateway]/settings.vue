@@ -10,7 +10,7 @@ const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
 
 const Gateway = computed(() => {
-  return GatewaysStore.gateway[props.gateway]
+  return GatewaysStore.gateways[props.gateway]
 })
 
 const { t } = useI18n()

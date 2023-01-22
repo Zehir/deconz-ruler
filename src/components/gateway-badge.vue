@@ -16,6 +16,8 @@ const badgeColor = computed(() => {
     .lightness(80)
     .hex()
 })
+
+const active = computed(() => GatewaysStore.activeGateway?.id.value === props.credentials.id)
 </script>
 
 <template>
@@ -23,6 +25,7 @@ const badgeColor = computed(() => {
     <btn-rounded-circle
       :color="badgeColor"
       :to="`/gateway/${props.credentials.id}`"
+      :active="active"
     >
       {{ props.credentials.name.substring(0, 1) }}
       <v-tooltip location="right" activator="parent">
