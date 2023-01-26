@@ -2,7 +2,7 @@
 import { required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
 import { useGatewaysStore } from '~/stores/gateways'
-import type { GatewayCredentials } from '~/interfaces/deconz'
+import type { GatewayCredentials, GatewayURITypes } from '~/interfaces/deconz'
 import { errorMessages } from '~/utils/misc'
 
 const props = withDefaults(defineProps<{
@@ -27,6 +27,11 @@ const v = useVuelidate(rules, state)
 
 const save = () => {
   GatewaysStore.activeCredential = klonaJson(state.value)
+}
+
+const removeAddress = (type: typeof GatewayURITypes[number], index: number) => {
+  if (Array.isArray(state.value.URIs[type]))
+    state.value.URIs[type]!.splice(index, 1)
 }
 </script>
 
@@ -83,11 +88,9 @@ const save = () => {
                   :value="address"
                   :title="address"
                 >
-                <!--
                   <template #append>
-                    <v-icon icon="mdi-close" />
+                    <v-icon icon="mdi-close" @click="removeAddress(uriType, index)" />
                   </template>
-                  -->
                 </v-list-item>
               </template>
             </v-list>
