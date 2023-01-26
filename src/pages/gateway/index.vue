@@ -5,21 +5,21 @@ const Scanner = useGatewayScanner()
 const { t } = useI18n()
 
 onMounted(() => {
-  Scanner.scan()
+  Scanner.runDiscovery()
 })
 </script>
 
 <template>
   <portal to="nav-topbar-details">
     <v-btn
-      :loading="Scanner.scanning.value"
-      :disabled="Scanner.scanning.value"
+      :loading="Scanner.discovering.value"
+      :disabled="Scanner.discovering.value"
       variant="tonal"
-      @click="Scanner.scan"
+      @click="Scanner.runDiscovery"
     >
       Scan for gateways
       <template #loader>
-        Scanning &nbsp;
+        Discovering &nbsp;
         <v-progress-circular
           indeterminate
           size="23"

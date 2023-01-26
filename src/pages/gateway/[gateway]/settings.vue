@@ -9,17 +9,17 @@ const props = defineProps<{
 const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
 
-const Gateway = computed(() => {
-  return GatewaysStore.gateways[props.gateway]
-})
-
 const { t } = useI18n()
 </script>
 
 <template>
   File : gateway/[gateway]/settings.vue
-
-  <json-viewer :value="GatewaysStore.activeCredential" :expand-depth="4" />
+  <template v-if="GatewaysStore.activeCredential">
+    <br>
+    Saved
+    <json-viewer :value="GatewaysStore.activeCredential" :expand-depth="4" />
+    <form-gateway :credentials="GatewaysStore.activeCredential" />
+  </template>
 </template>
 
 <route lang="json">

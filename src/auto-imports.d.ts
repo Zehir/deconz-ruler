@@ -43,9 +43,14 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const klona: typeof import('klona')['klona']
+  const klonaFull: typeof import('klona/full')['klona']
+  const klonaJson: typeof import('klona/json')['klona']
+  const klonaLite: typeof import('klona/lite')['klona']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
+  const objectKeys: typeof import('ts-extras')['objectKeys']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router')['onBeforeRouteLeave']
@@ -321,9 +326,14 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly klona: UnwrapRef<typeof import('klona')['klona']>
+    readonly klonaFull: UnwrapRef<typeof import('klona/full')['klona']>
+    readonly klonaJson: UnwrapRef<typeof import('klona/json')['klona']>
+    readonly klonaLite: UnwrapRef<typeof import('klona/lite')['klona']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly objectKeys: UnwrapRef<typeof import('ts-extras')['objectKeys']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router')['onBeforeRouteLeave']>

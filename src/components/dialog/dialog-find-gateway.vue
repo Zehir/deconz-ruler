@@ -65,7 +65,7 @@ const find = async () => {
 
   const address = state.address
   state.loading = true
-  const result = await Scanner.findGatewayAt(address)
+  const result = await Scanner.findAnyGatewayAt(address)
   if (result)
     state.config = result
   state.loading = false

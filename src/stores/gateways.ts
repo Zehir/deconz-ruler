@@ -11,14 +11,14 @@ export const useGatewaysStore = defineStore('gateways', () => {
   watch(() => Object.entries(credentials).length, (currentValue, oldValue) => {
     if (oldValue < currentValue) {
       // Credentials was added
-      Object.keys(credentials).forEach((id) => {
+      objectKeys(credentials).forEach((id) => {
         if (!gateways[id])
           gateways[id] = useGateway(toRef(credentials, id))
       })
     }
     else {
       // Credentials was deleted
-      Object.keys(gateways).forEach((id) => {
+      objectKeys(gateways).forEach((id) => {
         if (credentials[id] === undefined) {
           gateways[id].destroy()
           delete gateways[id]
@@ -27,10 +27,24 @@ export const useGatewaysStore = defineStore('gateways', () => {
     }
   })
 
+  /*
   const activeCredential = computed(() => {
     if (typeof route.params.gateway !== 'string')
       return undefined
     return toRef(credentials, route.params.gateway).value
+  })
+  */
+
+  const activeCredential = computed({
+    get() {
+      if (typeof route.params.gateway !== 'string')
+        return undefined
+      return toRef(credentials, route.params.gateway).value
+    },
+    set(newValue) {
+      if (newValue !== undefined && typeof route.params.gateway === 'string')
+        credentials[route.params.gateway] = newValue
+    },
   })
 
   const activeGateway = computed(() => {

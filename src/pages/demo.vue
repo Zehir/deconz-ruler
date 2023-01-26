@@ -10,7 +10,7 @@ const generateData = () => {
 }
 
 const clearData = () => {
-  Object.keys(DemoStore.credentials).forEach((key) => {
+  objectKeys(DemoStore.credentials).forEach((key) => {
     delete DemoStore.credentials[key]
   })
 }

@@ -17,6 +17,7 @@ declare module '@vue/runtime-core' {
     DialogFindGateway: typeof import('./components/dialog/dialog-find-gateway.vue')['default']
     DomainDetailList: typeof import('./components/domain-detail-list.vue')['default']
     FormGateway: typeof import('./components/form/form-gateway.vue')['default']
+    FormGatewayOld: typeof import('./components/form/form-gateway-old.vue')['default']
     GatewayBadge: typeof import('./components/gateway-badge.vue')['default']
     GatewayCredentials: typeof import('./components/gateway-credentials.vue')['default']
     NavBreadcrumbs: typeof import('./components/navigation-v2/nav-breadcrumbs.vue')['default']

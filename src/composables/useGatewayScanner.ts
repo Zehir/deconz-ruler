@@ -19,14 +19,14 @@ export function useGatewayScanner() {
   }>>({})
 
   const logs = ref('')
-  const scanning = ref(false)
+  const discovering = ref(false)
   let _axiosClient: AxiosInstance | null = null
 
   const axiosClient = function () {
     if (_axiosClient)
       return _axiosClient
     _axiosClient = axios.create({
-      timeout: 2000,
+      timeout: 5000,
       method: 'get',
       responseType: 'json',
     })
@@ -55,8 +55,8 @@ export function useGatewayScanner() {
       gateways[data.bridgeid].credentials.URIs.api = [address]
   }
 
-  async function scan() {
-    scanning.value = true
+  async function runDiscovery() {
+    discovering.value = true
     logs.value = 'Scanning gateways...'
     const Guesses: { ip: string; port: number }[] = []
 
@@ -72,7 +72,7 @@ export function useGatewayScanner() {
     }
     catch (error) {
       logs.value = `Error while fetching data from '${DiscoveryURL}': ${error}`
-      console.error(error)
+      // console.error(error)
     }
 
     // Try using localhost with various ports.
@@ -95,15 +95,15 @@ export function useGatewayScanner() {
     console.log('Scanning for gateways, you may see errors below but just ignore them, it\'s just because there was no gateway there.')
     await Promise.all(Guesses.map(async (guess) => {
       const address = getURI(guess)
-      const result = await findGatewayAt(address)
+      const result = await findAnyGatewayAt(address)
       if (result !== undefined)
         updateData(address, result)
     }))
 
-    scanning.value = false
+    discovering.value = false
   }
 
-  async function findGatewayAt(address: string): Promise<Config | undefined> {
+  async function findAnyGatewayAt(address: string): Promise<Config | undefined> {
     try {
       const request = await axiosClient().get<Config>(`${address}/api/config`)
       if (request.data) {
@@ -116,9 +116,20 @@ export function useGatewayScanner() {
     }
   }
 
+  async function findGatewayAddress(gatewayId: string, possibleAddresses : string[]){
+    const validAddresses = ref<string[]>([])
+    Promise.all(possibleAddresses.map(async (address) => {
+      const result = await findAnyGatewayAt(address)
+      if (result !== undefined && result.bridgeid === gatewayId){
+        validAddresses.value.push(address)
+      }
+    }))
+    return validAddresses
+  }
+
   function getURI(guess: { ip: string; port: number }): string {
     return `http://${guess.ip}:${guess.port}`
   }
 
-  return { gateways, logs, scan, scanning, findGatewayAt }
+  return { gateways, logs,  runDiscovery, discovering, findGatewayAddress, findAnyGatewayAt }
 }

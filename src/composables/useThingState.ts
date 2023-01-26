@@ -1,6 +1,6 @@
 export function useThingState() {
   const errors = ref<{ [key: string]: string }>({})
-  const isOK = computed(() => Object.keys(errors.value).length === 0)
+  const isOK = computed(() => objectKeys(errors.value).length === 0)
   const state = computed< 'Ok' | 'Error'>(() => isOK.value ? 'Ok' : 'Error')
 
   const color = computed(() => {

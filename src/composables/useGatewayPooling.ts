@@ -11,7 +11,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
   const useGatewayFetch = createFetch({
     baseUrl: gatewayAPIUri,
     options: {
-      timeout: 2000,
+      timeout: 5000,
     },
   })
 
@@ -48,7 +48,7 @@ export function useGatewayPooling(gatewayAPIUri: Ref<string>, data: Ref<Partial<
   watch(shell.data, (newData) => {
     if (shell.statusCode.value !== 200) {
       error.value = shell.error.value
-      console.warn(shell.error)
+      console.warn(shell.error.value)
       return
     }
 

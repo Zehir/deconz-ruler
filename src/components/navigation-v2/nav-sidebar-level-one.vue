@@ -3,7 +3,7 @@ import { useGatewaysStore } from '~/stores/gateways'
 
 const GatewaysStore = useGatewaysStore()
 
-const list = $ref()
+const list = ref()
 
 /*
 onMounted(() => {

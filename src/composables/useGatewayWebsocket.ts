@@ -71,7 +71,7 @@ export function useGatewayWebsocket(gatewayWebsocketUri: Ref<string>, data: Ref<
         objectRef.name = event.name
       if (event.attr) {
         const attr = event.attr as Record<string, any>
-        Object.keys(attr).forEach((key) => {
+        objectKeys(attr).forEach((key) => {
           if (key === 'id')
             return
           objectRef[key] = attr[key]

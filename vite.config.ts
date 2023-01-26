@@ -53,6 +53,27 @@ export default defineConfig({
         'vue/macros',
         '@vueuse/head',
         '@vueuse/core',
+        {
+          // https://github.com/sindresorhus/ts-extras
+          'ts-extras': [
+            'objectKeys',
+          ],
+        },
+        {
+          // https://github.com/lukeed/klona#readme
+          'klona/json': [
+            ['klona', 'klonaJson'],
+          ],
+          'klona/lite': [
+            ['klona', 'klonaLite'],
+          ],
+          'klona': [
+            'klona',
+          ],
+          'klona/full': [
+            ['klona', 'klonaFull'],
+          ],
+        },
       ],
       dts: 'src/auto-imports.d.ts',
       vueTemplate: true,

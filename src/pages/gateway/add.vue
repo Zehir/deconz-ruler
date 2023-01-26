@@ -15,7 +15,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <v-btn @click="Scanner.scan">
+  <v-btn @click="Scanner.runDiscovery">
     Scan
   </v-btn>
 
@@ -45,7 +45,7 @@ const { t } = useI18n()
         <json-viewer :value="GatewaysStore.credentials" :expand-depth="1" />
       </v-col>
       <v-col
-        v-for="index in Object.keys(GatewaysStore.credentials)" :key="index"
+        v-for="index in objectKeys(GatewaysStore.credentials)" :key="index"
         :cols="12"
       >
         <gateway-credentials v-model="GatewaysStore.credentials[index]" />
