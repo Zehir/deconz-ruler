@@ -14,21 +14,35 @@ const baseURL = computed(() => {
 })
 
 const items = computed(() => {
-  const list: { title: string; icon?: string; to: string }[] = []
+  const list: any[] = []
 
   if (GatewayStore.activeGateway === undefined)
     return list
 
   list.push({
     title: 'Home',
-    icon: 'mdi-home',
-    to: `${baseURL.value}/`,
+    props: {
+      prependIcon: 'mdi-home',
+      to: `${baseURL.value}/`,
+    },
+  })
+
+  list.push({ type: 'divider' })
+  list.push({
+    type: 'subheader',
+    title: 'Settings',
+    props: {
+      to: `${baseURL.value}/settings/connexions`,
+      prependIcon: 'mdi-cog',
+    },
   })
 
   list.push({
-    title: 'Settings',
-    icon: 'mdi-cog',
-    to: `${baseURL.value}/settings`,
+    title: 'Connexions',
+    props: {
+      prependIcon: 'mdi-link',
+      to: `${baseURL.value}/settings/connexions`,
+    },
   })
 
   return list
@@ -36,9 +50,13 @@ const items = computed(() => {
 </script>
 
 <template>
+  <v-list :items="items" />
+
+  <!--
   <v-list-item v-for="(item, index) in items" :key="index" v-bind="item">
     <template v-if="item.icon" #prepend>
       <v-icon :icon="item.icon" />
     </template>
   </v-list-item>
+-->
 </template>

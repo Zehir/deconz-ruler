@@ -27,6 +27,14 @@ onMounted(() => {
         <template v-for="item in GatewaysStore.credentials" :key="item.id">
           <gateway-badge :credentials="GatewaysStore.credentials[item.id]" />
         </template>
+        <v-list-item class="ma-1 justify-center">
+          <btn-rounded-circle to="/sandbox">
+            <v-icon icon="mdi-shovel" size="x-large" />
+            <v-tooltip location="right" activator="parent">
+              Sandbox
+            </v-tooltip>
+          </btn-rounded-circle>
+        </v-list-item>
         <v-divider />
         <!--
         <v-list-item class="ma-1 justify-center">

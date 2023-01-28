@@ -13,12 +13,12 @@ const { t } = useI18n()
 </script>
 
 <template>
-  File : gateway/[gateway]/settings.vue
+  File : gateway/[gateway]/settings/connexions.vue
   <template v-if="GatewaysStore.activeCredential">
     <br>
     Saved
     <json-viewer :value="GatewaysStore.activeCredential" :expand-depth="4" />
-    <form-gateway :credentials="GatewaysStore.activeCredential" />
+    <form-gateway-connexions :credentials="GatewaysStore.activeCredential" />
   </template>
 </template>
 

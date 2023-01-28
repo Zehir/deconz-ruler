@@ -15,9 +15,6 @@ const error = ref('')
 const { cloned: state } = useCloned(props.credentials, { clone: klonaJson })
 
 const rules = {
-  name: {
-    required,
-  },
   apiKey: {
     required,
   },
@@ -36,8 +33,6 @@ const removeAddress = (type: typeof GatewayURITypes[number], index: number) => {
 </script>
 
 <template>
-  Current
-  <json-viewer :value="state" :expand-depth="4" />
   <v-card>
     <template #title>
       <span>{{ props.credentials.name }}</span>
@@ -53,18 +48,6 @@ const removeAddress = (type: typeof GatewayURITypes[number], index: number) => {
             <v-alert type="error">
               {{ error }}
             </v-alert>
-          </v-col>
-
-          <v-col :cols="12">
-            <v-text-field
-              v-model="state.name"
-              label="Name"
-              required
-              readonly
-              :error-messages="errorMessages(v.name.$errors)"
-              @input="v.name.$touch()"
-              @blur="v.name.$touch()"
-            />
           </v-col>
 
           <v-col :cols="12">

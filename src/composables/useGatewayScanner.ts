@@ -116,13 +116,12 @@ export function useGatewayScanner() {
     }
   }
 
-  async function findGatewayAddress(gatewayId: string, possibleAddresses : string[]){
+  async function findGatewayAddress(gatewayId: string, possibleAddresses: string[]) {
     const validAddresses = ref<string[]>([])
     Promise.all(possibleAddresses.map(async (address) => {
       const result = await findAnyGatewayAt(address)
-      if (result !== undefined && result.bridgeid === gatewayId){
+      if (result !== undefined && result.bridgeid === gatewayId)
         validAddresses.value.push(address)
-      }
     }))
     return validAddresses
   }
@@ -131,5 +130,5 @@ export function useGatewayScanner() {
     return `http://${guess.ip}:${guess.port}`
   }
 
-  return { gateways, logs,  runDiscovery, discovering, findGatewayAddress, findAnyGatewayAt }
+  return { gateways, logs, runDiscovery, discovering, findGatewayAddress, findAnyGatewayAt }
 }
