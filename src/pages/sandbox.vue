@@ -1,12 +1,30 @@
-selected: '#ffffff',
 <script setup lang="ts">
-const selected = ref('#ffffff')
+import { useMachine } from '@xstate/vue'
+import { createMachine } from 'xstate'
+
+const toggleMachine = createMachine({
+  id: 'toggle',
+  initial: 'inactive',
+  states: {
+    inactive: {
+      on: { TOGGLE: 'active' },
+    },
+    active: {
+      on: { TOGGLE: 'inactive' },
+    },
+  },
+})
+
+const { state, send } = useMachine(toggleMachine)
 </script>
 
 <template>
   <v-container fluid>
     <h1>Sandbox</h1>
 
+    {{ state }}
+
+    <pre>
     https://xstate.js.org/docs/packages/xstate-vue/#quick-start
 
     States:
@@ -15,7 +33,7 @@ const selected = ref('#ffffff')
     Online/Offline
     Connected
     Errors : Configuration / Address / Api Key / Offline ?
-
+  </pre>
     <!--
     {{ selected }}
     <v-swatches v-model="selected" />

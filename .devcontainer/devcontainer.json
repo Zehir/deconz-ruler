@@ -29,7 +29,8 @@
 		"esbenp.prettier-vscode",
 		"Tobermory.es6-string-html",
 		"mhutchie.git-graph",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"statelyai.stately-vscode"
 	],
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
