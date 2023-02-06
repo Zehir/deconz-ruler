@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import type { GatewayData } from '~/interfaces/deconz'
-import { useGatewaysStore } from '~/stores/gateways'
 
 const props = withDefaults(defineProps<{
   domain: keyof GatewayData
 }>(), {
 })
 
-const GatewaysStore = useGatewaysStore()
-
 const open = ref(false)
 
 const domainData = computed(() => {
-  return GatewaysStore.activeGateway?.getData(props.domain).value
+  return {}
+  // return GatewaysStore.activeGateway?.getData(props.domain).value
 })
 </script>
 
-<template v-if="GatewaysStore.activeGatewayID">
+<template>
+  WIP
+  <!--
   <v-btn
     block
     :prepend-icon="open ? 'mdi-chevron-down' : 'mdi-chevron-right'"
@@ -34,4 +34,5 @@ const domainData = computed(() => {
       {{ item.name }}
     </v-list-item>
   </v-list>
+  -->
 </template>

@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const App = useAppStore()
-const Gateway = useGatewaysStore()
+const GatewaysStore = useGatewaysStore()
 </script>
 
 <template>
-  <div v-if="Gateway.activeGateway !== undefined">
+  <div v-if="GatewaysStore.activeGateway !== undefined">
+    <!-- WIP
     <v-tooltip
       :text="Gateway.activeGateway.pooling.state.messages.value"
       :disabled="Gateway.activeGateway.pooling.state.isOK.value"
@@ -43,5 +44,6 @@ const Gateway = useGatewaysStore()
         </v-chip>
       </template>
     </v-tooltip>
+    -->
   </div>
 </template>

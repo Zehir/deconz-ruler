@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { helpers, required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { useGatewaysStore } from '~/stores/gateways'
 import { useGatewayScanner } from '~/composables/useGatewayScanner'
 import type { Config, GatewayCredentials } from '~/interfaces/deconz'
 import { errorMessages } from '~/utils/misc'
@@ -15,7 +14,6 @@ const emit = defineEmits<{
   (e: 'close'): void
 }>()
 
-const GatewaysStore = useGatewaysStore()
 const Scanner = useGatewayScanner()
 
 const error = ref('')

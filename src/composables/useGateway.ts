@@ -4,7 +4,8 @@ import { useGatewayPooling } from './useGatewayPooling'
 import { useGatewayWebsocket } from './useGatewayWebsocket'
 import { useGatewayScanner } from './useGatewayScanner'
 import type { GatewayCredentials, GatewayData, GatewayURI, GatewayURITypes } from '~/interfaces/deconz'
-import { useGatewaysStore } from '~/stores/gateways'
+
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 export function useGateway(credentials: Ref<GatewayCredentials>) {
   // Data

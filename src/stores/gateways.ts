@@ -2,7 +2,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import { useGateway } from '~/composables/useGateway'
 import type { GatewayCredentials, GatewayData } from '~/interfaces/deconz'
 
-export const useGatewaysStore = defineStore('gateways', () => {
+export const useGatewaysOldStore = defineStore('gateways', () => {
   const route = useRoute()
   const credentials = shallowReactive<Record<string, GatewayCredentials>>({})
   const gateways = shallowReactive<Record<string, ReturnType<typeof useGateway>>>({})
@@ -81,7 +81,7 @@ export const useGatewaysStore = defineStore('gateways', () => {
 
 // https://pinia.vuejs.org/cookbook/hot-module-replacement.html
 // if (import.meta.hot)
-//  import.meta.hot.accept(acceptHMRUpdate(useGatewaysStore, import.meta.hot))
+//  import.meta.hot.accept(acceptHMRUpdate(useGatewaysOldStore, import.meta.hot))
 // Workaround for https://github.com/prazdevs/pinia-plugin-persistedstate/issues/79
 // This will force a webpage refrech on edit
 if (import.meta.hot)

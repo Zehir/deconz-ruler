@@ -1,28 +1,10 @@
 <script setup lang="ts">
-import { useMachine } from '@xstate/vue'
-import { createMachine } from 'xstate'
 
-const toggleMachine = createMachine({
-  id: 'toggle',
-  initial: 'inactive',
-  states: {
-    inactive: {
-      on: { TOGGLE: 'active' },
-    },
-    active: {
-      on: { TOGGLE: 'inactive' },
-    },
-  },
-})
-
-const { state, send } = useMachine(toggleMachine)
 </script>
 
 <template>
   <v-container fluid>
     <h1>Sandbox</h1>
-
-    {{ state }}
 
     <pre>
     https://xstate.js.org/docs/packages/xstate-vue/#quick-start
@@ -40,3 +22,13 @@ const { state, send } = useMachine(toggleMachine)
     -->
   </v-container>
 </template>
+
+<route lang="json">
+{
+  "name": "Sandbox",
+  "meta": {
+    "hideLevelTwoSidebar": true
+  }
+}
+</route>
+

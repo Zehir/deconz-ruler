@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = defineProps<{
   gateway: string
@@ -25,11 +25,11 @@ onMounted(() => {
   File : gateway/[gateway]/index.vue
   <json-viewer
     v-if="Gateway"
-    :value="Gateway.data"
-    :expand-depth="2"
+    :value="GatewaysStore.gateways[props.gateway].state"
+    :expand-depth="1"
   />
 
-  {{ Gateway?.pooling?.isActive }}
+  {{ GatewaysStore.gateways[props.gateway].state.value.toString() }}
   <!--
   <json-viewer
     :value="Gateway"

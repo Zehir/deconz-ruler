@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
 import type { GatewayData } from '~/interfaces/deconz'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = defineProps<{
   gateway: string
@@ -13,7 +13,8 @@ const App = useAppStore()
 const GatewaysStore = useGatewaysStore()
 
 const Resource = computed(() => {
-  return GatewaysStore.getData(props.gateway, props.domain, props.resource).value
+  return {}
+  // WIP return GatewaysStore.getData(props.gateway, props.domain, props.resource).value
 })
 
 const { t } = useI18n()

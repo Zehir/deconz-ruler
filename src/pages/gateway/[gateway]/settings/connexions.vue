@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = defineProps<{
   gateway: string

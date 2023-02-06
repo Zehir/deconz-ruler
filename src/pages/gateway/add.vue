@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useGatewaysStore } from '~/stores/gateways'
 import { useGatewayScanner } from '~/composables/useGatewayScanner'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const GatewaysStore = useGatewaysStore()
 const Scanner = useGatewayScanner()

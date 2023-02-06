@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { GatewayData } from '~/interfaces/deconz'
 
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 /*
   TODO Ajouter une liste déroulante et pas seulement le nom de là où je suis
 */
@@ -34,6 +34,7 @@ const breadcrumbs = computed(() => {
         disabled: false,
         to: '/gateway',
       })
+      /* WIP
       const GatewaysStore = useGatewaysStore()
       if (typeof route.params.gateway === 'string') {
         const Config = GatewaysStore.getData(route.params.gateway, 'config')
@@ -58,6 +59,7 @@ const breadcrumbs = computed(() => {
           }
         }
       }
+      */
       break
     }
 

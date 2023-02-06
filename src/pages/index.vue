@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
 
 const { t } = useI18n()
 
@@ -8,7 +7,6 @@ const { t } = useI18n()
 const App = useAppStore()
 
 App.navigationTitle = 'Home'
-const GatewaysStore = useGatewaysStore()
 </script>
 
 <template>

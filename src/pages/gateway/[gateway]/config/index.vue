@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useGatewayScanner } from '~/composables/useGatewayScanner'
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = defineProps<{
   gateway: string

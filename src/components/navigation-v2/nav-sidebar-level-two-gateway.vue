@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useAppStore } from '~/stores/app'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const route = useRoute()
 
@@ -8,9 +8,9 @@ const App = useAppStore()
 const GatewayStore = useGatewaysStore()
 
 const baseURL = computed(() => {
-  if (GatewayStore.activeGateway?.id.value === undefined)
+  if (GatewayStore.activeGateway?.id === undefined)
     return ''
-  return `/gateway/${GatewayStore.activeGateway.id.value}`
+  return `/gateway/${GatewayStore.activeGateway.id}`
 })
 
 const items = computed(() => {

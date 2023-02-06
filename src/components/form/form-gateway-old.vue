@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useGatewaysStore } from '~/stores/gateways'
 import type { GatewayURI } from '~/interfaces/deconz'
 import { GatewayURITypes } from '~/interfaces/deconz'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = withDefaults(defineProps<{
   mode: 'new' | 'edit'

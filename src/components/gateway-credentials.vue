@@ -2,7 +2,7 @@
 import { RouterLink } from 'vue-router'
 import type { GatewayCredentials } from '~/interfaces/deconz'
 import { GatewayURITypes } from '~/interfaces/deconz'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 import { StateToColor } from '~/utils/misc'
 
 const props = defineProps<{

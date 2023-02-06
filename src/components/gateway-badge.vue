@@ -2,14 +2,10 @@
 import Color from 'color'
 import type { GatewayCredentials } from '~/interfaces/deconz'
 
-import { useGatewaysStore } from '~/stores/gateways'
-
 const props = withDefaults(defineProps<{
   credentials: GatewayCredentials
 }>(), {
 })
-
-const GatewaysStore = useGatewaysStore()
 
 const badgeColor = computed(() => {
   return Color(`#${props.credentials.id.substring(10)}`)
@@ -17,7 +13,7 @@ const badgeColor = computed(() => {
     .hex()
 })
 
-const active = computed(() => GatewaysStore.activeGateway?.id.value === props.credentials.id)
+const active = computed(() => props.credentials.id === 'WIP')
 </script>
 
 <template>

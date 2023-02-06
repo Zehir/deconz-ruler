@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { required } from '@vuelidate/validators'
 import useVuelidate from '@vuelidate/core'
-import { useGatewaysStore } from '~/stores/gateways'
 import type { GatewayCredentials, GatewayURITypes } from '~/interfaces/deconz'
 import { errorMessages } from '~/utils/misc'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = withDefaults(defineProps<{
   credentials: GatewayCredentials

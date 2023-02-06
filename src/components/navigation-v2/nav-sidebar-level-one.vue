@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const GatewaysStore = useGatewaysStore()
 

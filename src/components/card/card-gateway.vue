@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Config, GatewayCredentials } from '~/interfaces/deconz'
-import { useGatewaysStore } from '~/stores/gateways'
+import { useGatewaysStore } from '~/stores/useGatewaysStore'
 
 const props = withDefaults(defineProps<{
   credentials: GatewayCredentials
@@ -10,10 +10,10 @@ const props = withDefaults(defineProps<{
 const GatewaysStore = useGatewaysStore()
 
 const updateGateway = () => {
-  GatewaysStore.updateCredentials(props.credentials)
+  GatewaysStore.credentials[props.credentials.id] = props.credentials
 }
 const deleteGateway = () => {
-  GatewaysStore.removeCredentials(props.credentials.id)
+  delete GatewaysStore.credentials[props.credentials.id]
 }
 
 const inStore = computed(() => GatewaysStore.credentials[props.credentials.id] !== undefined)
