@@ -30,7 +30,7 @@ const state = reactive<{
 const rules = {
   address: {
     required,
-    mustStartWithHttp: helpers.withMessage('Value must start with http:// or http://',
+    mustStartWithHttp: helpers.withMessage('Value must start with http:// or https://',
       (value: string) => value.startsWith('http://') || value.startsWith('https://'),
     ),
   },

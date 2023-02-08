@@ -25,11 +25,10 @@ onMounted(() => {
   File : gateway/[gateway]/index.vue
   <json-viewer
     v-if="Gateway"
-    :value="GatewaysStore.gateways[props.gateway].state"
+    :value="GatewaysStore.gateways[props.gateway].state.value.value"
     :expand-depth="1"
   />
 
-  {{ GatewaysStore.gateways[props.gateway].state.value.toString() }}
   <!--
   <json-viewer
     :value="Gateway"

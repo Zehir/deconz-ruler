@@ -12,7 +12,7 @@ export interface Typegen0 {
     actions: never
     delays: never
     guards: never
-    services: never
+    services: 'initAxios'
   }
   eventsCausingActions: {
     'log': 'LOAD/CREDENTIALS'
@@ -24,11 +24,11 @@ export interface Typegen0 {
 
   }
   eventsCausingServices: {
-
+    'initAxios': 'CONNECT' | 'RECONNECT' | 'xstate.init'
   }
   matchesStates: 'connecting' | 'disconnecting' | 'offline' | 'offline.disabled' | 'offline.error' | 'offline.error.invalid API key' | 'offline.error.unknown' | 'offline.error.unreachable' | 'online' | 'online.pooling' | 'online.pooling.disabled' | 'online.pooling.enabled' | 'online.websocket' | 'online.websocket.disabled' | 'online.websocket.enabled' | { 'offline'?: 'disabled' | 'error' | { 'error'?: 'invalid API key' | 'unknown' | 'unreachable' }
     'online'?: 'pooling' | 'websocket' | { 'pooling'?: 'disabled' | 'enabled'
-      'websocket'?: 'disabled' | 'enabled' } }
+      'websocket'?: 'disabled' | 'enabled'; }; }
   tags: never
 }
 
