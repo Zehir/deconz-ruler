@@ -4,6 +4,7 @@ import { useLocalStorage } from '@vueuse/core'
 import type { AxiosInstance } from 'axios'
 import axios from 'axios'
 import type { GatewayCredentials } from '~/interfaces/deconz'
+import { useGatewayScanner } from '~/composables/useGatewayScanner'
 
 export interface GatewayMachineContext {
   credentials: GatewayCredentials
@@ -11,7 +12,7 @@ export interface GatewayMachineContext {
   errorMessage?: string
 }
 
-export type GatewayMachineEvent = | {
+export type GatewayMachineEvents = | {
   type: 'CONNECT'
 } | {
   type: 'DISCONNECT'
@@ -43,7 +44,13 @@ export type GatewayMachineEvent = | {
   type: 'ERROR/INVALID_API_KEY'
 }
 
-/** @xstate-layout N4IgpgJg5mDOIC5RQIYBcwHcUE8DEAogEpEDyRA2gAwC6ioADgPawCWarTAdvSAB6IAjFUEAmAHQA2ABzSALNNEBmAOxUlq0QBoQORNICsVKQdErRVNYOlKFAXzs7UGbPgAypAIIARAPQBhIgJvAgA5ABUASU83AGVqOiQQZjYObl4BBDFBcVUDAE5pdRUVQXyVJR09BA0JSXy5JRlRfKNBUzkHJ3QsXHFuABtWLjA8b0jY-1JQ0IJ-cITeFPZOHiTMgFoDOXExSQUVSUEVaUkzSQMqxDkFKTl8-LKjQulDzscQZ16cfq4hkfEzCY-yg4jAXBQACMBpAxhNPAAhNwEXwABVIpDckVCAHFFkllmk1qBNgZDuIDNtJGc1DdJCpLrpEEcDLsqDdDg8jqJRF1Pj1XL9-mBAUxgcNQRBWLAoTCIIRQojkWiMVjcfjGCwVul1ogtiodkpFEUWpIlKIDNSrghTEpxIYOfV8tzeR8voLBsMRZgwJDYEwAMYAazAaHEUpl0NhYSVKIA6vFaEstUSMnrLXbWlQLubLQpRNJrbIVOIbo1JNmLmdLHz3X1PQCfX7AyGw+DZbDxrFY74ExrkinVmmEFtqbtBHJSmU5MdDJJra0ctOjUpKUb2UpawL6wAzHfCvBTGZzBZJgmDnUkxBG6Sl-LZh4GV4Mgwaa0FEtKB73jf7ETvboXD6ANuBGAMOC4KA8AgbgRWGAA3JgQ3EYZ2E8PhOFgftCSHXURytJkEBOYxWhuR4lGEQRpy3ICfhArgwIgqCwAAJxYpgWMBAZ0B3DiAFsUK4NCMJYbCL2JfhEFEOQqCLV8aO+cR6MYiVCBIchfAAVVCIJPH8AAJWMxNSXCrxqOQJGkh9WmfNdKkI8wdmkB4LNEfZKRkSQFMFZSwHA1TiDIIhfGxAA1GJIm8AB9TxUUiKKAGkCAATWM7UJMyWwcgaddBCdMljjka0SnyXIXPIyjqLdbcfgjXz-MguFJmmWZ5mCNLUzwppJF2L88sOKhXw0ORGWqG5b32B4nioF4Sm8vo6tAvymLwIIj1a09Ek1EzL0krJ7lLHkbDNYphAad8yntb9lHNEbDAcD4uCYCA4F4Otqm29Lhw2QxSupSkLSOekxHs6ppNZZdmizdppPmn4GzAZMdoyvVpCoqQLlMS1+pB61bFvB1JydF04aFL1RXFSCka+vCNkOO1-qxoHSmUa1y1ybYia5MRXUAxSEYpkEwQhKMIGpzqzI2LLSyKEb2hsU5REEUHEFte1OdOV8CwuXn+VosmASBIWIw7MXz2R77SlZRnAZx1nCLVwnNfNTXdfeg3vV9f1g1DcXTL2untnELNqUMGHSnyYqHmDm4mkrS0LBUUmBabb3W3DaVTb93bNjUHqQ5kAxw7KItXlLWOK3+6sk+q-WU69ltQ2FrPzZpyXV2MJ4zEGlcWkjwji3LxoXjEApbGTvdhWzlGEBO3qQaUdQjCVvGjl2e5HizWaa75j1J-Jk3Ren4d6VvZWF6XqgV8I8a7imrfix3vX+f3gFWPYljj7wmRjDR14zQBgUR41ozQlmUGYBoo9XgjQnvucm78OLiAAK5cBYmAFAAYAAWHYv5mQqD1bM0DFD5CNIIYq0lxAVAgTOC00CDCwOFGCNiiCUFBiepgCSOEc6IANCWQwVBBokILM6M0cljA63MJYEQNh7C1xfnAt+zDOIIRQEMCAAACWKkR1Ehg+gOC2eFzAE2sPTQBU1ipl0KAWaS+xbCmCfu7eqTFcF7WVhIDMRME6jWZE+MqDQeTuUtKcUmi0GLLQlC4zIE4eqHAuKcReqgzpFRvrcSaP5ywyWVjXBwQA */
+export type GatewayMachineServices = | {
+  initAxios: {
+    data: { axios: AxiosInstance }
+  }
+}
+
+/** @xstate-layout N4IgpgJg5mDOIC5RQIYBcwHcUE8DEAogEpEDyRA2gAwC6ioADgPawCWarTAdvSAB6IAjFUEAmAHQA2ABzSALNNEBmAOxUlq0QBoQORNICsVKQdErRVNYOlKFAXzs7UGbPgAypAIIARAPQBhIgJvAgA5ABUASU83AGVqOiQQZjYObl4BBDFBcVUDAE5pdRUVQXyVJR09BA0JSXy5JRlRfKNBUzkHJ3QsXHFuABtWLjA8b0jY-1JQ0IJ-cITeFPZOHiTMgFoDOXExSQUVSUEVaUkzSQMqxDkFKTl8-LKjQulDzscQZ16cfq4hkfEzCY-yg4jAXBQACMBpAxhNPAAhNwEXwABVIpDckVCAHFFkllmk1qBNgZDuIDNtJGc1DdJCpLrpEEcDLsqDdDg8jqJRF1Pj1XL9-mBAUxgcNQRBWLAoTCIIRQojkWiMVjcfjGCwVul1ogtiodkpFEUWpIlKIDNSrghTEpxIYOfV8tzeR8voLBsMRZgwJDYEwAMYAazAaHEUpl0NhYSVKIA6vFaEstUSMnrLXbWlQLubLQpRNJrbIVOIbo1JNmLmdLHz3X1PQCfX7AyGw+DZbDxrFY74ExrkinVmmEFtqbtBHJSmU5MdDJJra0ctOjUpKUb2UpawL6wAzHfCvBTGZzBZJgmDnUkxBG6Sl-LZh4GV4Mgwaa0FEtKB73jf7ETvboXD6ANuBGAMOC4KA8AgbgRWGAA3JgQ3EOsfhArgwIgqAEAQwN0FWBJ+0JIddRHM1xFEfZDGEQQmlkdQF3UCl6MnQR6Xozc3W3NDQLAcCJTwMAACchKYITAQGdAdzEgBbFDuPEdDMIlHCuEQgN8O4Qiz01VISKvGoSlLAoFBEAw2JEa1hCaCkv2zG9REaDQtyAniML4rDCBIchfAAVVCIJPH8AAJWMiIvYl+GvOQJEch9WmfNdKiZBBzB2aQHhiyi5EpGRJBc75FN4-jIK8sgiF8bEADUYkibwAH1PFRSJ6oAaQIABNcK9MvKKahncQGnXNjH1KA1rRKfJckyx4lBo6cCsFCMlI8gSuyPWZ5mCbrtUizImkkXYvzYw4qFfDQcutG5b32B4nioF4SkWvpluKzygg2k8dtTUiJymrKbDNYphAad8yntb9lHNHLDAcD4uCYCA4F4VDkx6va9UMKbqUpC0jnpMRkuqRzWWXPMzHvFpnp+BswDR3bhw2aRBByHHTEtE7CetWxbwdHLzSODKKmpoUvVFcVIPpn6DI2Q47TZvHOeUK6bNXOlzJaKgHvyrjXNFgEgRBMEISjCApf0vqNlsHJTJy9obFOURaPfZR7W2BQcwLC5XUAwrafFo2Iw7M3z3RxnSlZBWOYJ5WUttN3rs905TBF-2m39YNQ3N3rNgZHYs2pajTFKfIJoeQayyOMo2LOVO-jF9OW1DcNpWD7OMZHNRDoLmRzOLsoi1eUsbiaStLQsFQ6+FcRG8ztsTbldvGdXYwnjMM6VxaUuUuLYfGheMQClsVO92FJfSKBo7CaUdQjCd7mjl2e57zeMwGU432PVPsWg9N8+DPYlfKGt8qD3xStdO4d0syPUnrrP238ATCVEkJf+fUZDGGZq8M0uMCiPGtGaEsygzCKAtFgp2J99xiyQWJcQABXLgQkwAoADAACw7KgzIFRDrZlePmfIRpBATUcuICoFMZykINAYCh09qHiXoUGBGmBIrERzogA0JZDBayPgWZ0ZoixGBMGYCeIgbD2DgV-ShiCRI0IQigIYEAAAETVIgOJDNUXSDNSLmF5tYOWOC7oTSHoUAsjl9i2GLiLFaJUoAcKEBoSBchsy0Q0FQWQchB63ifNmEQTt+HqB9vyPWr13LRNiVkOQh1DgXFODfVQIN0ngNuLdH85ZEm0VgQ4IAA */
 export const gatewayMachine = createMachine({
   id: 'gateway',
   initial: 'connecting',
@@ -53,7 +60,8 @@ export const gatewayMachine = createMachine({
 
   schema: {
     context: {} as GatewayMachineContext,
-    events: {} as GatewayMachineEvent,
+    events: {} as GatewayMachineEvents,
+    services: {} as GatewayMachineServices,
   },
 
   tsTypes: {} as import('./useGatewaysStore.typegen').Typegen0,
@@ -139,15 +147,10 @@ export const gatewayMachine = createMachine({
       // Ceci est un service
       // https://xstate.js.org/docs/guides/typescript.html#typegen
       invoke: {
-        id: 'initAxios',
-        src: async () => {
-          const catResponse = await fetch('https://dummyjson.com/products/1')
-          const cats = await catResponse.json()
-          return cats
-        },
+        src: 'initAxios',
         onDone: {
           target: 'online',
-          actions: assign({ errorMessage: (context, event) => 'C\'est cassé' }),
+          actions: ['log'],
         },
         onError: {
           target: 'offline.error',
@@ -176,6 +179,32 @@ export const gatewayMachine = createMachine({
     },
   },
 }, {
+  services: {
+
+    initAxios: async (context, event) => {
+      const scanner = useGatewayScanner()
+
+      if (context.credentials.URIs.api === undefined || context.credentials.URIs.api.length === 0)
+        throw new Error('No API url provided.', { cause: 'UNREACHABLE' })
+
+      const address = await scanner.findGatewayAddress(
+        context.credentials.id,
+        context.credentials.URIs.api,
+      )
+
+      if (address.length === 0)
+        throw new Error('None of the URL data is responding.', { cause: 'UNREACHABLE' })
+
+      const instance = axios.create({
+        baseURL: address[0],
+        timeout: 3000,
+      })
+
+      return {
+        axios: instance,
+      }
+    },
+  },
   actions: {
     log: (context, event) => {
       // eslint-disable-next-line no-console
@@ -196,6 +225,7 @@ export const gatewayMachine = createMachine({
     decrement: assign({ count: context => context.count - 1 }),
     */
   },
+
 })
 
 export const useGatewaysStore = defineStore(
@@ -231,7 +261,6 @@ export const useGatewaysStore = defineStore(
       })
 
       service.onTransition((nextState) => {
-        console.log('New state')
         const initialStateChanged
           = nextState.changed === undefined
           && Object.keys(nextState.children).length

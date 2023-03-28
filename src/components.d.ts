@@ -13,7 +13,6 @@ declare module '@vue/runtime-core' {
     Counter: typeof import('./components/Counter.vue')['default']
     DialogFindGateway: typeof import('./components/dialog/dialog-find-gateway.vue')['default']
     DomainDetailList: typeof import('./components/domain-detail-list.vue')['default']
-    FormGateway: typeof import('./components/form/form-gateway.vue')['default']
     FormGatewayConnexions: typeof import('./components/form/form-gateway-connexions.vue')['default']
     FormGatewayOld: typeof import('./components/form/form-gateway-old.vue')['default']
     GatewayBadge: typeof import('./components/gateway-badge.vue')['default']

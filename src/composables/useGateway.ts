@@ -5,12 +5,7 @@ import { useGatewayWebsocket } from './useGatewayWebsocket'
 import { useGatewayScanner } from './useGatewayScanner'
 import type { GatewayCredentials, GatewayData, GatewayURI, GatewayURITypes } from '~/interfaces/deconz'
 
-import { useGatewaysStore } from '~/stores/useGatewaysStore'
-
 export function useGateway(credentials: Ref<GatewayCredentials>) {
-  // Data
-  const gatewayStore = useGatewaysStore()
-
   const gatewayAPIUri = ref('')
   const gatewayWebsocketUri = ref('')
   const id = computed(() => credentials.value?.id)

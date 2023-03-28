@@ -1,5 +1,5 @@
 <script setup lang="ts">
-
+const test2 = ref('foo')
 </script>
 
 <template>

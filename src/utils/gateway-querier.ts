@@ -4,7 +4,6 @@ import type * as Deconz from '~/interfaces/deconz'
 // import { Gateway } from '~/interfaces/deconz'
 
 export class GatewayQuerier {
-  /*
   private credentials: Deconz.GatewayCredentials
 
   public static DiscoveryURL = 'https://phoscon.de/discover'
@@ -12,23 +11,15 @@ export class GatewayQuerier {
   public static DefaultPassword = 'delight'
 
   public urls = {
-    base: () => `${Gateway.getURI(this.credentials.secured, this.credentials.ip, this.credentials.port)}/api`,
+    base: () => '',
     baseAuth: () => `${this.urls.base()}/${this.credentials.apiKey}`,
-    baseNoUser: () => `${this.urls.base()}/`,
+    baseNoUser: () => `${this.urls.base()}/<nouser>`,
     config: () => `${this.urls.baseAuth()}/config`,
     anonymousConfig: () => `${this.urls.baseNoUser()}/config`,
   }
 
   constructor(credentials: Deconz.GatewayCredentials) {
     this.credentials = credentials
-    if ([undefined, ''].includes(this.credentials.ip))
-      throw new Error('Gateway ip is undefined.')
-
-    if (this.credentials.apiKey === undefined)
-      this.credentials.apiKey = ''
-
-    if (this.credentials.secured === undefined)
-      this.credentials.secured = false
   }
 
   public async getAnonymousConfig(): Promise<Deconz.AnonymousConfig | undefined> {
@@ -83,5 +74,4 @@ export class GatewayQuerier {
     if (req.status === 200 && req.data)
       return req.data
   }
-  */
 }
